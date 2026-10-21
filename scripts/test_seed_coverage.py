@@ -240,11 +240,11 @@ def generate_report(repo_meta: Dict[str, Any],
     repo_tokens_est = int((repo_meta['total_bytes'] / 4)) # Standard heuristic: ~4 bytes per token for raw code
     
     # Token savings
-    h_tokens = hybrid_meta['est_tokens']
-    m_tokens = master_meta['est_tokens']
+    h_tokens = hybrid_meta.get('est_tokens', 0)
+    m_tokens = master_meta.get('est_tokens', 0)
     
-    h_savings = ((repo_tokens_est - h_tokens) / repo_tokens_est) * 100 if repo_tokens_est > 0 else 0
-    m_savings = ((repo_tokens_est - m_tokens) / repo_tokens_est) * 100 if repo_tokens_est > 0 else 0
+    h_savings = ((repo_tokens_est - h_tokens) / repo_tokens_est) * 100 if repo_tokens_est > 0 and hybrid_meta.get('exists') else 0
+    m_savings = ((repo_tokens_est - m_tokens) / repo_tokens_est) * 100 if repo_tokens_est > 0 and master_meta.get('exists') else 0
 
     lines = []
     lines.append(f"# INFORME BENCHMARK: COBERTURA Y FIDELIDAD DE THINKINGSEED")
@@ -258,14 +258,23 @@ def generate_report(repo_meta: Dict[str, Any],
     lines.append(f"")
     lines.append(f"## 1. RESUMEN EJECUTIVO: ADN vs REPOSITORIO COMPLETO")
     lines.append(f"")
+    h_lines = f"{hybrid_meta['lines']} líneas" if hybrid_meta.get('exists') else "0 líneas"
+    m_lines = f"{master_meta['lines']} líneas" if master_meta.get('exists') else "0 líneas"
+    h_size = f"{hybrid_meta['size_bytes'] / 1024:.1f} KB" if hybrid_meta.get('exists') else "0.0 KB"
+    m_size = f"{master_meta['size_bytes'] / 1024:.1f} KB" if master_meta.get('exists') else "0.0 KB"
+    h_comp = f"{repo_tokens_est / max(1, h_tokens):.0f}x más ligero" if hybrid_meta.get('exists') else "N/A"
+    m_comp = f"{repo_tokens_est / max(1, m_tokens):.0f}x más ligero" if master_meta.get('exists') else "N/A"
+    h_files = "1 archivo Markdown" if hybrid_meta.get('exists') else "0 archivo Markdown"
+    m_files = "1 archivo Markdown" if master_meta.get('exists') else "0 archivo Markdown"
+
     lines.append(f"| Dimensión de Métrica | Repositorio Completo | Seed Híbrido (`/seed`) | Seed Master (`/seedMaster`) |")
     lines.append(f"|---|:---:|:---:|:---:|")
-    lines.append(f"| **Volumen de Archivos** | **{repo_meta['total_files']} archivos** | 1 archivo Markdown | 1 archivo Markdown |")
-    lines.append(f"| **Líneas de Código / Texto** | **{repo_meta['total_lines']:,} líneas** | {hybrid_meta['lines']} líneas | {master_meta['lines']} líneas |")
-    lines.append(f"| **Peso Físico** | **{repo_meta['total_bytes'] / (1024*1024):.2f} MB** | {hybrid_meta['size_bytes'] / 1024:.1f} KB | {master_meta['size_bytes'] / 1024:.1f} KB |")
+    lines.append(f"| **Volumen de Archivos** | **{repo_meta['total_files']} archivos** | {h_files} | {m_files} |")
+    lines.append(f"| **Líneas de Código / Texto** | **{repo_meta['total_lines']:,} líneas** | {h_lines} | {m_lines} |")
+    lines.append(f"| **Peso Físico** | **{repo_meta['total_bytes'] / (1024*1024):.2f} MB** | {h_size} | {m_size} |")
     lines.append(f"| **Tokens Estimados** | **~{repo_tokens_est:,} tokens** | **~{h_tokens:,} tokens** | **~{m_tokens:,} tokens** |")
     lines.append(f"| **Ahorro de Contexto (Tokens)** | 0% (Base) | **{h_savings:.2f}% de ahorro** | **{m_savings:.2f}% de ahorro** |")
-    lines.append(f"| **Factor de Compresión** | 1x | **{repo_tokens_est / max(1, h_tokens):.0f}x más ligero** | **{repo_tokens_est / max(1, m_tokens):.0f}x más ligero** |")
+    lines.append(f"| **Factor de Compresión** | 1x | **{h_comp}** | **{m_comp}** |")
     lines.append(f"| **ÍNDICE DE COBERTURA DE ADN** | 100% (Código crudo) | **{cov_hybrid.get('adn_score', 0):.1f}% (ADN Esencial)** | **{cov_master.get('adn_score', 0):.1f}% (ADN Exhaustivo)** |")
     lines.append(f"")
     lines.append(f"---")
@@ -296,13 +305,16 @@ def generate_report(repo_meta: Dict[str, Any],
     lines.append(f"")
     lines.append(f"Los ThinkingSeeds no son meros resúmenes de texto; son contratos de evidencia técnica.")
     lines.append(f"")
+    h_ep = hybrid_meta.get('epistemic', {'CONFIRMADO': 0, 'INFERIDO': 0, 'FALTANTE': 0, 'DECLARADO': 0, 'TOTAL_TAGS': 0})
+    m_ep = master_meta.get('epistemic', {'CONFIRMADO': 0, 'INFERIDO': 0, 'FALTANTE': 0, 'DECLARADO': 0, 'TOTAL_TAGS': 0})
+
     lines.append(f"| Etiqueta Epistémica | Significado Metodológico | Frecuencia en `/seed` | Frecuencia en `/seedMaster` |")
     lines.append(f"|---|---|:---:|:---:|")
-    lines.append(f"| `[CONFIRMADO]` | Verificado en código fuente y manifiestos | {hybrid_meta['epistemic']['CONFIRMADO']} | **{master_meta['epistemic']['CONFIRMADO']}** |")
-    lines.append(f"| `[INFERIDO]` | Deducción arquitectónica razonable | {hybrid_meta['epistemic']['INFERIDO']} | {master_meta['epistemic']['INFERIDO']} |")
-    lines.append(f"| `[FALTANTE]` | Brecha identificada / WIP del proyecto | {hybrid_meta['epistemic']['FALTANTE']} | {master_meta['epistemic']['FALTANTE']} |")
-    lines.append(f"| `[DECLARADO]` | Mencionado en docs pero pendiente en código | {hybrid_meta['epistemic']['DECLARADO']} | {master_meta['epistemic']['DECLARADO']} |")
-    lines.append(f"| **TOTAL AFIRMACIONES AUDITADAS** | Evidencia rastreable | **{hybrid_meta['epistemic']['TOTAL_TAGS']}** | **{master_meta['epistemic']['TOTAL_TAGS']}** |")
+    lines.append(f"| `[CONFIRMADO]` | Verificado en código fuente y manifiestos | {h_ep['CONFIRMADO']} | **{m_ep['CONFIRMADO']}** |")
+    lines.append(f"| `[INFERIDO]` | Deducción arquitectónica razonable | {h_ep['INFERIDO']} | {m_ep['INFERIDO']} |")
+    lines.append(f"| `[FALTANTE]` | Brecha identificada / WIP del proyecto | {h_ep['FALTANTE']} | {m_ep['FALTANTE']} |")
+    lines.append(f"| `[DECLARADO]` | Mencionado en docs pero pendiente en código | {h_ep['DECLARADO']} | {m_ep['DECLARADO']} |")
+    lines.append(f"| **TOTAL AFIRMACIONES AUDITADAS** | Evidencia rastreable | **{h_ep['TOTAL_TAGS']}** | **{m_ep['TOTAL_TAGS']}** |")
     lines.append(f"")
     lines.append(f"---")
     lines.append(f"")
@@ -315,7 +327,7 @@ def generate_report(repo_meta: Dict[str, Any],
     lines.append(f"")
     lines.append(f"### 4.2 Seed Master (`seed-[proyecto]-master.md`): ~{cov_master.get('adn_score', 0):.1f}% de Cobertura de ADN")
     lines.append(f"- **Misión:** Auditorías completas, migraciones de infraestructura cloud y refactorings multi-módulo.")
-    lines.append(f"- **Ahorro de Tokens:** **{m_savings:.2f}%**. Ocupa ~5k tokens y proporciona el doble de afirmaciones técnicas `[CONFIRMADO]` ({master_meta['epistemic']['CONFIRMADO']} vs {hybrid_meta['epistemic']['CONFIRMADO']}).")
+    lines.append(f"- **Ahorro de Tokens:** **{m_savings:.2f}%**. Ocupa ~5k tokens y proporciona afirmaciones técnicas `[CONFIRMADO]` ({m_ep['CONFIRMADO']} vs {h_ep['CONFIRMADO']}).")
     lines.append(f"- **Fortaleza:** Documenta exhaustivamente los modos de falla, esquemas de persistencia y directivas de gobierno.")
     lines.append(f"")
     lines.append(f"---")
