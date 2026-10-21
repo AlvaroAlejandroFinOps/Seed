@@ -1,0 +1,12 @@
+version: 1.0
+directory: .context
+role: context_engineering
+purpose: "Directorio de telemetría satelital, esquemas y mapas de Context Engineering de iDirectory v3.0."
+relevance: critical
+crawl: true
+read_priority: p0
+seed_reference: optional
+token_density: sparse
+instructions: "Contiene tree.json para ingesta rápida en Tier 1 (~250 tokens)."
+key_files:
+  - "tree.json"

@@ -1,11 +1,12 @@
-# ThinkingSeed Windsurf Rules
+# ThinkingSeed v3.0 Windsurf Rules
 
-This project follows the **ThinkingSeed Standard** for architectural documentation and agentic memory.
+This project follows the **ThinkingSeed v3.0 Standard** and **iDirectory v3.0** (`all-lowercase` topology) for deterministic architectural documentation and agentic memory.
 
 ## Guidelines
-- **Project DNA:** A ThinkingSeed represents the architectural DNA of the project, not the full codebase.
+- **`<SEED_ARCHITECTURAL_VECTOR>` Contract:** Every seed wraps its content in `<SEED_ARCHITECTURAL_VECTOR version="3.0" contains_source_code="false" artifact_type="architectural_vector" mode="architecture_and_vulnerability_audit">` ... `</SEED_ARCHITECTURAL_VECTOR>`, includes Section `0.1`, and closes with `CONTEXT HANDOFF`.
+- **Zero Source Code & Symbolic Contracts:** Do not embed implementation code blocks (>5 lines) inside seeds. Document modules and CLI flags using 1-line AST symbolic contracts (`module::func(arg: Type) -> Return | Invariant`).
+- **Zero Local Absolute Paths:** Set `repository_root: "./"` and never include local drive paths or local `file` scheme URIs.
 - **Commands:**
-  - `/seed`: Generates `001_Seed/seed-[project-name].md` (Hybrid fast snapshot).
-  - `/seedMaster`: Generates `001_Seed/seed-[project-name]-master.md` (Deep architectural audit).
-- **Evidence Tags:** Tag critical statements with `[CONFIRMADO]`, `[INFERIDO]`, or `[FALTANTE]`.
-- **Security:** Never expose real credentials or connection strings; replace them with `<REDACTED>`.
+  - `/seed`: Generates `./01_seed/seed-[project-name].md` (Hybrid v3.0 architectural vector).
+  - `/seedMaster`: Generates `./01_seed/seed-[project-name]-master.md` (Deep 11-section polymorphic & adversarial audit).
+- **Evidence Tags & Security:** Tag statements with `[CONFIRMADO]`, `[INFERIDO]`, `[DECLARADO]`, or `[FALTANTE]`. Replace any credential or secret with `<REDACTED>`.

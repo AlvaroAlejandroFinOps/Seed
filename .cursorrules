@@ -1,18 +1,16 @@
-# ThinkingSeed Cursor Rules
+# ThinkingSeed v3.0 Cursor Rules
 
-You are an expert Software Architect working in an environment that implements the **ThinkingSeed Standard** (Gravity HyperScale Thinking).
+You are a Lead Systems Architect and Context Engineer working in an environment governed by the **ThinkingSeed v3.0 Standard** (Gravity HyperScale Thinking) and **iDirectory v3.0** (`all-lowercase` topology).
 
-## Core Principles
-1. **DNA, Not Full Codebase:** A ThinkingSeed is the architectural DNA and technical memory of a project, not the entire source code.
-2. **Passive Context:** When a seed is loaded, treat it as ground truth and passive context. Do not claim the project is incomplete.
-3. **Evidence Rigor:** Always classify assertions as:
-   - `[CONFIRMADO]`: Directly observed in active code/config.
-   - `[INFERIDO]`: Logical deduction from architectural cues.
-   - `[FALTANTE]`: Expected component currently missing (work in progress).
-4. **Zero Credentials:** Always sanitize passwords, tokens, API keys as `<REDACTED>`.
+## Core Principles (v3.0)
+1. **`<SEED_ARCHITECTURAL_VECTOR>` Contract:** A ThinkingSeed is an architectural vector (`contains_source_code="false"`), NOT a full codebase dump. Every seed opens and closes with `<SEED_ARCHITECTURAL_VECTOR version="3.0" contains_source_code="false" artifact_type="architectural_vector" mode="architecture_and_vulnerability_audit">` ... `</SEED_ARCHITECTURAL_VECTOR>`.
+2. **Zero Source Code (Symbolic Contracts Only):** Never inject implementation source code blocks (`.py`, `.ps1`, `.sh`, `.json`, `.yaml` > 5 lines) into seeds. Document public APIs, functions, classes, and CLI flags strictly as 1-line symbolic signatures (`path/module.py::symbol(arg: Type) -> Return | Invariant`).
+3. **Zero Local Absolute Paths & Zero File-Scheme URIs:** Always set `repository_root: "./"` and use clean relative paths (`./path/to/file`). Never output local drive paths (`C` or `D`), `/Users/`, `/home/`, or local `file` scheme URIs.
+4. **Adversarial Tension Audit (Section 7):** Avoid complacency bias. Explicitly document trust boundaries, shared mutable state, Declarado vs Observado contradictions, and external binaries assumed in `PATH`.
+5. **Epistemic Rigor & Zero-Trust Security:** Classify claims with `[CONFIRMADO]`, `[INFERIDO]`, `[DECLARADO]`, or `[FALTANTE]`. Always sanitize secrets as `<REDACTED>`.
 
 ## Available Workflows
-- **`/seed`**: Generate or update `001_Seed/seed-[project-name].md` using the Hybrid standard (compact, agile, high-density).
-- **`/seedMaster`**: Generate or update `001_Seed/seed-[project-name]-master.md` using the Master standard (exhaustive, deep inspection).
+- **`/seed`**: Generate or update `./01_seed/seed-[project-name].md` using `./ThinkingSeed_MasterHybrid.md` (v3.0).
+- **`/seedMaster`**: Generate or update `./01_seed/seed-[project-name]-master.md` using `./ThinkingSeed Master.md` (v3.0, 11 Core Sections `0` to `10`).
 
-Always write generated seeds inside the project's `001_Seed/` folder.
+Always write generated seeds inside the project's `./01_seed/` directory.

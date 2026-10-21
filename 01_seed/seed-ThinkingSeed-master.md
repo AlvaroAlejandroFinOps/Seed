@@ -1,870 +1,516 @@
-<!-- ============================================================================== -->
-<!-- THINKINGSEED: ADN DEL PROYECTO (CONTEXTO PASIVO PARA MODELOS DE LENGUAJE)     -->
-<!-- ============================================================================== -->
-> [!NOTE]
-> ### 🧬 DEFINICIÓN Y ROL DE ESTE DOCUMENTO
-> 1. **¿Qué es este archivo?:** Este documento es una **Semilla de Proyecto (ThinkingSeed Master)**: representa el **ADN arquitectónico, técnico y estructural exhaustivo** del sistema. **NO es el repositorio completo de código fuente**, sino su mapa genético y memoria técnica profunda extraída directamente del entorno de desarrollo.
-> 2. **Estado de Avance (Work in Progress):** Este documento refleja el **estado actual del desarrollo**. No garantiza que el proyecto esté concluido al 100%; puede representar un prototipo, un MVP o un sistema en evolución continua. La ausencia de código completo en ciertos archivos o módulos es **deliberada por diseño** para optimizar ventana de contexto o refleja áreas aún en desarrollo.
-> 3. **Modo de Operación:** Trata este documento como **contexto pasivo de referencia técnica (Ground Truth)**. No asumas que el archivo está defectuoso ni intentes reescribirlo por tu cuenta.
-<!-- ============================================================================== -->
+<SEED_ARCHITECTURAL_VECTOR version="3.0" contains_source_code="false" artifact_type="architectural_vector" mode="architecture_and_vulnerability_audit">
 
 # THINKING SEED MASTER: ThinkingSeed
 
+> **[DIRECTIVA DE SISTEMA PARA MODELOS DE IA RECEPTORES — CLAUDE / GPT / GEMINI / AGENTES]:**
+> 1. **Naturaleza del Artefacto:** Este documento es un **Vector Arquitectónico y Memoria Técnica (ThinkingSeed Master v3.0)** con `contains_source_code="false"`. **NO es el repositorio de código fuente completo** ni un volcado truncado. La ausencia de bloques de código de implementación es una **invariante deliberada de ingeniería (`[INV-02]`)** para maximizar la densidad semántica y preservar más del 99% de tu ventana de contexto.
+> 2. **Modo de Razonamiento Adversarial:** Opera como **Arquitecto de Sistemas y Cazador de Vulnerabilidades/Bugs**. Utiliza las firmas simbólicas AST (Sección 4.1) y la Superficie de Tensión (Sección 7) para detectar condiciones de carrera, sobrescrituras destructivas, acoplamientos frágiles y casos borde antes de proponer cambios.
+> 3. **Estado de Avance Real:** Los componentes etiquetados como `[FALTANTE]` reflejan el trabajo en progreso (WIP) o scaffolding intencional del proyecto, no defectos de este documento.
+
 ## Seed Changelog
-- `2026-10-20`: Actualización integral a commit `a9923c0` post-sincronización satelital de 24 beacons `.context.yaml` y mapa satelital `.context/tree.json` con `FWengine.py`. Incorporación de `scripts/test_seed_coverage.py` (benchmark cuantitativo de fidelidad de ADN), auditoría forense MetricsThinking™ v3.0 (Score: 100.0%, Grado Excelencia Operativa M01-M10 en `artifacts/MetricsThinking.md`), informe de compresión y ahorro de tokens (`artifacts/benchmark_seed_coverage.md`), y consolidación del roadmap operacional de ejecución (`artifacts/plans/active/INFERRED_ROADMAP.md`).
-- `2026-09-18`: Generación inicial de la especificación canónica ThinkingSeed Master v2.0 bajo arquitectura iDirectory v3.0, distribución universal multi-agente (`scripts/install_skills.py`) y unificación de carpetas canónicas en `01_seed/`.
+- `2026-10-20 (v3.0)`: Reingeniería integral a esquema **ThinkingSeed v3.0** (`<SEED_ARCHITECTURAL_VECTOR>`). Consolidación polimórfica de 21 a 11 Secciones Core (`0` a `10`) con regla DRY Intra-Seed, erradicación de rutas absolutas locales y URIs de esquema de archivo local, extracción de 22 contratos simbólicos AST de 1 línea en `scripts/install_skills.py` y `scripts/test_seed_coverage.py`, normalización topológica `all-lowercase` (`./tools/`, `./README.md`), sincronización de 26/26 beacons `.context.yaml` con `.context/tree.json`, e incorporación de los 6 validadores deterministas AST/Regex en `scripts/test_seed_coverage.py`.
+- `2026-09-18 (v2.0)`: Generación inicial de la especificación ThinkingSeed Master v2.0 bajo arquitectura iDirectory v3.0, distribución multi-agente (`scripts/install_skills.py`) y unificación de carpeta canónica en `./01_seed/`.
 
 ---
 
-## 0. IDENTIDAD Y METADATOS
+## 0. IDENTIDAD, METADATOS Y CONTRATO DEL RECEPTOR
 
 ```yaml
-seed_schema_version: "2.0"
+seed_schema_version: "3.0"
 project_name: "ThinkingSeed"
 repository_name: "Thinking-Seed"
 project_type: "modular-framework"
 repository_mode: "single-project"
-generated_at: "2026-10-20T21:05:00-03:00"
-generated_by: "Antigravity (Gemini 3.8 Flash) / Master Seed Workflow (/seedMaster)"
-repository_root: "d:/0001 HyperScale Thinking/PROYECTOS CLOUD/iContext/ThinkingSeed"
+generated_at: "2026-10-20T22:35:00-03:00"
+generated_by: "Antigravity Lead Systems Architect (Gemini 4 Argon Medium) / Master Seed Workflow v3.0"
+repository_root: "./"
 git_branch: "master"
 git_commit: "a9923c0"
 working_tree_state: "clean"
 analysis_mode: "static+git+validated"
 coverage_level: "high"
 known_analysis_limits:
-  - "Inspección estática profunda y validada mediante benchmark automatizado local (scripts/test_seed_coverage.py)."
-  - "Módulos de nube corporativos (src/cloud_jobs, src/data_generation, src/dashboards) operan como scaffolding arquitectónico iDirectory v3.0 listo para desacoplamiento e implementación externa."
-  - "Telemetría satelital verificada contra .context/tree.json y 24 beacons .context.yaml distribuidos por carpeta."
+  - "Inspección estática profunda y validación determinista mediante AST/Regex local (./scripts/test_seed_coverage.py)."
+  - "Los directorios productivos de nube (./src/cloud_jobs, ./src/core, ./src/dashboards, ./src/data_generation) operan como scaffolding arquitectónico iDirectory v3.0 sin código fuente de negocio implementado."
+  - "Los motores satelitales externos (FWengine.py y query_graph.py) residen en repositorios hermanos del ecosistema Gravity; la verificación local autónoma se ejecuta mediante check_local_tree_freshness."
 ```
 
 ### 0.1 Instrucciones para el modelo receptor
-1. **ADN vs Repositorio:** Reconoce este documento como la memoria técnica y el ADN del proyecto, no como el repositorio completo ni como una prueba de ejecución.
-2. **Contexto Pasivo:** No generes código no solicitado ni reclames por archivos ausentes; espera instrucciones específicas del usuario o utilízalo como contexto pasivo para responder preguntas sobre el funcionamiento del sistema.
-3. **Estado de Avance:** Considera que las secciones incompletas o componentes marcados como `[FALTANTE]` representan el avance real del proyecto y oportunidades de asistencia, no errores del documento.
-4. **Evidencia:** Respeta las etiquetas de evidencia (`[CONFIRMADO]`, `[INFERIDO]`, `[DECLARADO]`, `[NO VERIFICADO]`, `[FALTANTE]`) y no transformes inferencias en hechos.
-5. **Rutas:** Antes de proponer cambios, identifica módulos y archivos afectados citando sus rutas exactas relativas al repositorio con barras inclinadas (`/`).
-6. **Contratos:** Conserva arquitectura, convenciones, contratos y restricciones declaradas.
-7. **Preguntas Dirigidas:** No inventes componentes ausentes. Formula preguntas solo cuando la incertidumbre impida una respuesta segura.
-8. **Seguridad:** No reveles ni solicites secretos. Usa placeholders (`<REDACTED>`).
-9. **Impacto:** Evalúa impactos laterales en pruebas, configuración, datos, seguridad, observabilidad y despliegue.
-10. **Asistencia:** Distingue entre solución inmediata, deuda técnica y recomendación futura.
+1. **ADN vs Repositorio:** Reconoce este documento como la memoria técnica y el ADN del proyecto (`contains_source_code="false"`), no como el repositorio completo ni como una prueba de ejecución en vivo.
+2. **Contexto Pasivo y Quirúrgico:** No generes código no solicitado ni reclames por archivos ausentes; espera instrucciones específicas del usuario o utilízalo como Ground Truth para responder consultas técnicas.
+3. **Estado de Avance:** Considera que las secciones o directorios marcados como `[FALTANTE]` representan el avance real del proyecto y oportunidades de asistencia, no errores del documento.
+4. **Rigor Epistemológico:** Respeta las etiquetas `[CONFIRMADO]`, `[INFERIDO]`, `[DECLARADO]`, `[NO VERIFICADO]` y `[FALTANTE]`. No transformes inferencias en hechos.
+5. **Portabilidad de Rutas:** Antes de proponer cambios, identifica módulos y archivos afectados citando sus rutas exactas relativas al repositorio (`./ruta/archivo`) con barras inclinadas (`/`). Prohibido emitir rutas absolutas locales o URIs con esquema de archivo local.
+6. **Contratos Simbólicos:** Conserva la arquitectura, convenciones `all-lowercase`, firmas simbólicas AST (Sección 4.1) e invariantes (`[INV-01]` a `[INV-06]`).
+7. **Postura Adversarial Constructiva:** Evalúa siempre la Sección 7 (Superficie de Tensión) para anticipar impactos laterales en reglas de agentes, sincronización satelital, pruebas y seguridad.
+8. **Seguridad Zero-Trust:** Nunca reveles, inventes ni solicites secretos reales; utiliza siempre el marcador `<REDACTED>`.
 
 ---
 
-## 1. RESUMEN EJECUTIVO
+## 1. RESUMEN EJECUTIVO Y ALCANCE
 
 ### 1.1 Proyecto en una frase
-**ThinkingSeed** es el estándar de arquitectura e interoperabilidad cognitiva gobernado por **Gravity HyperScale Thinking** que desacopla el razonamiento de los agentes y modelos de lenguaje del código masivo mediante memorias técnicas estructuradas (seeds) y Context Engineering (iDirectory v3.0).
+**ThinkingSeed** es el framework de ingeniería de contexto e interoperabilidad cognitiva gobernado por **Gravity HyperScale Thinking** que desacopla el razonamiento arquitectónico de los modelos de lenguaje respecto al código fuente masivo mediante vectores arquitectónicos deterministas (`./01_seed/seed-[proyecto].md`), firmas simbólicas AST de 1 línea y gobernanza topológica **iDirectory v3.0** `[CONFIRMADO]`.
 
-### 1.2 Objetivo principal
-- **[CONFIRMADO]** Estandarizar la extracción y generación de memoria técnica portable (ADN del proyecto) mediante los workflows transversales `/seed` (Híbrido ágil) y `/seedMaster` (Auditoría profunda), almacenando la salida invariablemente en `01_seed/`.
-  - *Evidencia:* `AGENTS.md:6-12`, `GEMINI.md:7-26`, `CLAUDE.md:14-31`, `scripts/install_skills.py:34-115`, `.agents/skills/seed/SKILL.md:1-120`, `.agents/skills/seedMaster/SKILL.md:1-136`.
-- **[CONFIRMADO]** Proveer gobernanza y Context Engineering nativo para estructuras de proyectos basadas en iDirectory v3.0 con mapas satelitales `.context/tree.json` y telemetría por directorio mediante 24 beacons `.context.yaml`.
-  - *Evidencia:* `02_foundation/engine/engine_readme.md:1-37`, `.context/tree.json:1-186`.
-- **[CONFIRMADO]** Proporcionar auditoría forense matemática de madurez de ingeniería y cobertura de ADN cuantificable con más de 99% de compresión de tokens.
-  - *Evidencia:* `scripts/test_seed_coverage.py:1-391`, `artifacts/benchmark_seed_coverage.md:1-69`, `artifacts/MetricsThinking.md:1-217`.
+### 1.2 Objetivos principales y problema que resuelve
+- **[CONFIRMADO]** Erradicar la saturación de ventana de contexto (*Lost-in-the-Middle*), la activación accidental del modo de completado de código y la fuga de rutas locales al transferir el contexto de un repositorio hacia LLMs conversacionales (Claude, GPT, Gemini) o agentes de IDE — *Evidencia:* `./ThinkingSeed Master.md`, `./ThinkingSeed_MasterHybrid.md`, `./AGENTS.md`.
+- **[CONFIRMADO]** Distribuir e inyectar de forma automatizada y sin dependencias externas las skills `/seed` y `/seedMaster` junto con directivas multi-agente homologadas — *Evidencia:* `./scripts/install_skills.py`, `./.agents/skills/seed/SKILL.md`, `./.agents/skills/seedMaster/SKILL.md`.
+- **[CONFIRMADO]** Auditar deterministamente mediante AST y expresiones regulares que todo Seed cumpla los 6 gates de calidad v3.0 (Contrato XML, Zero-Code, Portabilidad de Rutas, Zero-Trust `<REDACTED>`, Cobertura AST de contratos y Frescura Satelital `all-lowercase`) — *Evidencia:* `./scripts/test_seed_coverage.py`.
 
-### 1.3 Problema que resuelve
-Los modelos de lenguaje frontera sufren de saturación de ventana de contexto, pérdida de atención ("needle in a haystack") y alucinaciones al procesar repositorios extensos de software. ThinkingSeed resuelve esta limitación sintetizando el ADN arquitectónico, restricciones, topología, contratos y modos de falla en un único artefacto canónico (`01_seed/seed-[nombre].md`), permitiendo consultas e intervenciones precisas con un ahorro verificado del 99.83% en tokens.
+### 1.3 Alcance y límites del sistema
+- **Dentro del alcance (`In-Scope`):**
+  - Especificaciones maestras v3.0 (`./ThinkingSeed Master.md`, `./ThinkingSeed_MasterHybrid.md` y fixture `./tests/ThinkingSeed_Mini.md`).
+  - Skills ejecutables (`./.agents/skills/seed/SKILL.md`, `./.agents/skills/seedMaster/SKILL.md`) y reglas multi-agente (`./AGENTS.md`, `./GEMINI.md`, `./CLAUDE.md`, `./.cursorrules`, `./.windsurfrules`, `./.github/copilot-instructions.md`).
+  - Instalador CLI multi-plataforma (`./scripts/install_skills.py`) y validador determinista AST/Regex (`./scripts/test_seed_coverage.py`).
+  - Topología canónica iDirectory v3.0 con 24 beacons `.context.yaml` y mapa satelital `./.context/tree.json`.
+- **Fuera del alcance (`Out-of-Scope`):**
+  - Ejecución directa de pipelines ETL/ELT o procesamiento de datos en la nube (`./src/cloud_jobs`, `./src/core`, `./src/dashboards` y `./src/data_generation` son directorios de scaffolding estructural `[FALTANTE]`).
+  - Almacenamiento o versionado de datasets crudos en `./data/raw`, `./data/processed` o `./data/sandbox` (excluidos por `./.gitignore` y `./.agentignore`).
 
-### 1.4 Alcance
+### 1.4 Principios de diseño e invariantes no negociables
+- **`[INV-01]` Contrato de Frontera XML (`<SEED_ARCHITECTURAL_VECTOR>`):** Todo Seed v3.0 abre y cierra con etiquetas XML de sistema declarando `contains_source_code="false"` y `mode="architecture_and_vulnerability_audit"` `[CONFIRMADO]`.
+- **`[INV-02]` Zero Source Code / Symbolic Contracts Only:** Prohibido incluir bloques de código fuente de implementación mayores a 5 líneas; todo módulo o CLI se documenta mediante firmas simbólicas AST de 1 línea `[CONFIRMADO]`.
+- **`[INV-03]` Zero Local Absolute Paths:** `repository_root` es invariablemente `"./"`; prohibido emitir rutas con letras de unidad, directorios de usuario o URIs de sistema de archivos local `[CONFIRMADO]`.
+- **`[INV-04]` Zero-Dependency Python Standard Library:** Las herramientas en `./scripts/` utilizan exclusivamente módulos nativos de Python (`os`, `sys`, `re`, `ast`, `json`, `shutil`, `argparse`, `pathlib`, `typing`) `[CONFIRMADO]`.
+- **`[INV-05]` Topología Canónica `all-lowercase` y Ubicación `./01_seed/`:** Todos los directorios del repositorio cumplen nomenclatura en minúsculas (`./tools/`, `./01_seed/`) y los seeds residen exclusivamente en `./01_seed/` `[CONFIRMADO]`.
+- **`[INV-06]` Sanitización Zero-Trust (`<REDACTED>`):** Cero tolerancia a credenciales, tokens o claves privadas en texto plano dentro de `./01_seed/*.md` `[CONFIRMADO]`.
 
-**Incluye:**
-- **[CONFIRMADO]** Especificación canónica de seeds en dos niveles: Híbrido (`ThinkingSeed_MasterHybrid.md`) y Master (`ThinkingSeed Master.md`).
-- **[CONFIRMADO]** Instalador y distribuidor universal multi-agente (`scripts/install_skills.py`) para Antigravity / Gemini CLI, Claude Code, Cursor, Windsurf y GitHub Copilot.
-- **[CONFIRMADO]** Directivas universales de agentes (`AGENTS.md`, `GEMINI.md`, `CLAUDE.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
-- **[CONFIRMADO]** Estructura canónica iDirectory v3.0 con 24 beacons `.context.yaml` y mapa satelital `.context/tree.json`.
-- **[CONFIRMADO]** Motor de validación cuantitativa y auditoría de cobertura (`scripts/test_seed_coverage.py`).
-- **[CONFIRMADO]** Auditoría forense de madurez basada en evidencia física (MetricsThinking™ v3.0, 100.0% / 100.0% en `artifacts/MetricsThinking.md`).
-
-**No incluye / fuera de alcance:**
-- **[CONFIRMADO]** No es un repositorio de código monolítico ejecutable ni un data warehouse productivo.
-- **[INFERIDO]** No ejecuta pipelines de datos cloud en tiempo real desde el core de este repositorio; delega la ejecución a plataformas cloud configuradas (Fabric, AWS Glue, Dataproc) usando los contratos de `src/cloud_jobs/`.
-
-### 1.5 Estado actual resumido
-- **Fase:** Marco de trabajo y estándar técnico consolidado v3.0 (Excelencia Operativa / Producción).
-- **Operatividad:** 100% operativa en especificaciones de seeds, directivas universales, scripts de instalación y suite de benchmarking.
-- **Foco actual:** Adopción transversal en ecosistemas cloud corporativos, verificación de frescura del mapa satelital (`FWengine.py`) y testing de cobertura de ADN en repositorios heterogéneos.
-- **Mayor riesgo mitigado:** Eliminación de inconsistencias de nombres de carpetas (`001_Seed` unificada formalmente a `01_seed/`) y erradicación del drift satelital.
-
-### 1.6 Capacidades principales
-
-| Capacidad | Estado | Implementación principal | Evidencia |
-|---|---|---|---|
-| Snapshot Híbrido Ágil (`/seed`) | Completa `[CONFIRMADO]` | `.agents/skills/seed/SKILL.md` | `ThinkingSeed_MasterHybrid.md` |
-| Auditoría Exhaustiva Master (`/seedMaster`) | Completa `[CONFIRMADO]` | `.agents/skills/seedMaster/SKILL.md` | `ThinkingSeed Master.md` |
-| Inyector e Instalador Universal | Completa `[CONFIRMADO]` | `scripts/install_skills.py` | `scripts/install_skills.py:34-115` |
-| Benchmark y Auditoría de Cobertura | Completa `[CONFIRMADO]` | `scripts/test_seed_coverage.py` | `scripts/test_seed_coverage.py:1-391` |
-| Directivas Multi-Agente Agnósticas | Completa `[CONFIRMADO]` | `AGENTS.md`, `GEMINI.md`, `CLAUDE.md`, `.cursorrules`, `.windsurfrules` | Archivos raíz |
-| Especificación Bilingüe Paper-Grade | Completa `[CONFIRMADO]` | `Readme.md` (EN) y `README_ES.md` (ES) | Raíz del proyecto |
-| Gobernanza iDirectory v3.0 | Completa `[CONFIRMADO]` | `.context.yaml` (24 beacons) + `.context/tree.json` | `02_foundation/engine/engine_readme.md` |
-| Auditoría Forense MetricsThinking™ | Completa `[CONFIRMADO]` | `artifacts/MetricsThinking.md` & `.json` | Score 100.0%, 31/31 checks |
+### 1.5 Capacidades principales y criterios de éxito
+| Capacidad | Estado | Componente / Entry Point | Métrica / Criterio de Éxito | Evidencia |
+|---|---|---|---|---|
+| Auditoría Master Polimórfica (`/seedMaster`) | Completa `[CONFIRMADO]` | `./.agents/skills/seedMaster/SKILL.md` | 11 Secciones Core (`0`-`10`) + 6 Gates PASS | `./ThinkingSeed Master.md` |
+| Snapshot Híbrido Ágil (`/seed`) | Completa `[CONFIRMADO]` | `./.agents/skills/seed/SKILL.md` | Compresión $\ge 98\%$ de tokens | `./ThinkingSeed_MasterHybrid.md` |
+| Instalador Multi-Agente CLI | Completa `[CONFIRMADO]` | `./scripts/install_skills.py` | Distribución global y por `--target` | `./scripts/install_skills.py` |
+| Validador Determinista AST/Regex | Completa `[CONFIRMADO]` | `./scripts/test_seed_coverage.py` | Cobertura AST $\ge 90\%$ y exit code `0` | `./artifacts/benchmark_seed_coverage.md` |
+| Gobernanza Satelital iDirectory v3.0 | Completa `[CONFIRMADO]` | `./.context/tree.json` | Biyección exacta 24 beacons == 24 nodos | `./02_foundation/engine/engine_readme.md` |
 
 ---
 
-## 2. MANIFIESTO Y PRINCIPIOS DE DISEÑO
+## 2. ARQUITECTURA, TOPOLOGÍA Y FRONTERAS MODULARES
 
-### 2.1 Principios arquitectónicos
-1. **Desacoplamiento Cognitivo:** Aislar el mapa genético y la memoria del sistema de los gigabytes de código fuente, reduciendo el consumo de tokens en llamadas a modelos frontera sin degradar la precisión técnica.
-2. **Rigor Epistemológico Cuatripartito:** Cada afirmación técnica debe portar explícitamente su nivel de certeza:
-   - `[CONFIRMADO]`: Verificado directamente en manifests, código o configuración.
-   - `[INFERIDO]`: Deducción lógica sustentada en arquitectura.
-   - `[DECLARADO]`: Declarado en documentación pero pendiente de validación en código.
-   - `[FALTANTE]`: Componente esperado ausente (evidencia de WIP real del proyecto).
-3. **Agnosticismo Multi-Agente:** El estándar opera transparentemente en Google Antigravity / Gemini CLI, Anthropic Claude Code, Cursor, Windsurf, GitHub Copilot o scripts de automatización CLI.
-4. **Zero-Trust de Credenciales:** Prohibición estricta de volcar API keys, passwords, tokens o cadenas de conexión con credenciales explícitas en seeds. Todo valor sensible se reemplaza por `<REDACTED>`.
-5. **Estructura Canónica `01_seed/`:** La ubicación exclusiva, universal e inmutable para los artefactos generados es `01_seed/`.
-6. **Idempotencia Operativa:** La re-ejecución de `/seed`, `/seedMaster` o scripts de sincronización sobrescribe limpiamente el estado sin generar duplicados ni artefactos huérfanos.
+### 2.1 Patrón arquitectónico y vista general
+El sistema implementa el patrón **Cognitive Decoupling & Two-Tier Satellital Context Engineering (iDirectory v3.0)** `[CONFIRMADO]`:
+- **Tier 1 (Exploración Quirúrgica):** El agente lee `./AGENTS.md`, el mapa satelital `./.context/tree.json` (~250 tokens) y el beacon local `.context.yaml` de la carpeta objetivo sin cargar el Seed completo.
+- **Tier 2 (Auditoría y Razonamiento Global):** Ante disparadores arquitectónicos (`/seedMaster`, `/metrics`, `/plan` o `seed_reference: required`), el agente ingiere `./01_seed/seed-ThinkingSeed-master.md`.
 
-### 2.2 Restricciones no negociables
-- **[CONFIRMADO]** Todo seed debe almacenarse dentro de `01_seed/` (`01_seed/seed-[nombre].md` o `01_seed/seed-[nombre]-master.md`).
-- **[CONFIRMADO]** Todo seed debe incluir el bloque de apertura de **Directiva para Modelos de IA (ADN)** y el bloque de cierre de **Context Handoff / Protocolo de Asistencia**.
-- **[CONFIRMADO]** Prohibido incluir binarios o volcados de datos masivos (`.parquet`, `.csv`, `.bin`, `.venv`, `.git`).
-- **[CONFIRMADO]** Cualquier secreto o valor potencialmente sensible debe redactarse obligatoriamente con `<REDACTED>`.
-
-### 2.3 Criterios de éxito
-- **Factor de Compresión:** $\ge 500\times$ más ligero en tokens que el código fuente crudo (alcanzado: $579\times$ en `artifacts/benchmark_seed_coverage.md`).
-- **Ahorro de Contexto:** $\ge 99.0\%$ de ahorro de tokens en comparación con el escaneo ciego del repositorio (alcanzado: $99.83\%$).
-- **Índice de Cobertura de ADN:** $\ge 90.0\%$ en auditoría master (alcanzado: $93.8\%+$ en `test_seed_coverage.py`).
-- **Madurez de Gobernanza:** $100.0\%$ de cumplimiento en los 10 módulos canónicos de MetricsThinking™ v3.0 (`artifacts/MetricsThinking.md`).
-
----
-
-## 3. TOPOLOGÍA DEL REPOSITORIO
-
-### 3.1 Vista general
-El repositorio opera bajo la arquitectura **iDirectory v3.0**, estructurado en capas jerárquicas con prioridades de ingesta de contexto (`p0` a `p3`), gobernanza descentralizada mediante 24 archivos de telemetría `.context.yaml` y un mapa satelital centralizado `.context/tree.json`.
-
-### 3.2 Árbol estructural anotado
-
+### 2.2 Árbol estructural anotado (`all-lowercase` invariant)
 ```text
-ThinkingSeed/
-├── .agents/                               # [p1] Skills locales de agentes de IA
+./
+├── .agents/                               # [p1] Skills multi-agente locales (.agents/.context.yaml)
 │   ├── .context.yaml                      # Beacon de telemetría de skills
 │   └── skills/
-│       ├── seed/                          # Skill /seed (Snapshot ágil híbrido)
-│       │   └── SKILL.md
-│       └── seedMaster/                    # Skill /seedMaster (Auditoría profunda master)
-│           └── SKILL.md
-├── .context/                              # [p0] Telemetría satelital y esquemas de Context Engineering
+│       ├── seed/SKILL.md                  # Workflow /seed (Snapshot híbrido v3.0)
+│       └── seedMaster/SKILL.md            # Workflow /seedMaster (Vector exhaustivo v3.0)
+├── .context/                              # [p0] Gobernanza satelital (.context/.context.yaml)
 │   ├── .context.yaml                      # Beacon de gobernanza satelital
-│   └── tree.json                          # Mapa satelital topológico (~250 tokens)
-├── .github/                               # [p1] Automatizaciones y directivas de GitHub
-│   └── copilot-instructions.md            # Instrucciones de contexto para GitHub Copilot
-├── .cursorrules                           # [p1] Directivas de comportamiento para Cursor IDE
-├── .windsurfrules                         # [p1] Directivas de comportamiento para Windsurf IDE
-├── .gitignore                             # [p1] Exclusiones de Git (.venv, datasets, logs, caches)
-├── .agentignore                           # [p1] Exclusiones de indexación para agentes de IA
-├── 01_seed/                               # [p0] Ubicación canónica oficial de memorias técnicas (Seeds)
-│   ├── .context.yaml                      # Beacon de directorio de seeds
-│   └── seed-ThinkingSeed-master.md        # Este documento (Ground Truth y ADN del proyecto)
-├── 02_foundation/                         # [p1] Núcleo del framework y gobierno técnico
-│   └── engine/
+│   └── tree.json                          # Mapa topológico satelital (24 nodos sincronizados)
+├── .github/
+│   └── copilot-instructions.md            # Directivas v3.0 para GitHub Copilot
+├── 01_seed/                               # [p0] Almacén canónico de vectores ADN (01_seed/.context.yaml)
+│   ├── .context.yaml                      # Beacon de ADN (seed_reference: required)
+│   └── seed-ThinkingSeed-master.md        # Vector arquitectónico maestro v3.0 (este archivo)
+├── 02_foundation/
+│   └── engine/                            # [p1] Especificación iDirectory v3.0 (02_foundation/engine/.context.yaml)
 │       ├── .context.yaml
-│       └── engine_readme.md               # Manifiesto de arquitectura iDirectory v3.0
-├── 03_research/                           # [p1-p2] Investigación, exploración y prototipos
-│   ├── experiments/                       # [p2] PoCs y benchmarks algorítmicos (.context.yaml)
-│   ├── notebooks/                         # [p2] Notebooks interactivos EDA (.context.yaml)
-│   └── prompts/                           # [p1] System prompts y plantillas de LLMs (.context.yaml)
-├── artifacts/                             # [p1-p3] Artefactos generados, métricas y planes
-│   ├── benchmark_seed_coverage.md         # Informe benchmark cuantitativo de compresión y fidelidad
-│   ├── MetricsThinking.json               # Métricas forenses serializadas en JSON Schema
-│   ├── MetricsThinking.md                 # Auditoría forense completa de madurez (Score 100%)
+│       └── engine_readme.md               # Manifiesto de los 24 directorios canónicos
+├── 03_research/                           # [p1-p2] Exploración e ingeniería de prompts
+│   ├── experiments/.context.yaml          # [p2] PoCs y benchmarks algorítmicos
+│   ├── notebooks/.context.yaml            # [p2] Notebooks interactivos EDA
+│   └── prompts/.context.yaml              # [p1] Catálogo de system prompts
+├── artifacts/                             # [p0-p3] Reportes forenses, benchmarks y planes
+│   ├── benchmark_seed_coverage.md         # Reporte cuantitativo generado por test_seed_coverage.py
+│   ├── MetricsThinking.json               # Evaluación serializada MetricsThinking v3.0
+│   ├── MetricsThinking.md                 # Auditoría forense de madurez M01-M10
 │   └── plans/
-│       ├── active/                        # [p1] Planes operacionales vigentes (.context.yaml, INFERRED_ROADMAP.md)
-│       ├── archive/                       # [p3] Histórico de arquitecturas descartadas (.context.yaml)
-│       └── metricsthinking/               # [p0] Gobernanza de evaluación de métricas (.context.yaml)
-├── config/                                # [p1] Configuraciones desacopladas por entorno (.context.yaml)
-├── data/                                  # [p3] Tiering de datos local (ignorado en Git / AI)
-│   ├── processed/                         # Capa Silver / Gold (.context.yaml)
-│   ├── raw/                               # Capa Bronze inmutable (.context.yaml)
-│   └── sandbox/                           # Sandbox experimental para ciencia de datos (.context.yaml)
-├── docs/                                  # [p1-p2] Documentación técnica y especificaciones
-│   ├── architecture/                      # Diagramas C4 y arquitectura Medallion (.context.yaml)
-│   ├── notes/                             # Bitácoras de ingeniería, ADRs y RCAs (.context.yaml)
-│   └── specs/                             # Especificaciones de linaje y esquemas (.context.yaml)
-├── logs/                                  # [p3] Trazas locales de ejecución y auditoría (.context.yaml)
-├── schemas/                               # [p1] Contratos formales de esquemas DDL/JSON (.context.yaml)
-├── scripts/                               # [p2] Tooling operativo y utilidades CLI (.context.yaml)
-│   ├── install_skills.py                  # Instalador universal multi-agente
-│   └── test_seed_coverage.py              # Suite de auditoría y benchmark de cobertura de ADN
-├── src/                                   # [p1-p2] Scaffolding de código fuente productivo
-│   ├── cloud_jobs/                        # Pipelines productivos multi-cloud (.context.yaml)
-│   ├── core/                              # Lógica común y servicios de backend (.context.yaml)
-│   ├── dashboards/                        # Visualizaciones e interfaces interactivas (.context.yaml)
-│   └── data_generation/                   # Generación probabilística de datos sintéticos (.context.yaml)
-├── tests/                                 # [p1] Suites de validación y especificaciones mínimas (.context.yaml)
-│   └── ThinkingSeed_Mini.md               # Plantilla canónica mínima para pruebas
-├── Tools/                                 # [p2] Herramientas gráficas y diagramas (.context.yaml)
+│       ├── active/                        # [p1] Planes vigentes (artifacts/plans/active/.context.yaml)
+│       │   ├── .context.yaml
+│       │   └── INFERRED_ROADMAP.md        # Roadmap operativo basado en evidencia
+│       ├── archive/.context.yaml          # [p3] Histórico de planes archivados
+│       └── metricsthinking/.context.yaml  # [p0] Gobernanza de métricas
+├── config/.context.yaml                   # [p1] Configuraciones desacopladas por entorno
+├── data/                                  # [p3] Tiering local ignorado en Git (crawl: false)
+│   ├── processed/.context.yaml            # Capa Silver/Gold local
+│   ├── raw/.context.yaml                  # Capa Bronze inmutable
+│   └── sandbox/.context.yaml              # Sandbox experimental aislado
+├── docs/                                  # [p1-p2] Documentación humana y especificaciones
+│   ├── architecture/.context.yaml         # Diagramas de arquitectura
+│   ├── notes/.context.yaml                # Notas de ingeniería y ADRs
+│   └── specs/.context.yaml                # Especificaciones técnicas
+├── logs/.context.yaml                     # [p3] Trazas operativas locales (crawl: false)
+├── schemas/.context.yaml                  # [p1] Contratos formales de datos
+├── scripts/                               # [p2] Automatización CLI Python (scripts/.context.yaml)
+│   ├── .context.yaml
+│   ├── install_skills.py                  # Instalador e inyector multi-agente
+│   └── test_seed_coverage.py              # Auditor determinista AST/Regex v3.0
+├── src/                                   # [p1-p2] Scaffolding productivo multi-cloud
+│   ├── cloud_jobs/.context.yaml           # [p1] Pipelines cloud (scaffolding)
+│   ├── core/.context.yaml                 # [p1] Backend compartido (scaffolding)
+│   ├── dashboards/.context.yaml           # [p2] Visualización BI (scaffolding)
+│   └── data_generation/.context.yaml      # [p2] Datos sintéticos (scaffolding)
+├── tests/                                 # [p1] Suites de validación y fixtures (tests/.context.yaml)
+│   ├── .context.yaml
+│   └── ThinkingSeed_Mini.md               # Fixture mínimo de validación v3.0
+├── tools/                                 # [p2] Recursos visuales y utilidades (tools/.context.yaml)
+│   ├── .context.yaml
 │   └── Seed.png                           # Diagrama visual de la arquitectura ThinkingSeed
-├── AGENTS.md                              # Directiva universal canónica para agentes autónomos
-├── CLAUDE.md                              # Configuración y comandos rápidos para Claude Code
-├── GEMINI.md                              # Reglas globales de workspace para Google Antigravity / Gemini
-├── LICENSE                                # Licencia MIT de distribución abierta
-├── Readme.md                              # Especificación técnica paper-grade en inglés
-├── README_ES.md                           # Especificación técnica paper-grade en español
-├── ThinkingSeed Master.md                 # Contrato canónico y plantilla para /seedMaster
-├── ThinkingSeed_MasterHybrid.md           # Contrato canónico y plantilla para /seed
-└── image.png                              # Infografía visual del framework
+├── .agentignore                           # Filtros de exclusión para agentes de IA
+├── .cursorrules                           # Reglas v3.0 para Cursor IDE
+├── .gitignore                             # Filtros de exclusión de Git
+├── .windsurfrules                         # Reglas v3.0 para Windsurf IDE
+├── AGENTS.md                              # Directiva universal canónica v3.0
+├── CLAUDE.md                              # Directiva v3.0 para Anthropic Claude Code
+├── GEMINI.md                              # Reglas globales v3.0 para Google Antigravity / Gemini
+├── image.png                              # Infografía principal del protocolo GHT-SEED
+├── LICENSE                                # Licencia MIT
+├── README.md                              # Documentación paper-grade en inglés
+├── README_ES.md                           # Documentación paper-grade en español
+├── ThinkingSeed Master.md                 # Especificación maestra canónica v3.0 (/seedMaster)
+└── ThinkingSeed_MasterHybrid.md           # Especificación híbrida canónica v3.0 (/seed)
 ```
 
-### 3.3 Catálogo de componentes
-
+### 2.3 Catálogo de componentes y fronteras modulares
 | Componente | Tipo | Responsabilidad | Entry point | Depende de | Consumido por | Madurez |
 |---|---|---|---|---|---|---|
-| `seed` skill | Agent Skill | Generación de snapshot ágil híbrido | `.agents/skills/seed/SKILL.md` | `ThinkingSeed_MasterHybrid.md` | Agentes de IA, desarrollador | Producción `[CONFIRMADO]` |
-| `seedMaster` skill | Agent Skill | Auditoría profunda y ADN exhaustivo | `.agents/skills/seedMaster/SKILL.md` | `ThinkingSeed Master.md` | Agentes de IA, auditores | Producción `[CONFIRMADO]` |
-| `install_skills.py` | CLI Tool | Distribución global o inyección en repositorios | `scripts/install_skills.py` | Python 3 standard library | Desarrollador, pipelines CI/CD | Producción `[CONFIRMADO]` |
-| `test_seed_coverage.py` | CLI Tool | Auditoría cuantitativa de cobertura y compresión | `scripts/test_seed_coverage.py` | Python 3 standard library | Desarrollador, CI/CD, auditoría | Producción `[CONFIRMADO]` |
-| `tree.json` | Context Map | Mapa satelital topológico ultraligero (~250 tokens) | `.context/tree.json` | `FWengine.py` (externo) | Bootloader de agentes, IDEs | Producción `[CONFIRMADO]` |
-| Beacons `.context.yaml` | Governance | Roles, nivel de aislamiento y telemetría por carpeta | `[carpeta]/.context.yaml` | `FWengine.py` (externo) | Agentes en navegación contextual | Producción `[CONFIRMADO]` |
-| Directivas de Agentes | Rules | Guardrails de comportamiento y seguridad | `AGENTS.md`, `GEMINI.md`, `CLAUDE.md` | Estándar ThinkingSeed | Antigravity, Claude, Copilot | Producción `[CONFIRMADO]` |
-| `MetricsThinking` | Report | Auditoría forense de madurez de ingeniería (Score 100%) | `artifacts/MetricsThinking.md` | MetricsThinking™ v3.0 | Líderes técnicos, comités | Producción `[CONFIRMADO]` |
-| `INFERRED_ROADMAP.md` | Roadmap | Plan de ejecución operacional basado en evidencia | `artifacts/plans/active/INFERRED_ROADMAP.md` | Ground Truth físico | Equipo de desarrollo | Producción `[CONFIRMADO]` |
+| `Master Spec v3.0` | Spec | Contrato polimórfico de 11 secciones e invariantes | `./ThinkingSeed Master.md` | Ninguna | `./.agents/skills/seedMaster/SKILL.md` | Producción `[CONFIRMADO]` |
+| `Hybrid Spec v3.0` | Spec | Contrato ágil de alta densidad | `./ThinkingSeed_MasterHybrid.md` | Ninguna | `./.agents/skills/seed/SKILL.md` | Producción `[CONFIRMADO]` |
+| `install_skills.py` | CLI Tool | Instalación global o inyección en proyectos destino | `./scripts/install_skills.py::main` | Python Stdlib | Desarrolladores, CI/CD | Producción `[CONFIRMADO]` |
+| `test_seed_coverage.py` | CLI Auditor | Benchmark de ADN y 6 validadores AST/Regex | `./scripts/test_seed_coverage.py::main` | Python Stdlib (`ast`, `re`) | Desarrolladores, Gate Pre-Commit | Producción `[CONFIRMADO]` |
+| `tree.json` & Beacons | Context Map | Mapa satelital y 24 beacons de gobernanza | `./.context/tree.json` | `.context.yaml` (24x) | Bootloader de agentes (Tier 1/2) | Producción `[CONFIRMADO]` |
 
-### 3.4 Carpetas o nombres ambiguos
-- **`01_seed/` vs `001_Seed/` (Deprecada):** La convención unificada y obligatoria es `01_seed/`. Cualquier referencia previa a `001_Seed` ha sido formalmente migrada y deprecada.
-- **`01_seed/` vs `01_Status/`:** `01_seed/` alberga las memorias técnicas vivas (Ground Truth); `01_Status/` se reservaba para actas de estado de avance cronológico.
-- **`02_foundation/engine/` vs `src/core/`:** `02_foundation/engine/` describe la gobernanza, especificación y reglas de iDirectory; `src/core/` es el scaffolding para implementaciones de lógica transversal del negocio.
-- **`artifacts/plans/active/` vs `artifacts/plans/archive/`:** `active/` contiene planes y roadmaps actualmente en ejecución (`INFERRED_ROADMAP.md`); `archive/` retiene decisiones pasadas por trazabilidad.
-- **`docs/` vs `artifacts/`:** `docs/` contiene documentación conceptual y arquitectura formal para humanos; `artifacts/` aloja salidas cuantificables de herramientas de análisis, benchmarks y planes operativos.
-- **`scripts/` vs `Tools/`:** `scripts/` alberga utilidades ejecutables en Python (`install_skills.py`, `test_seed_coverage.py`); `Tools/` aloja recursos gráficos y utilitarios estáticos (`Seed.png`).
+### 2.4 Desambiguación de carpetas y archivos críticos
+- **Desambiguaciones clave:**
+  - `./01_seed/` vs `001_Seed/` (deprecada): Toda generación y lectura apunta exclusivamente a `./01_seed/` (`[ADR-001]`).
+  - `./scripts/` vs `./tools/`: `./scripts/` contiene herramientas ejecutables en Python (`install_skills.py`, `test_seed_coverage.py`); `./tools/` almacena activos visuales y utilitarios estáticos (`./tools/Seed.png`).
+  - `./02_foundation/engine/` vs `./src/core/`: `./02_foundation/engine/` define el manifiesto topológico iDirectory (`engine_readme.md`); `./src/core/` es scaffolding para lógica de negocio.
+  - `./docs/notes/` y `./docs/specs/` vs carpetas vacías legacy (`docs/engineers_notes`, `docs/technical_specs`): Los beacons activos residen en `./docs/notes/` y `./docs/specs/`; las carpetas vacías sin beacon (`docs/engineers_notes`, `docs/technical_specs` y `src/fabric_jobs`) son remanentes vacíos de versiones previas a iDirectory v3.0 documentados en la Sección 7.3.
+  - `./docs/` vs `./artifacts/`: `./docs/` aloja documentación conceptual para humanos; `./artifacts/` contiene reportes cuantitativos generados (`benchmark_seed_coverage.md`, `MetricsThinking.md`, `MetricsThinking.json`, `INFERRED_ROADMAP.md`).
+- **Fuentes de verdad vs Artefactos generados:**
+  - *Fuentes editables:* `./ThinkingSeed Master.md`, `./ThinkingSeed_MasterHybrid.md`, `./scripts/*.py`, `./.agents/skills/*/SKILL.md` y archivos de reglas raíz.
+  - *Artefactos generados/sincronizados:* `./01_seed/seed-ThinkingSeed-master.md`, `./artifacts/benchmark_seed_coverage.md` y `./.context/tree.json`.
 
-### 3.5 Archivos críticos
-
-| Ruta | Por qué es crítica | Qué la consume | Riesgo de cambio |
+| Ruta Crítica | Por qué es crítica | Consumidor principal | Riesgo de modificación |
 |---|---|---|---|
-| `AGENTS.md` | Directiva base universal para agentes agnósticos | Antigravity, Claude, Cursor, Copilot | Alto `[CONFIRMADO]` |
-| `GEMINI.md` | Reglas de workspace estrictas de Antigravity IDE | Antigravity runtime, Gemini CLI | Alto `[CONFIRMADO]` |
-| `ThinkingSeed Master.md` | Contrato canónico de auditoría y generación master | Skill `/seedMaster`, agentes | Crítico `[CONFIRMADO]` |
-| `ThinkingSeed_MasterHybrid.md` | Contrato canónico de snapshot híbrido ágil | Skill `/seed`, agentes | Crítico `[CONFIRMADO]` |
-| `scripts/install_skills.py` | Instalador y distribuidor multi-agente | Desarrolladores, scripting de bootstrap | Medio `[CONFIRMADO]` |
-| `scripts/test_seed_coverage.py` | Validador cuantitativo de cobertura de ADN | Benchmarks, CI/CD, auditoría forense | Medio `[CONFIRMADO]` |
-| `.context/tree.json` | Mapa satelital topológico de arranque (Bootloader) | Agentes al ingresar al proyecto | Alto `[CONFIRMADO]` |
-| `01_seed/seed-ThinkingSeed-master.md` | Este archivo: memoria técnica y Ground Truth del sistema | Modelos receptores en traspasos de contexto | Crítico `[CONFIRMADO]` |
+| `./ThinkingSeed Master.md` | Define el esquema v3.0 y las 11 secciones obligatorias | Skill `/seedMaster`, auditores | Crítico `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | Ejecuta los 6 validadores deterministas y emite exit code | CI/CD, desarrolladores | Alto `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | Propaga skills y reglas a nivel global o a otros repositorios | Entornos Gemini, Claude, Cursor | Alto `[CONFIRMADO]` |
+| `./.context/tree.json` | Bootloader satelital de 24 nodos para navegación de agentes | Agentes autónomos en Tier 1 | Alto `[CONFIRMADO]` |
 
-### 3.6 Archivos generados y fuentes de verdad
-- **Fuentes de Verdad Editables:** `ThinkingSeed Master.md`, `ThinkingSeed_MasterHybrid.md`, `AGENTS.md`, `GEMINI.md`, `CLAUDE.md`, `scripts/install_skills.py`, `scripts/test_seed_coverage.py`.
-- **Artefactos Satelitales Sincronizados:** `.context/tree.json` y 24 beacons `.context.yaml` (generados y sincronizados mediante `FWengine.py beacon --sync` y `FWengine.py map --sync`).
-- **Artefactos de Auditoría y Benchmark:** `01_seed/seed-ThinkingSeed-master.md`, `artifacts/benchmark_seed_coverage.md`, `artifacts/MetricsThinking.md`, `artifacts/MetricsThinking.json`, `artifacts/plans/active/INFERRED_ROADMAP.md`.
-- **Archivos que no deben editarse manualmente:** `.context/tree.json` (debe actualizarse siempre vía `FWengine.py map --sync`).
+### 2.5 Stack tecnológico
+| Capa | Tecnología | Versión | Finalidad | Fuente de verificación |
+|---|---|---|---|---|
+| Runtime & Análisis AST | Python Standard Library | $\ge 3.10$ (validado en 3.12) | CLI, parsing AST (`ast`), regex (`re`), rutas (`pathlib`) | `./scripts/test_seed_coverage.py` |
+| Contratos de Contexto | Markdown / XML / YAML / JSON | GFM, YAML 1.2, JSON Schema | Vectores `<SEED_ARCHITECTURAL_VECTOR>`, beacons y satélite | `./ThinkingSeed Master.md`, `./.context/tree.json` |
+| Modelado Topológico | Mermaid JS | Flowcharts `LR` / `TD` | Grafos compactos de ejecución y CI/CD | `./ThinkingSeed Master.md` |
+| Control de Versiones | Git | $\ge 2.30$ | Trazabilidad de commits y Delta-Seeding incremental | `./.gitignore`, `./.agents/skills/seedMaster/SKILL.md` |
 
 ---
 
-## 4. ARQUITECTURA DEL SISTEMA
+## 3. FLUJOS DE EJECUCIÓN, ENTRY POINTS Y CICLO DE VIDA
 
-### 4.1 Patrón arquitectónico
-El sistema implementa el patrón **Layered Modular Framework with Satellital Context Engineering (iDirectory v3.0)** y **Cognitive Decoupling**:
-- **Capa Satelital (Tier 1):** `.context/tree.json` proporciona a los agentes un mapa topológico ultraligero (~250 tokens) para navegación inicial sin leer el repositorio completo.
-- **Capa de ADN (Tier 2):** `01_seed/seed-[proyecto].md` provee la memoria técnica exhaustiva, contratos y modos de falla con rigor epistemológico.
-- **Capa Descentralizada (Tier 3):** Cada subcarpeta posee un beacon `.context.yaml` que delimita responsabilidades, dependencias y reglas de modificación local antes de cualquier intervención.
+### 3.1 Entry points registrados
+| Escenario / Operación | Entry point | Trigger / Comando simbólico | Salida / Efecto en disco | Evidencia |
+|---|---|---|---|---|
+| Generación Seed Master v3.0 | `./.agents/skills/seedMaster/SKILL.md` | Slash command `/seedMaster` | Crea/actualiza `./01_seed/seed-[proyecto]-master.md` | `./.agents/skills/seedMaster/SKILL.md` |
+| Generación Seed Híbrido v3.0 | `./.agents/skills/seed/SKILL.md` | Slash command `/seed` | Crea/actualiza `./01_seed/seed-[proyecto].md` | `./.agents/skills/seed/SKILL.md` |
+| Instalación Global de Skills | `./scripts/install_skills.py::main` | `python scripts/install_skills.py --global-install` | Copia skills en `~/.gemini/config/skills` y `CLAUDE.md` en `~/.claude` | `./scripts/install_skills.py:34-65` |
+| Inyección en Repo Destino | `./scripts/install_skills.py::main` | `python scripts/install_skills.py --target <ruta>` | Copia `.agents/skills/`, 6 archivos de reglas y crea `01_seed/` | `./scripts/install_skills.py:67-115` |
+| Auditoría y Benchmark v3.0 | `./scripts/test_seed_coverage.py::main` | `python scripts/test_seed_coverage.py --target-repo . --no-anonymize` | Emite `./artifacts/benchmark_seed_coverage.md` y retorna `0` o `1` | `./scripts/test_seed_coverage.py:451-523` |
 
-### 4.2 Diagrama de contexto
-
+### 3.2 Flujo principal de extremo a extremo (Grafo de Ejecución v3.0)
 ```mermaid
 flowchart LR
-    Dev([Desarrollador / Arquitecto]) -->|Ejecuta /seed o /seedMaster| Agent[Agente Autónomo / IDE / CLI]
-    Agent -->|1. Consulta Satelital ~250 tokens| Tree[Mapa .context/tree.json]
-    Agent -->|2. Inspección Estática Quirúrgica| Repo[Repositorio de Código]
-    Agent -->|3. Escribe ADN Estructurado| SeedFile[01_seed/seed-ThinkingSeed-master.md]
-    
-    SeedFile -->|Traspaso de Contexto Pasivo| Receptor([Modelo de Razonamiento Receptor])
-    Dev -->|Inyección Multi-Plataforma| Installer[scripts/install_skills.py]
-    Installer -->|Distribución Global o Local| MultiAgent[Gemini / Claude / Cursor / Windsurf]
+    Trigger["/seedMaster o CLI"] --> Delta["1. Delta-Seeding (git diff + .context/tree.json)"]
+    Delta --> AST["2. Extracción Simbólica AST (1 línea, Zero-Code)"]
+    AST --> Audit["3. Auditoría Adversarial (Sección 7) & <REDACTED>"]
+    Audit --> Emit["4. Emisión <SEED_ARCHITECTURAL_VECTOR> en ./01_seed/"]
+    Emit --> Gate["5. test_seed_coverage.py (6 Gates Deterministas -> Exit 0)"]
 ```
+- **Secuencia algorítmica:**
+  1. **Delta-Seeding y Lectura Satelital:** Si existe un Seed previo en `./01_seed/`, se extrae `git_commit` y se consulta el diferencial contra `HEAD` junto con los 24 nodos de `./.context/tree.json`.
+  2. **Extracción Simbólica AST:** `extract_repo_ast_contracts` recorre los módulos `.py` mediante `ast.parse()` extrayendo funciones públicas, clases y flags de `argparse` sin copiar cuerpos de código.
+  3. **Síntesis Polimórfica y Auditoría Adversarial:** Se estructuran las 11 Secciones Core (`0` a `10`) documentando contradicciones y vectores de fallo reales en la Sección 7.
+  4. **Verificación Determinista (Gate de Salida):** `test_seed_coverage.py` ejecuta los 6 validadores (`v1_headers` a `v6_freshness`), escribe `./artifacts/benchmark_seed_coverage.md` y retorna código de salida `0` solo si los 6 gates aprueban.
 
-### 4.3 Diagrama de componentes
-
-```mermaid
-flowchart TD
-    subgraph Governance [iDirectory v3.0 Governance & Context Engineering]
-        TreeJson[".context/tree.json (Satellite Map)"]
-        Beacons["24x .context.yaml (Directory Beacons)"]
-        EngineSpec["02_foundation/engine/engine_readme.md"]
-    end
-
-    subgraph CoreEngine [ThinkingSeed Core Contracts & Templates]
-        MasterTemplate["ThinkingSeed Master.md"]
-        HybridTemplate["ThinkingSeed_MasterHybrid.md"]
-        MiniTemplate["tests/ThinkingSeed_Mini.md"]
-    end
-
-    subgraph AgentSkills [Multi-Agent Skills & Directives]
-        SeedSkill[".agents/skills/seed/SKILL.md"]
-        MasterSkill[".agents/skills/seedMaster/SKILL.md"]
-        AgentRules["AGENTS.md / GEMINI.md / CLAUDE.md"]
-    end
-
-    subgraph Tooling [Automation & Benchmarking Tools]
-        Installer["scripts/install_skills.py"]
-        CoverageBench["scripts/test_seed_coverage.py"]
-    end
-
-    subgraph ArtifactsOut [Forensic Evidence & Output Seeds]
-        MasterSeedOut["01_seed/seed-ThinkingSeed-master.md"]
-        BenchOut["artifacts/benchmark_seed_coverage.md"]
-        MetricsOut["artifacts/MetricsThinking.md & .json"]
-        RoadmapOut["artifacts/plans/active/INFERRED_ROADMAP.md"]
-    end
-
-    MasterTemplate --> MasterSkill
-    HybridTemplate --> SeedSkill
-    AgentSkills --> MasterSeedOut
-    Installer --> AgentSkills
-    CoverageBench --> BenchOut
-    CoreEngine --> CoverageBench
-    Governance --> AgentSkills
-```
-
-### 4.4 Stack tecnológico
-
-| Capa | Tecnología | Versión | Finalidad | Fuente de versión |
-|---|---|---:|---|---|
-| Runtime | Python | 3.10+ (probado en 3.12) | Ejecución de scripts CLI y benchmarks | `scripts/install_skills.py:1` |
-| Tooling CLI | Standard Library Python | `pathlib`, `shutil`, `argparse`, `re`, `json` | Portabilidad absoluta sin dependencias externas | `scripts/install_skills.py`, `scripts/test_seed_coverage.py` |
-| Formato de Contexto | Markdown / YAML / JSON | GFM, YAML 1.2, JSON Schema Draft 7 | Especificación de seeds, beacons y mapas | Manifiestos en repo |
-| Modelado Visual | Mermaid JS | Flowcharts TD/LR | Diagramas de flujo y arquitectura en seeds | `ThinkingSeed Master.md` |
-| Control de Versiones | Git | 2.30+ | Trazabilidad, commits y hash para metadatos | `.gitignore`, historial de Git |
-| Motor Satelital | FWengine.py | v3.0 | Sincronización de beacons y mapa satelital | `02_foundation/engine/engine_readme.md` |
-
-### 4.5 Fronteras y acoplamientos
-- **Zero-Dependency Core:** Las herramientas principales (`install_skills.py` y `test_seed_coverage.py`) no dependen de ningún paquete de terceros (`pip install`), eliminando riesgos de supply-chain attack y garantizando portabilidad instantánea en cualquier sistema con Python estándar.
-- **Desacoplamiento con FWengine.py:** Aunque la gobernanza `.context/` se sincroniza mediante `FWengine.py`, la ejecución de `/seed` y `/seedMaster` es completamente autónoma y no requiere la presencia de motores externos en tiempo de ejecución.
+### 3.3 Ciclo de vida de datos/artefactos, concurrencia e idempotencia
+- **Ciclo de vida:** El ADN nace de la inspección estática del árbol físico, se serializa como vector Markdown/XML en `./01_seed/`, se audita contra el AST real con `./scripts/test_seed_coverage.py` y se consume como contexto pasivo en sesiones multi-LLM.
+- **Idempotencia y estado:** `test_seed_coverage.py` es funcionalmente stateless en su análisis y sobrescribe deterministamente el archivo de salida indicado en `--output`. `install_skills.py` elimina previamente la carpeta destino de la skill (`shutil.rmtree`) antes de ejecutar `shutil.copytree` para evitar archivos residuales.
 
 ---
 
-## 5. FLUJOS DE EJECUCIÓN
+## 4. CONTRATOS SIMBÓLICOS, MODELO DE DATOS Y PERSISTENCIA
 
-### 5.1 Entry points
+> **Cumplimiento de Invariante `[INV-02]`:** Cero bloques de código fuente de implementación. Todos los scripts y módulos públicos del repositorio quedan representados al 100% mediante sus firmas simbólicas tipadas de 1 línea.
 
-| Escenario | Entry point | Comando o trigger | Resultado |
+### 4.1 Tabla de Firmas Simbólicas AST y Contratos CLI
+| Ruta del Módulo | Símbolo Público / CLI Flag | Firma Simbólica Tipada (1 línea) | Invariante / Efecto / Excepciones |
 |---|---|---|---|
-| Snapshot Híbrido Ágil | Skill `/seed` | Invocación `/seed` en prompt | Genera `01_seed/seed-[proyecto].md` |
-| Auditoría Exhaustiva Master | Skill `/seedMaster` | Invocación `/seedMaster` en prompt | Genera `01_seed/seed-[proyecto]-master.md` |
-| Instalación Interactiva | CLI Script | `python scripts/install_skills.py` | Menú interactivo de selección de entorno |
-| Instalación Global de Skills | CLI Script | `python scripts/install_skills.py --global-install` | Inyecta skills en `~/.gemini/` y `~/.claude/` |
-| Inyección en Repositorio Destino | CLI Script | `python scripts/install_skills.py --target <ruta>` | Copia skills, directivas y crea `01_seed/` |
-| Auditoría de Cobertura de ADN | CLI Script | `python scripts/test_seed_coverage.py --target-repo .` | Genera `artifacts/benchmark_seed_coverage.md` |
-| Sincronización de Beacons | FWengine CLI | `python FWengine.py beacon --sync` | Sincroniza los 24 beacons `.context.yaml` |
-| Sincronización de Satélite | FWengine CLI | `python FWengine.py map --sync` | Actualiza `.context/tree.json` |
+| `./scripts/install_skills.py` | `get_home_dir` | `install_skills::get_home_dir() -> Path` | Retorna `Path.home()` del usuario actual sin efectos secundarios `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `install_antigravity_global` | `install_skills::install_antigravity_global() -> bool` | Reemplaza `seed` y `seedMaster` en `~/.gemini/config/skills/`; captura `Exception` y retorna `bool` `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `install_claude_code_global` | `install_skills::install_claude_code_global() -> bool` | Copia `./CLAUDE.md` hacia `~/.claude/CLAUDE.md`; captura `Exception` y retorna `bool` `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `inject_into_project` | `install_skills::inject_into_project(target_path: Path) -> bool` | Inyecta `.agents/skills/`, 6 archivos de reglas multi-agente y crea `01_seed/` en `target_path.resolve()` `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `main` | `install_skills::main() -> None` | Orquesta CLI (`argparse`) en modo `--global-install`, `--target` o menú interactivo `input()` con fallback `EOFError` `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `--global-install` | `CLI Flag (--global-install: action="store_true")` | Ejecuta `install_antigravity_global()` e `install_claude_code_global()` sin prompt interactivo `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `--target` | `CLI Flag (--target: str, optional)` | Ruta del repositorio destino donde `inject_into_project(Path(args.target))` inyecta las skills y reglas `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `check_llm_contract_headers` | `test_seed_coverage::check_llm_contract_headers(seed_content: str) -> Dict[str, Any]` | Validador 1: Exige `<SEED_ARCHITECTURAL_VECTOR`, `contains_source_code="false"`, `0.1 Instrucciones para el modelo receptor` y `CONTEXT HANDOFF` `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `check_zero_code_invariant` | `test_seed_coverage::check_zero_code_invariant(seed_content: str) -> Dict[str, Any]` | Validador 2: Escanea bloques cercados y rechaza lenguajes en `FORBIDDEN_CODE_LANGS` o múltiples bloques YAML > 5 líneas `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `check_path_portability` | `test_seed_coverage::check_path_portability(seed_content: str) -> Dict[str, Any]` | Validador 3: Exige `repository_root: "./"` y 0 coincidencias de URIs locales, letras de unidad o rutas de usuario `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `check_secret_leaks` | `test_seed_coverage::check_secret_leaks(seed_content: str, seed_dir: Path = None) -> Dict[str, Any]` | Validador 4: Escanea 7 familias de expresiones regulares de credenciales en `01_seed/*.md` y exige presencia de `<REDACTED>` `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `extract_repo_ast_contracts` | `test_seed_coverage::extract_repo_ast_contracts(repo_path: Path) -> Dict[str, List[str]]` | Parsea con `ast.parse()` todos los `.py` (excluyendo `IGNORE_DIRS`) y extrae funciones/clases públicas y flags `add_argument` `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `check_ast_contract_coverage` | `test_seed_coverage::check_ast_contract_coverage(repo_path: Path, seed_content: str) -> Dict[str, Any]` | Validador 5: Calcula el porcentaje de contratos simbólicos AST presentes en el Seed (umbral de aprobación $\ge 90.0\%$) `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `check_local_tree_freshness` | `test_seed_coverage::check_local_tree_freshness(repo_path: Path) -> Dict[str, Any]` | Validador 6: Verifica biyección 1:1 entre carpetas con `.context.yaml` y nodos en `.context/tree.json`, más invariante `all-lowercase` `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `analyze_repo` | `test_seed_coverage::analyze_repo(repo_path: Path) -> Dict[str, Any]` | Recorre el árbol del repositorio contabilizando archivos, bytes, líneas, directorios nivel 1/2, configs y contratos AST `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `analyze_seed` | `test_seed_coverage::analyze_seed(seed_path: Path) -> Dict[str, Any]` | Extrae volumen de tokens estimados (`words * 1.3`) y conteo de etiquetas epistemológicas `[CONFIRMADO]`/`[INFERIDO]`/`[FALTANTE]`/`[DECLARADO]` `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `compute_coverage` | `test_seed_coverage::compute_coverage(repo_meta: Dict[str, Any], seed_meta: Dict[str, Any], repo_path: Path) -> Dict[str, Any]` | Calcula el `adn_score` ponderado (0-100%) e integra el resultado de los 6 validadores deterministas v3.0 `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `generate_report` | `test_seed_coverage::generate_report(repo_meta, hybrid_meta, master_meta, cov_hybrid, cov_master, anonymize: bool = True) -> str` | Renderiza el informe Markdown con tablas de compresión, cobertura estructural/AST y estado de `GATE-01` a `GATE-06` `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `main` | `test_seed_coverage::main() -> None` | Ejecuta el pipeline de auditoría, escribe el reporte en `--output` y finaliza con `sys.exit(0)` si todos los gates pasan o `sys.exit(1)` si fallan `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `--target-repo` | `CLI Flag (--target-repo: str, required=True)` | Ruta al repositorio objetivo que será auditado contra su carpeta `01_seed/` `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `--output` | `CLI Flag (--output: str, default="artifacts/benchmark_seed_coverage.md")` | Ruta del archivo Markdown donde se persiste el informe de benchmark `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | `--no-anonymize` | `CLI Flag (--no-anonymize: action="store_true")` | Muestra el nombre real del repositorio (`repo_path.resolve().name`) en lugar de la etiqueta anonimizada `[CONFIRMADO]` |
 
-### 5.2 Flujo principal de extremo a extremo (Generación de Seed Master)
+### 4.2 Contratos de datos y esquemas (Schemas)
+| Entidad / Artefacto | Formato / Schema | Claves Requeridas / Estructura Simbólica | Origen -> Destino | Regla de Validación |
+|---|---|---|---|---|
+| `Seed Vector Header` | XML + YAML 1.2 | `<SEED_ARCHITECTURAL_VECTOR version="3.0" contains_source_code="false">` + `seed_schema_version: "3.0"`, `repository_root: "./"` | Agente -> `./01_seed/*.md` | `check_llm_contract_headers` & `check_path_portability` `[CONFIRMADO]` |
+| `Directory Beacon` | YAML (`.context.yaml`) | `version: 1.0`, `directory: str`, `role: str`, `purpose: str`, `crawl: bool`, `read_priority: p0..p3`, `seed_reference: required\|optional` | Diseño topológico -> `24x */.context.yaml` | `check_local_tree_freshness` `[CONFIRMADO]` |
+| `Satellite Map` | JSON (`.context/tree.json`) | `version: "3.0"`, `project: "ThinkingSeed"`, `bootloader: {tier_1, tier_2}`, `nodes: Dict[str, NodeSpec]` | Estructura física -> `./.context/tree.json` | Biyección de 24 nodos en `check_local_tree_freshness` `[CONFIRMADO]` |
+| `Metrics Evaluation` | JSON (`MetricsThinking.json`) | `project_name`, `archetype: "agent-skill"`, `score_total`, `modules: M01..M10` | Auditoría `/metrics` -> `./artifacts/MetricsThinking.json` | Esquema canónico MetricsThinking™ v3.0 `[CONFIRMADO]` |
 
-```mermaid
-flowchart TD
-    Start([Usuario invoca /seedMaster]) --> Step1[1. Identificación de Proyecto y Raíz]
-    Step1 --> Step2[2. Lectura de Satélite .context/tree.json y Beacons]
-    Step2 --> Step3[3. Inspección Estática Profunda de Archivos y Código]
-    Step3 --> Step4[4. Etiquetado Epistemológico: CONFIRMADO / INFERIDO / FALTANTE]
-    Step4 --> Step5[5. Sanitización Zero-Trust de Secretos: REDACTED]
-    Step5 --> Step6[6. Renderizado de Plantilla Master ThinkingSeed]
-    Step6 --> Step7[7. Persistencia en 01_seed/seed-ThinkingSeed-master.md]
-    Step7 --> End([Notificación con Enlace y Handoff Protocol])
-```
+### 4.3 Almacenes de persistencia
+| Almacén | Tecnología | Contenido | Política de Acceso / Retención | Evidencia |
+|---|---|---|---|---|
+| `./01_seed/` | Filesystem / Git | Vectores arquitectónicos `seed-*.md` | Lectura condicional Tier 2 (`crawl: false`); versionado en Git | `./01_seed/.context.yaml` |
+| `./.context/` | Filesystem / Git | Mapa satelital `tree.json` y beacon | Lectura obligatoria Tier 1 (`prio: p0`, ~250 tokens) | `./.context/tree.json` |
+| `./artifacts/` | Filesystem / Git | Reportes `benchmark_seed_coverage.md`, `MetricsThinking.*` y planes en `./artifacts/plans/` | Actualizado por scripts de validación y auditorías | `./artifacts/benchmark_seed_coverage.md` |
+| `./data/` y `./logs/` | Filesystem local | Capas `data/raw`, `data/processed`, `data/sandbox` y `logs` | `crawl: false`; ignorados en Git y agentes | `./.gitignore`, `./.agentignore` |
 
-1. **Paso 1: Identificación de Proyecto:** El agente verifica el nombre del proyecto (`ThinkingSeed`), confirma el directorio raíz y garantiza la existencia de `01_seed/`.
-2. **Paso 2: Lectura de Satélite:** Consulta `.context/tree.json` para obtener la estructura canónica y niveles de prioridad (`p0`-`p3`).
-3. **Paso 3: Inspección Estática:** Examina manifiestos, scripts operativos, configuraciones, directivas de agentes y artefactos de métricas.
-4. **Paso 4: Etiquetado Epistemológico:** Asigna con rigor científico las etiquetas `[CONFIRMADO]`, `[INFERIDO]`, `[DECLARADO]`, `[FALTANTE]` con evidencias concretas por archivo y líneas.
-5. **Paso 5: Sanitización de Secretos:** Aplica regla estricta de sanitización reemplazando cualquier valor sensible por `<REDACTED>`.
-6. **Paso 6: Renderizado Estructurado:** Aplica el contrato exhaustivo de 21 secciones de `ThinkingSeed Master.md`.
-7. **Paso 7: Persistencia y Handshake:** Escribe el artefacto en `01_seed/seed-[nombre]-master.md` y añade el protocolo de asistencia.
-
-### 5.3 Flujos alternativos
-- **Distribución de Skills a Nuevos Proyectos:** Al ejecutar `python scripts/install_skills.py --target <ruta>`, el instalador crea `.agents/skills/`, copia las skills canónicas (`seed`, `seedMaster`), copia las reglas agnósticas (`AGENTS.md`, `GEMINI.md`, `CLAUDE.md`, `.cursorrules`, `.windsurfrules`) y crea `01_seed/` de forma no destructiva.
-- **Auditoría Cuantitativa de Cobertura:** Al ejecutar `python scripts/test_seed_coverage.py --target-repo <ruta>`, el motor calcula el porcentaje de coincidencia de directorios, módulos y dependencias, arrojando el informe formal `artifacts/benchmark_seed_coverage.md`.
-
-### 5.4 Ciclo de vida de datos y artefactos
-- **Génesis:** La memoria técnica nace durante la fase de desarrollo o auditoría de un proyecto mediante escaneo estático de código.
-- **Transformación:** Los datos crudos se sintetizan en diagramas, tablas de contratos y directivas epistemológicas.
-- **Persistencia:** Se versiona permanentemente en Git dentro de `01_seed/`.
-- **Consumo:** Se adjunta a chats externos (Gemini Web, Claude, ChatGPT, Cursor) o se consume mediante RAG/Context Injection para responder dudas complejas con 99.8% de ahorro en tokens.
-
-### 5.5 Estado, concurrencia e idempotencia
-- **Sin Estado en Memoria (Stateless):** Los generadores de seeds operan como funciones puras sobre el sistema de archivos.
-- **Idempotencia Estricta:** Múltiples ejecuciones sobre el mismo commit producen artefactos consistentes y reproducibles.
-- **Manejo Seguro de Archivos:** Las operaciones de copia en `install_skills.py` utilizan `shutil.rmtree` y `copytree` atómicos sobre destinos específicos, previniendo estados inconsistentes.
+### 4.4 Sub-Módulos Condicionales (Poda Polimórfica)
+- **4.4.1 Eventos, Colas y Mensajería Asíncrona:** No aplica; arquitectura 100% síncrona y determinista basada en sistema de archivos local `[CONFIRMADO]`.
+- **4.4.2 Migraciones y Bootstrap:** El bootstrap en repositorios externos se realiza mediante `install_skills::inject_into_project`, mientras que la sincronización topológica local se verifica de forma autónoma con `test_seed_coverage::check_local_tree_freshness` `[CONFIRMADO]`.
 
 ---
 
-## 6. CONTRATOS E INTERFACES
+## 5. CONFIGURACIÓN, ENTORNOS Y DEPENDENCIAS
 
-### 6.1 APIs y CLI expuestos
-
-| Herramienta / Entry Point | Comando / Trigger | Parámetros | Salida Esperada | Implementación |
-|---|---|---|---|---|
-| Instalador Multi-Agente | `python scripts/install_skills.py` | `--global-install`, `--target <ruta>` | Copia de skills y reglas | `scripts/install_skills.py:118-165` |
-| Suite de Benchmarking | `python scripts/test_seed_coverage.py` | `--target-repo <ruta>`, `--output <ruta>`, `--no-anonymize` | Reporte de benchmark | `scripts/test_seed_coverage.py:330-382` |
-| Slash Command Híbrido | `/seed` | Prompt del agente en chat | `01_seed/seed-[proyecto].md` | `.agents/skills/seed/SKILL.md` |
-| Slash Command Master | `/seedMaster` | Prompt del agente en chat | `01_seed/seed-[proyecto]-master.md` | `.agents/skills/seedMaster/SKILL.md` |
-
-### 6.2 APIs y servicios consumidos
-
-| Sistema | Uso | Protocolo / Canal | Configuración | Fallback |
-|---|---|---|---|---|
-| Google Antigravity / Gemini IDE | Ejecución de skills y lectura de reglas | Skills protocol (`SKILL.md`), `GEMINI.md` | Local workspace | `AGENTS.md` |
-| Anthropic Claude Code | Automatización y prompts estructurados | Directivas de proyecto | `CLAUDE.md` en raíz | Manual prompt |
-| Cursor / Windsurf IDE | Contexto continuo de edición de código | Rules files (`.cursorrules`, `.windsurfrules`) | Raíz del workspace | Prompt chat |
-| GitHub Copilot | Completado inteligente guiado por arquitectura | Markdown instructions | `.github/copilot-instructions.md` | Inline comments |
-| FWengine.py (iDirectory) | Sincronización satelital y de telemetría | CLI commands (`map`, `beacon`) | `.context/tree.json` | Inspección estática |
-
-### 6.3 Eventos, colas y mensajería
-- No aplica mensajería asíncrona ni colas transaccionales; la arquitectura es 100% orientada a archivos y contratos declarativos en disco.
-
-### 6.4 Contratos de datos
-
-| Entidad / Dataset | Propietario | Schema | Clave | Origen | Destino | Calidad / Validación |
+### 5.1 Variables de configuración y constantes operativas
+| Variable / Constante | Tipo | Requerida | Default Seguro | Efecto Operativo | Sensible | Evidencia |
 |---|---|---|---|---|---|---|
-| YAML Seed Header | ThinkingSeed Core | YAML 1.2 | `seed_schema_version` | Inspección del repo | `01_seed/*.md` | Versionado estricto `"2.0"` |
-| Directory Beacon | iDirectory Engine | YAML 1.2 | `role`, `priority` | Estructura de carpetas | `.context.yaml` (24x) | Validado vía `FWengine.py` |
-| Satellite Map | iDirectory Engine | JSON Schema | `nodes`, `bootloader` | Árbol físico de archivos | `.context/tree.json` | Valida frescura y drift |
-| Metrics Evaluation | MetricsThinking™ | JSON Schema | `score_total`, `modules` | Evidencia física | `artifacts/MetricsThinking.json` | 31 criterios de evaluación |
-| Coverage Benchmark | ThinkingSeed Bench | Markdown / Text | Dimensiones de métrica | Repo vs Seed | `artifacts/benchmark_seed_coverage.md` | Fórmulas matemáticas de compresión |
+| `BASE_DIR` | `Path` | Sí | `Path(__file__).resolve().parent.parent` | Raíz relativa del repositorio para localizar plantillas y skills | No | `./scripts/install_skills.py:25` |
+| `SKILLS_SRC_DIR` | `Path` | Sí | `BASE_DIR / ".agents" / "skills"` | Directorio origen de las skills `seed` y `seedMaster` | No | `./scripts/install_skills.py:26` |
+| `IGNORE_DIRS` | `Set[str]` | Sí | `{'.git', '.venv', 'venv', '__pycache__', ...}` | Exclusión de directorios ruidosos durante el escaneo AST y topológico | No | `./scripts/test_seed_coverage.py:23-26` |
+| `FORBIDDEN_CODE_LANGS` | `Set[str]` | Sí | `{'python', 'powershell', 'bash', 'json', ...}` | Lista negra de lenguajes de implementación bloqueados en el Seed | No | `./scripts/test_seed_coverage.py:28-32` |
+| `CREDENTIAL_PLACEHOLDER` | `str` | Sí | `<REDACTED>` | Marcador obligatorio para sanitización de secretos bajo política Zero-Trust | Sí (`<REDACTED>`) | `./ThinkingSeed Master.md`, `./scripts/test_seed_coverage.py:130` |
 
-### 6.5 Compatibilidad y versionado
-- **Schema de Seed:** Versión `2.0` canónica (retrocompatible con parsers de `1.0`).
-- **Arquitectura iDirectory:** Versión `3.0` (adopción de beacons `.context.yaml` y satélite `.context/tree.json`).
-- **Formato de Rutas:** Estandarización obligatoria de rutas relativas con separador Unix (`/`) para compatibilidad cruzada Windows/Linux/macOS.
+### 5.2 Precedencia de configuración y matriz de entornos
+- **Orden de precedencia:** Argumentos CLI (`--target-repo`, `--output`, `--no-anonymize`, `--global-install`, `--target`) > Reglas locales de workspace (`./AGENTS.md`, `./GEMINI.md`, `./CLAUDE.md`, `./.cursorrules`, `./.windsurfrules`, `./.github/copilot-instructions.md`) > Configuración global del usuario (`~/.gemini/config/skills/`, `~/.claude/CLAUDE.md`) > Plantillas canónicas (`./ThinkingSeed Master.md`, `./ThinkingSeed_MasterHybrid.md`).
+- **Matriz de entornos:**
+  - *Desarrollo Local (`./`):* Ejecución directa de `./scripts/test_seed_coverage.py` auditando `./01_seed/seed-ThinkingSeed-master.md`.
+  - *Instalación Global Workstation (`--global-install`):* Despliega skills en el perfil del usuario para disponibilidad transversal en Antigravity y Claude Code.
+  - *Inyección en Proyecto Destino (`--target`):* Instala `.agents/skills/`, reglas multi-agente y carpeta `01_seed/` en un repositorio externo.
 
----
+### 5.3 Dependencias internas, externas y resolución de motores externos
+- **Grafo de dependencias internas:**
+  - `./.agents/skills/seedMaster/SKILL.md` implementa el contrato de `./ThinkingSeed Master.md`.
+  - `./.agents/skills/seed/SKILL.md` implementa el contrato de `./ThinkingSeed_MasterHybrid.md`.
+  - `./scripts/install_skills.py` distribuye `./.agents/skills/` y los 6 archivos de reglas raíz.
+  - `./scripts/test_seed_coverage.py` audita `./01_seed/*.md` contra `./.context/tree.json`, los 24 beacons `.context.yaml` y el AST de `./scripts/*.py`.
+- **Resolución explícita de dependencias y motores externos:**
 
-## 7. PERSISTENCIA Y DATOS
-
-### 7.1 Almacenes
-
-| Almacén | Tecnología | Contenido | Acceso | Retención | Evidencia |
-|---|---|---|---|---|---|
-| Seeds de Proyecto | Sistema de archivos / Git | ADN arquitectónico en Markdown | Lectura/Escritura por agentes | Permanente (versionado Git) | `01_seed/` |
-| Mapa Satelital | JSON en disco | Topología de nodos y bootloader | Lectura rápida (~250 tokens) | Sincronizado por `FWengine.py` | `.context/tree.json` |
-| Beacons de Contexto | YAML en disco | Metadatos y rol de cada carpeta | Lectura local por agentes | Permanente (24 beacons) | `*/.context.yaml` |
-| Tiering de Datos Local | File System local | Datos Bronze, Silver, Gold y Sandbox | Excluido de Git y AI | Ignorado en repositorios remotos | `data/` (`.gitignore:1-12`) |
-| Artefactos de Auditoría | Markdown / JSON | Informes de madurez y benchmarks | Lectura/Escritura por analistas | Permanente | `artifacts/` |
-
-### 7.2 Modelo de datos
-- **Estructura del Header YAML en Seeds:** Define identificador de proyecto, tipo de repositorio, timestamp ISO-8601, hash de commit Git, estado del árbol de trabajo (`clean`/`dirty`), modo de análisis y limitaciones reconocidas.
-- **Estructura del Beacon `.context.yaml`:**
-  ```yaml
-  role: string          # e.g., dna, core_engine, ops_automation
-  priority: string      # p0, p1, p2, p3
-  crawl: boolean        # Permiso de indexación profunda
-  seed_ref: string      # required | optional
-  key_files: list[str]  # Archivos críticos del módulo
-  ```
-
-### 7.3 Migraciones y bootstrap
-- **Bootstrap de un Nuevo Repositorio:**
-  1. Ejecución de `python scripts/install_skills.py --target /ruta/proyecto`.
-  2. Inicialización de estructura iDirectory v3.0 con `FWengine.py init`.
-  3. Sincronización de beacons con `FWengine.py beacon --sync`.
-  4. Generación del mapa satelital con `FWengine.py map --sync`.
-  5. Extracción del ADN inicial invocando `/seed` o `/seedMaster`.
-
-### 7.4 Calidad, gobernanza y linaje
-- **Gobernanza iDirectory:** Toda carpeta productiva cuenta con su propio `.context.yaml` que especifica si los agentes deben indexar (`crawl: true`) o proteger la ventana de contexto (`crawl: false`).
-- **Detección de Drift:** La frescura del mapa satelital se valida formalmente mediante `FWengine.py map --check-freshness`.
-
----
-
-## 8. CONFIGURACIÓN Y ENTORNOS
-
-### 8.1 Variables de configuración
-
-| Parámetro / Variable | Tipo | Requerida | Default | Entornos | Efecto | Sensible | Evidencia |
-|---|---|---:|---|---|---|---:|---|
-| `BASE_DIR` | Path | Sí | `Path(__file__).parent.parent` | Local | Raíz lógica del proyecto | No | `scripts/install_skills.py:25` |
-| `SKILLS_SRC_DIR` | Path | Sí | `BASE_DIR / ".agents/skills"` | Local | Origen para copiado de skills | No | `scripts/install_skills.py:26` |
-| `gemini_skills_dir` | Path | No | `~/.gemini/config/skills` | Global | Directorio de skills Antigravity | No | `scripts/install_skills.py:35` |
-| `claude_dir` | Path | No | `~/.claude` | Global | Directorio global Claude Code | No | `scripts/install_skills.py:54` |
-| `seed_schema_version` | String | Sí | `"2.0"` | Todos | Versión de especificación del seed | No | `ThinkingSeed Master.md:167` |
-
-### 8.2 Precedencia de configuración
-1. **Argumentos de Línea de Comandos (CLI):** Parámetros explícitos pasados a `install_skills.py` o `test_seed_coverage.py`.
-2. **Archivos de Reglas Locales del Workspace:** `.cursorrules`, `.windsurfrules`, `GEMINI.md`, `CLAUDE.md`, `AGENTS.md`.
-3. **Configuraciones Globales del Usuario:** `~/.gemini/config/skills/`, `~/.claude/CLAUDE.md`.
-4. **Valores por Defecto Canónicos:** Especificados en las plantillas maestras.
-
-### 8.3 Matriz de entornos
-
-| Aspecto | Local IDE (Desarrollo) | Global OS (Workstation) | Destino Inyectado (Target Repo) |
-|---|---|---|---|
-| Ubicación Skills | `.agents/skills/` | `~/.gemini/config/skills/` | `<target>/.agents/skills/` |
-| Reglas Agentes | Archivos en raíz del workspace | `~/.claude/CLAUDE.md` | Archivos copiados en raíz del target |
-| Salida de Seeds | `01_seed/seed-ThinkingSeed-master.md` | N/A (por proyecto) | `<target>/01_seed/seed-[target].md` |
-| Validación Cobertura | `scripts/test_seed_coverage.py` | N/A | Ejecutable apuntando con `--target-repo` |
-
-### 8.4 Feature flags
-- `--no-anonymize` (`scripts/test_seed_coverage.py`): Desactiva la anonimización de nombres de repositorios en los reportes de benchmark generados.
-- `--global-install` (`scripts/install_skills.py`): Activa la instalación transversal en las carpetas de configuración del sistema operativo.
-
----
-
-## 9. DEPENDENCIAS
-
-### 9.1 Dependencias internas
-- `.agents/skills/seed/SKILL.md` depende de `ThinkingSeed_MasterHybrid.md`.
-- `.agents/skills/seedMaster/SKILL.md` depende de `ThinkingSeed Master.md`.
-- `scripts/install_skills.py` lee `.agents/skills/` y copia plantillas y reglas raíz.
-- `scripts/test_seed_coverage.py` audita la raíz contra `01_seed/` y genera `artifacts/benchmark_seed_coverage.md`.
-
-### 9.2 Dependencias externas críticas
-
-| Dependencia | Versión | Uso | Criticidad | Riesgo / Restricción | Alternativa |
-|---|---:|---|---|---|---|
-| Python Standard Library | $\ge 3.10$ | Rutas (`pathlib`), archivos (`shutil`), CLI (`argparse`) | Alta | Runtimes legados $< 3.10$ | Módulos compatibles |
-| Git CLI | $\ge 2.30$ | Extracción de metadatos (branch, commit hash) | Media | Git no inicializado (retorna `"unknown"`) | Fallback estático |
-| FWengine.py | v3.0 | Gobernanza satelital iDirectory | Media | Motor no disponible en repos externos | Inspección estática nativa |
-
-### 9.3 Gestión y reproducibilidad
-- Cero dependencias en `requirements.txt` o `pyproject.toml` para el núcleo del framework.
-- El proyecto garantiza ejecución inmediata ("zero install overhead") en cualquier entorno donde exista Python estándar instalado.
-- Licencia de código abierto permisiva **MIT License** formalizada en `LICENSE`.
-
-### 9.4 Proyectos hermanos y ecosistema
-- **Gravity HyperScale Thinking:** Meta-framework arquitectónico y de pensamiento escalable de datos y cognitive engineering.
-- **iDirectory Architecture v3.0:** Sistema canónico de organización de proyectos de ingeniería de datos y software.
-- **GraphNodes (Gravity):** Grafo semántico y malla de conocimiento de repositorios interconectados.
-- **MetricsThinking™ v3.0:** Auditor universal de madurez de ingeniería basado en evidencia física estricta.
-
----
-
-## 10. DESARROLLO LOCAL
-
-### 10.1 Prerrequisitos
-- **Python:** Versión 3.10 o superior (verificado con Python 3.12).
-- **Git:** Versión 2.30 o superior instalada y en el `PATH`.
-- **IDE / Agente:** Antigravity IDE, Claude Code, Cursor, Windsurf o VS Code con GitHub Copilot.
-
-### 10.2 Quick start verificable
-
-```bash
-# 1. Clonar o posicionarse en el repositorio
-cd "d:/0001 HyperScale Thinking/PROYECTOS CLOUD/iContext/ThinkingSeed"
-
-# 2. Verificar estado de Git
-git status -s -b
-
-# 3. Validar y ejecutar la suite de benchmark de cobertura
-python scripts/test_seed_coverage.py --target-repo . --no-anonymize
-
-# 4. Probar la instalación global de skills (opcional)
-python scripts/install_skills.py --global-install
-
-# 5. Generar o actualizar el ThinkingSeed Master en un chat de IA
-# Ejecutar el slash command: /seedMaster
-```
-
-### 10.3 Comandos operativos
-
-| Objetivo | Comando | Directorio | Efectos secundarios | Verificado |
+| Dependencia / Motor | Versión | Naturaleza | Ubicación / Resolución | Fallback Local Autónomo |
 |---|---|---|---|---|
-| Benchmark de Cobertura | `python scripts/test_seed_coverage.py --target-repo . --no-anonymize` | Raíz | Escribe `artifacts/benchmark_seed_coverage.md` | Sí `[CONFIRMADO]` |
-| Instalación Global | `python scripts/install_skills.py --global-install` | Raíz | Actualiza `~/.gemini/` y `~/.claude/` | Sí `[CONFIRMADO]` |
-| Inyección de Skills | `python scripts/install_skills.py --target <ruta>` | Raíz | Crea `.agents/skills` y `01_seed` en destino | Sí `[CONFIRMADO]` |
-| Chequeo de Freshness | `python FWengine.py map --check-freshness` | iDirectory | Detecta si hay archivos desincronizados | Sí `[CONFIRMADO]` |
-| Sincronizar Beacons | `python FWengine.py beacon --sync` | iDirectory | Actualiza los 24 archivos `.context.yaml` | Sí `[CONFIRMADO]` |
-| Sincronizar Satélite | `python FWengine.py map --sync` | iDirectory | Reescribe `.context/tree.json` | Sí `[CONFIRMADO]` |
-
-### 10.4 Convenciones de código
-- **Estilo:** PEP 8 con indentación de 4 espacios y tipado estricto (`typing.Dict`, `List`, `Path`, `Tuple`).
-- **Separadores de Ruta:** Uso estricto de `Path` (`pathlib`) y normalización a barras Unix (`/`) para evitar incompatibilidades entre Windows y Linux.
-- **Codificación:** Tratamiento explícito de archivos en `utf-8` con `errors='ignore'` para resiliencia ante caracteres extraños.
-
-### 10.5 Guía de cambios
-- **Para modificar el estándar Master:** Editar `ThinkingSeed Master.md` asegurando mantener la compatibilidad con el esquema `2.0`.
-- **Para actualizar la skill `/seedMaster`:** Editar `.agents/skills/seedMaster/SKILL.md` y luego ejecutar `python scripts/install_skills.py --global-install` para propagar los cambios al entorno global de Antigravity.
-- **Para registrar nuevos directorios:** Crear el archivo `.context.yaml` con su rol y prioridad (`p0`-`p3`) y ejecutar `FWengine.py map --sync`.
+| Python Standard Library | $\ge 3.10$ | Runtime Core | Intérprete `python` en `PATH` (`0` paquetes externos en PyPI) | Nativo (`[INV-04]`) `[CONFIRMADO]` |
+| Git CLI | $\ge 2.30$ | Control de versiones | Binario `git` en `PATH` para `git diff` y metadatos | Modo `analysis_mode: "static"` si `.git` no está disponible `[CONFIRMADO]` |
+| `FWengine.py` | `v3.0` | Motor externo (Ecosistema `iDirectory`) | Reside en el repositorio hermano `iDirectory` (NO existe en `./`) | `./scripts/test_seed_coverage.py::check_local_tree_freshness` valida localmente beacons, `tree.json` y `all-lowercase` sin requerir `FWengine.py` `[CONFIRMADO]` |
+| `query_graph.py` | `v3.0` | Motor externo (Ecosistema `Gravity`) | Reside en el repositorio hermano `Gravity` (NO existe en `./`) | Reportes precalculados en `./artifacts/MetricsThinking.md` y `./artifacts/MetricsThinking.json` `[CONFIRMADO]` |
 
 ---
 
-## 11. TESTING Y CALIDAD
+## 6. PRUEBAS, CI/CD, DESPLIEGUE Y OPERACIÓN
 
-### 11.1 Estrategia de pruebas
+### 6.1 Estrategia de pruebas y cobertura
+| Suite / Validador | Ubicación | Qué audita / cubre | Comando simbólico de ejecución | Estado |
+|---|---|---|---|---|
+| Suite Determinista v3.0 (6 Gates) | `./scripts/test_seed_coverage.py` | Contrato XML, Zero-Code, Portabilidad, Secretos, Cobertura AST (22/22 contratos) y Frescura Satelital (24/24 nodos) | `python scripts/test_seed_coverage.py --target-repo . --no-anonymize` | Activo (100% PASS) `[CONFIRMADO]` |
+| Fixture Mínimo v3.0 | `./tests/ThinkingSeed_Mini.md` | Plantilla mínima de referencia con contenedor `<SEED_ARCHITECTURAL_VECTOR>` | Inspección estática de estructura | Activo `[CONFIRMADO]` |
+| Verificación CLI Instalador | `./scripts/install_skills.py` | Parsing de flags `--global-install` y `--target` sin errores de sintaxis | `python scripts/install_skills.py --help` | Activo `[CONFIRMADO]` |
 
-| Tipo | Ubicación | Framework | Qué cubre | Cómo ejecutar | Estado |
-|---|---|---|---|---|---|
-| Benchmark de Cobertura | `scripts/test_seed_coverage.py` | Python CLI Suite | Fidelidad de ADN, compresión y tags epistémicos | `python scripts/test_seed_coverage.py --target-repo .` | Activo `[CONFIRMADO]` |
-| Validación de Esquema Mini | `tests/ThinkingSeed_Mini.md` | Especificación canónica | Estructura mínima viable de un seed para testing | Inspección estática | Activo `[CONFIRMADO]` |
-| Auditoría Forense de Madurez | `artifacts/MetricsThinking.md` | MetricsThinking™ v3.0 | Evaluación integral de 10 módulos (M01-M10) | `python query_graph.py /metrics` | 100.0% `[CONFIRMADO]` |
-| Sincronización Satelital | `FWengine.py` | iDirectory Engine | Coherencia entre archivos físicos y `tree.json` | `python FWengine.py map --check-freshness` | Activo `[CONFIRMADO]` |
-
-### 11.2 Cobertura crítica
-- **Directorios Raíz (Top Dirs):** 16/16 cubiertos ($100.0\%$).
-- **Módulos Nivel 2:** 19/19 cubiertos ($100.0\%$).
-- **Scripts y Herramientas CLI:** 5/5 cubiertos ($100.0\%$).
-- **Archivos de Configuración:** 27/27 cubiertos ($100.0\%$).
-- **Módulos Python Críticos:** 2/2 cubiertos (`install_skills.py`, `test_seed_coverage.py`) ($100.0\%$).
-- **Score Consolidado de ADN:** **$\ge 95.0\%$** en la suite automatizada de benchmarking.
-
-### 11.3 Datos de prueba
-- Fixtures canónicos provistos en `tests/ThinkingSeed_Mini.md`.
-- Directorios sandbox aislados en `data/sandbox/` para pruebas experimentales sin riesgo de contaminación.
-
-### 11.4 Quality gates
-- **Stage-Gate MetricsThinking™:** Calificación de $100.0\%$ con 31 de 31 criterios satisfechos en el perfil `agent-skill` (`artifacts/MetricsThinking.md`).
-- **Verificación de Secretos:** Cero credenciales expuestas en el historial y árbol de trabajo.
-
----
-
-## 12. BUILD, RELEASE Y DESPLIEGUE
-
-### 12.1 Build y empaquetado
-- No se requiere compilación binaria. Los artefactos son scripts Python autónomos y archivos de especificación Markdown interpretables directamente por modelos de lenguaje e IDEs.
-
-### 12.2 CI/CD
-
+### 6.2 Quality Gates y CI/CD
+- **Gates deterministas de salida (`GATE-01` a `GATE-06`):** `scripts/test_seed_coverage.py` actúa como Quality Gate bloqueante (retorna `sys.exit(1)` ante cualquier infracción de encabezados XML, código fuente inyectado, rutas locales, secretos expuestos, cobertura AST $< 90\%$ o desincronización entre `.context.yaml` y `.context/tree.json`).
+- **Flujo de validación y despliegue:**
 ```mermaid
 flowchart LR
-    Commit[Commit en Git] --> MapCheck[Verificar Freshness Satelital]
-    MapCheck --> CoverageCheck[Ejecutar test_seed_coverage.py]
-    CoverageCheck --> MetricsCheck[Auditar MetricsThinking 100%]
-    MetricsCheck --> DeploySkills[Distribuir con install_skills.py]
+    Edit["Modificación en Repo"] --> Audit["test_seed_coverage.py (Gates 1..6)"]
+    Audit --> Report["artifacts/benchmark_seed_coverage.md"]
+    Report --> Deploy["install_skills.py (--global-install / --target)"]
 ```
 
-### 12.3 Infraestructura
-- **Local:** Estación de trabajo Windows con almacenamiento local y entorno Python 3.12.
-- **Nube (Scaffolding):** Especificaciones preparadas para Fabric PySpark, GCP Dataproc y AWS Glue en `src/cloud_jobs/`.
-
-### 12.4 Release y rollback
-- Distribución mediante Git tags y commits en la rama `master`.
-- Rollback inmediato mediante `git checkout` o `git revert` sin dependencias de bases de datos externas.
+### 6.3 Sub-Módulo Condicional: Observabilidad, Health Checks y Runbooks
+- **Señales de consola:** Los scripts emiten trazas deterministas prefijadas con `[*]`, `[+]`, `[OK]`, `[FAIL]`, `[ALERTA]` y `[ERROR]`.
+- **Health check autónomo:** Ejecutar `python scripts/test_seed_coverage.py --target-repo . --no-anonymize` verifica simultáneamente la salud del Seed y la sincronización de los 24 beacons `.context.yaml` contra `./.context/tree.json`.
 
 ---
 
-## 13. OPERACIÓN Y OBSERVABILIDAD
+## 7. SUPERFICIE DE TENSIÓN, CONTRADICCIONES Y MODOS DE FALLA (AUDITORÍA ADVERSARIAL)
 
-### 13.1 Logging
-- Formato de consola unificado en scripts operativos con prefijos semánticos:
-  - `[*]`: Mensaje de progreso / inicio de análisis.
-  - `[+]`: Éxito / artefacto generado.
-  - `[!]`: Advertencia / drift detectado.
-  - `[ERROR]`: Fallo crítico con detalle de causa.
-  - `[OK]`: Validación completada.
+> **Auditoría Forense Adversarial:** A diferencia de reportes complacientes, esta sección expone las tensiones estructurales reales, efectos secundarios destructivos y supuestos del repositorio actual.
 
-### 13.2 Métricas, trazas y alertas
+### 7.1 Fronteras de confianza (Trust Boundaries) y entradas no confiables
+- **Sobrescritura incondicional en `inject_into_project(target_path: Path)`:** Al ejecutar `./scripts/install_skills.py --target <ruta>`, las líneas 88-108 copian con `shutil.copy2` los archivos `GEMINI.md`, `CLAUDE.md`, `.cursorrules`, `.windsurfrules`, `AGENTS.md` y `.github/copilot-instructions.md` directamente sobre la raíz del proyecto destino **sin crear backup ni fusionar reglas preexistentes** `[CONFIRMADO]`. Si el repositorio destino ya tenía reglas propias personalizadas, serán sobrescritas silenciosamente.
+- **Eliminación recursiva de directorios de skills (`shutil.rmtree`):** En `install_antigravity_global()` (línea 43) e `inject_into_project()` (línea 83), el script ejecuta `shutil.rmtree(dest)` antes de `shutil.copytree(src, dest)`. Si el usuario modificó localmente una skill en el destino, perderá los cambios no versionados `[CONFIRMADO]`.
 
-| Señal | Instrumentación | Destino | Umbral / Criterio | Acción |
+### 7.2 Acoplamientos implícitos, concurrencia y estado mutable compartido
+- **Acoplamiento por convención de nombres en `./01_seed/`:** `test_seed_coverage.py` (líneas 471-480) distingue entre Seed Master y Seed Híbrido iterando sobre `seed_dir.glob("seed-*.md")` y verificando `s.name.endswith("-master.md")`. Si existen múltiples archivos `seed-*.md` de distintos proyectos dentro de `./01_seed/`, las variables `master_seed` y `hybrid_seed` quedarán asignadas únicamente al último elemento iterado sin emitir advertencia `[CONFIRMADO]`.
+- **Bloqueos de descriptores en Windows NTFS:** Las operaciones `shutil.rmtree` en `install_skills.py` o renombrados de carpetas pueden lanzar `PermissionError` en sistemas Windows si un IDE o terminal mantiene un handle abierto sobre los archivos dentro de `.agents/skills/` `[CONFIRMADO]`.
+
+### 7.3 Contradicciones detectadas y corregidas (Declarado vs Observado en Árbol Físico)
+Durante la auditoría v3.0 se detectaron y corrigieron las siguientes contradicciones reales entre la documentación y el árbol físico (que deben vigilarse para evitar regresiones):
+1. **Esquizofrenia de Plantilla (21 vs 11 secciones):** La versión anterior de `./ThinkingSeed Master.md` exigía 21 secciones mientras `./.agents/skills/seedMaster/SKILL.md` definía un esqueleto de 11 secciones (`0`-`10`). Se unificó en el esquema polimórfico v3.0 de 11 Secciones Core `[CONFIRMADO]`.
+2. **Deriva de Casing en NTFS (`Tools/` y `Readme.md`):** El árbol físico tenía `Tools/` y `Readme.md` con mayúsculas iniciales violando el invariante `all-lowercase` de iDirectory v3.0 y rompiendo enlaces a `README.md`. Fue normalizado a `./tools/` y `./README.md` `[CONFIRMADO]`.
+3. **Referencia cruzada huérfana a `seed-idirectory-master.md` y `001_Seed/`:** `./.context/tree.json`, `./01_seed/.context.yaml` y `./02_foundation/engine/engine_readme.md` referenciaban `seed-idirectory-master.md`, mientras `.cursorrules`, `.windsurfrules` y `.github/copilot-instructions.md` apuntaban a la carpeta deprecada `001_Seed/`. Todos fueron rectificados hacia `./01_seed/seed-ThinkingSeed-master.md` `[CONFIRMADO]`.
+4. **Beacons faltantes en `.agents/` y `.context/` y carpetas vacías sin rastreo en Git:** Se materializaron `./.agents/.context.yaml` y `./.context/.context.yaml` (alcanzando 26/26 nodos sincronizados en `./.context/tree.json`), y se identificaron 3 carpetas locales vacías sin archivos ni beacons (`docs/engineers_notes`, `docs/technical_specs` y `src/fabric_jobs`) ignoradas por Git `[CONFIRMADO]`.
+
+### 7.4 Dependencias externas asumidas en `PATH` o repositorios hermanos
+- **Motores satelitales `FWengine.py` y `query_graph.py`:** Documentos previos mostraban comandos invocando `FWengine.py` y `query_graph.py` como si residieran en `./`. En realidad, son herramientas externas de los repositorios hermanos `iDirectory` y `Gravity` `[CONFIRMADO]`. Para eliminar esta dependencia fantasma, `scripts/test_seed_coverage.py::check_local_tree_freshness` implementa la verificación autónoma local sin depender de binarios externos.
+
+### 7.5 Matriz de modos de falla y recuperación
+| ID | Modo de Falla / Vector | Síntoma Observable | Causa Raíz | Detección | Mitigación / Recuperación | Riesgo Residual Real |
+|---|---|---|---|---|---|---|
+| `FAIL-01` | Sobrescritura de reglas en repositorio destino | Pérdida de directivas previas en `AGENTS.md` o `GEMINI.md` del proyecto target | `inject_into_project` ejecuta `shutil.copy2` directo sin merge | `git diff` en el repositorio destino tras ejecutar `--target` | Revisar `git status` / `git diff` en el repo destino y fusionar manualmente con `git checkout -p` | **Medio:** `install_skills.py` aún no implementa modo `--merge` o `.bak` automático |
+| `FAIL-02` | Rechazo de Gate en `test_seed_coverage.py` (Exit `1`) | El script termina con código `1` y marca `FAIL` en consola | Fuga de ruta local, bloque de código prohibido, falta de tag XML o cobertura AST $< 90\%$ | `GATE-01` a `GATE-06` en `compute_coverage` | Inspeccionar el detalle impreso por el validador fallido y corregir el Seed | **Bajo:** El bloqueo determinista impide que el error pase inadvertido |
+| `FAIL-03` | Drift entre carpetas físicas y `.context/tree.json` | `GATE-06 (check_local_tree_freshness)` reporta `missing_in_tree` o `uppercase_dirs` | Creación de nueva carpeta o `.context.yaml` sin actualizar `.context/tree.json` | Ejecución de `test_seed_coverage.py` | Añadir el nodo correspondiente en `./.context/tree.json` respetando `all-lowercase` | **Bajo:** Detectado localmente sin requerir `FWengine.py` |
+| `FAIL-04` | Colisión de múltiples seeds en `./01_seed/` | `test_seed_coverage.py` audita un archivo inesperado | Más de un archivo `seed-*-master.md` en `./01_seed/` | Inspección de `./01_seed/` | Mantener únicamente el par canónico `seed-[proyecto].md` y `seed-[proyecto]-master.md` en `./01_seed/` | **Bajo:** En este repositorio solo existe `seed-ThinkingSeed-master.md` |
+
+---
+
+## 8. SEGURIDAD, PRIVACIDAD Y GUARDRAILS
+
+### 8.1 Postura Zero-Trust y manejo de secretos
+- El repositorio no almacena ni procesa credenciales de nube ni tokens de API en tiempo de ejecución (`[INV-06]`).
+- `./.gitignore` y `./.agentignore` bloquean la indexación y el versionado de entornos virtuales (`.venv/`), datos crudos (`data/`) y trazas (`logs/`).
+- El validador `check_secret_leaks` audita deterministamente `./01_seed/*.md` contra 7 patrones de secretos reales (Google API Keys, OpenAI/Anthropic `sk-`, GitHub tokens, AWS `AKIA`, claves privadas PEM, Bearer tokens y URIs con credenciales).
+
+### 8.2 Superficie de ataque y controles implementados
+- **Zero Supply-Chain Surface (`[INV-04]`):** Al no requerir ningún paquete externo de PyPI (`pip install`), la superficie de ataque por dependencias de terceros es nula.
+- **Resolución de rutas:** `install_skills.py` normaliza la ruta objetivo mediante `target_path.resolve()` y comprueba `target.exists() and target.is_dir()` antes de escribir.
+- **Protección contra Prompt Injection / Context Poisoning:** El contenedor `<SEED_ARCHITECTURAL_VECTOR>` delimita explícitamente el artefacto como contexto arquitectónico pasivo (`contains_source_code="false"`).
+
+### 8.3 Hallazgos de seguridad (Security Findings)
+| Severidad | Vector / Hallazgo | Evidencia | Impacto Potencial | Mitigación / Estado |
 |---|---|---|---|---|
-| Drift Satelital | `FWengine.py map --check-freshness` | Consola | Archivos modificados sin sincronizar | Ejecutar `FWengine.py map --sync` |
-| Cobertura de ADN | `scripts/test_seed_coverage.py` | `artifacts/benchmark_seed_coverage.md` | Score ADN $< 90\%$ | Actualizar secciones del Seed |
-| Madurez de Ingeniería | MetricsThinking™ v3.0 | `artifacts/MetricsThinking.md` | Score Global $< 90\%$ | Revisar bottleneck en `INFERRED_ROADMAP.md` |
-
-### 13.3 Health checks y readiness
-- **Check de Freshness del Mapa:** `python FWengine.py map --check-freshness` valida si existen archivos nuevos o eliminados no reflejados en `.context/tree.json`.
-- **Check de Cobertura de Seeds:** `python scripts/test_seed_coverage.py --target-repo .` verifica la integridad del ADN.
-
-### 13.4 Runbooks y operación
-1. **Procedimiento ante Drift Satelital:**
-   ```powershell
-   python FWengine.py beacon --sync
-   python FWengine.py map --sync
-   ```
-2. **Procedimiento de Despliegue de Nuevas Skills:**
-   ```powershell
-   python scripts/install_skills.py --global-install
-   ```
+| Baja | Sobrescritura sin confirmación en `inject_into_project` | `./scripts/install_skills.py:96-108` | Puede reemplazar archivos `AGENTS.md`/`GEMINI.md` existentes en un repositorio destino | Documentado en Sección 7 (`FAIL-01`); usar en repositorios bajo control de versiones Git `[CONFIRMADO]` |
+| Informativa | Verificación de secretos en `./01_seed/` | `./scripts/test_seed_coverage.py:102-141` | Ninguna credencial expuesta detectada (`0` fugas) | Auditado automáticamente por `GATE-04 (check_secret_leaks)` `[CONFIRMADO]` |
 
 ---
 
-## 14. SEGURIDAD
+## 9. ESTADO REAL, DEUDA TÉCNICA Y DECISIONES (ADRs)
 
-### 14.1 Modelo de autenticación y autorización
-- No se gestionan sesiones de usuario ni tokens de acceso en el framework local.
-- Operación bajo permisos estándar del sistema de archivos del usuario local.
-
-### 14.2 Manejo de secretos
-- Política estricta de sanitización: Todo valor de credencial, clave de API, cadena de conexión con password o token privado se sustituye invariablemente por `<REDACTED>`.
-- `.gitignore` y `.agentignore` protegen activamente carpetas sensibles (`.venv/`, `data/`, `logs/`, `.env`).
-
-### 14.3 Superficie de ataque y controles
-- **Path Traversal Mitigation:** Uso estricto de `Path.resolve()` en `scripts/install_skills.py` para prevenir saltos de directorio indebidos.
-- **Zero Remote Execution:** El código no realiza llamadas a endpoints remotos no autenticados ni descargas dinámicas arbitrarias (`curl | bash`).
-
-### 14.4 Security Findings
-
-| Severidad | Hallazgo | Evidencia | Impacto | Remediación sugerida |
+### 9.1 Matriz Declarado vs Observado
+| Área / Módulo | Declarado en Documentación | Observado en Repositorio | Estado Real | Evidencia |
 |---|---|---|---|---|
-| Informativa | Sin credenciales detectadas | Inspección estática del 100% de archivos | Ninguno (Seguro) | Mantener política de sanitización `<REDACTED>` |
-| Baja | Archivos temporales locales | `data/raw/`, `logs/` | Potencial fuga en commits descuidados | Reforzar `.gitignore` y `.agentignore` `[CONFIRMADO]` |
+| Especificación ThinkingSeed v3.0 | Esquema polimórfico 11 secciones + XML Vector + Zero-Code | Implementado en plantillas maestras y fixture mini | Completo `[CONFIRMADO]` | `./ThinkingSeed Master.md`, `./ThinkingSeed_MasterHybrid.md`, `./tests/ThinkingSeed_Mini.md` |
+| Skills y Reglas Multi-Agente | Delta-Seeding, extracción AST y auditoría adversarial | Sincronizado en las 2 skills y 6 archivos de reglas | Completo `[CONFIRMADO]` | `./.agents/skills/seedMaster/SKILL.md`, `./AGENTS.md`, `./GEMINI.md`, `./CLAUDE.md` |
+| Validador Determinista v3.0 | 6 validadores AST/Regex con código de salida `0`/`1` | Implementado con 100% Python Standard Library | Completo `[CONFIRMADO]` | `./scripts/test_seed_coverage.py` |
+| Topología iDirectory v3.0 | 24 carpetas con `.context.yaml` en `all-lowercase` | 24 beacons físicos alineados 1:1 con `./.context/tree.json` | Completo `[CONFIRMADO]` | `./.context/tree.json`, `./tools/.context.yaml`, `./.agents/.context.yaml` |
+| Módulos Productivos en `./src/` | Pipelines cloud, backend core, dashboards y datos sintéticos | Carpetas contienen únicamente su beacon `.context.yaml` | Scaffolding `[FALTANTE]` | `./src/cloud_jobs/.context.yaml`, `./src/core/.context.yaml`, `./src/dashboards/.context.yaml`, `./src/data_generation/.context.yaml` |
+| Suite de Tests Unitarios (`unittest`) | Pruebas unitarias en `./tests/` | `./tests/` contiene el fixture `ThinkingSeed_Mini.md` y `.context.yaml`, sin archivos `test_*.py` | Parcial `[FALTANTE]` | `./tests/.context.yaml`, `./tests/ThinkingSeed_Mini.md` |
 
----
+### 9.2 Trabajo pendiente (`[FALTANTE]`) y deuda técnica priorizada
+| ID | Prioridad | Componente / Deuda o Pendiente | Impacto | Criterio de Cierre Verificable |
+|---|---|---|---|---|
+| `DEBT-01` | P2 | Modo no destructivo (`--backup` o `--merge`) en `./scripts/install_skills.py::inject_into_project` | Evita sobrescribir reglas preexistentes en repositorios destino (`FAIL-01`) | Nuevo flag `--backup` en `install_skills.py` que preserve archivos previos antes de copiar |
+| `DEBT-02` | P2 | Suite `tests/test_validators.py` con `unittest` para los 6 validadores de `test_seed_coverage.py` | Añade pruebas unitarias aisladas sobre casos positivos/negativos de cada validador | Ejecución de `python -m unittest discover -s tests` pasando al 100% |
+| `DEBT-03` | P3 | Ejemplos de referencia en `./src/` o `./schemas/` | Los directorios `./src/*` y `./schemas/` operan hoy solo como estructura canónica iDirectory | Incorporar contratos JSON Schema en `./schemas/` si el framework se expande |
 
-## 15. ESTADO REAL DEL PROYECTO
-
-### 15.1 Matriz de implementación
-
-| Área | Declarado | Observado | Estado real | Evidencia | Próximo paso |
+### 9.3 Registro de Decisiones Arquitectónicas (`[ADR-XXX]`)
+| ID | Decisión Arquitectónica | Motivo / Problema | Alternativa Descartada | Consecuencia / Trade-off | Estado / Evidencia |
 |---|---|---|---|---|---|
-| Especificación Master Seed | Plantilla canónica de auditoría | 21 secciones completas | Completo `[CONFIRMADO]` | `ThinkingSeed Master.md` | Mantener actualizada |
-| Especificación Hybrid Seed | Plantilla canónica ágil | Estructura concisa de ADN | Completo `[CONFIRMADO]` | `ThinkingSeed_MasterHybrid.md` | Mantener actualizada |
-| Instalador Universal | Distribución multi-agente | Soporte Gemini, Claude, Cursor, Copilot | Completo `[CONFIRMADO]` | `scripts/install_skills.py` | Añadir nuevos agentes si surgen |
-| Benchmark de Cobertura | Suite de medición cuantitativa | Código Python resiliente | Completo `[CONFIRMADO]` | `scripts/test_seed_coverage.py` | Integrar en CI/CD |
-| Gobernanza iDirectory | 24 beacons y mapa satelital | Beacons activos y tree.json sincronizado | Completo `[CONFIRMADO]` | `.context/tree.json` | Ejecutar freshness checks periódicos |
-| Scaffolding Cloud Jobs | Soporte pipelines multi-cloud | Estructura de carpetas sin jobs productivos | Estructural `[FALTANTE]` | `src/cloud_jobs/` | Desarrollar jobs de ejemplo (PySpark) |
+| `ADR-001` | Ubicación canónica exclusiva en `./01_seed/` y topología `all-lowercase` | Erradicar colisiones de casing en NTFS/APFS y referencias legacy a `001_Seed/` | Permitir `001_Seed/` o `Tools/` con mayúsculas | Portabilidad total entre Windows, Linux y macOS | Aceptada `[CONFIRMADO]` — `./AGENTS.md`, `./.context/tree.json` |
+| `ADR-002` | Contenedor `<SEED_ARCHITECTURAL_VECTOR>` e invariante Zero Source Code (`v3.0`) | Comentarios HTML eran ignorados por chats externos y bloques de código disparaban modo autocompletado | Mantener comentarios HTML `<!-- ... -->` y ejemplos de código en el Seed | Reducción drástica de tokens y reconocimiento inmediato como vector arquitectónico | Aceptada `[CONFIRMADO]` — `./ThinkingSeed Master.md` |
+| `ADR-003` | Consolidación Polimórfica en 11 Secciones Core (`0` a `10`) + Sección 7 Adversarial | Las 21 secciones estáticas inducían redundancia narrativa y sesgo de autocomplacencia | Conservar 21 secciones estáticas con tablas `"No aplica"` | Máxima densidad de información y detección proactiva de bugs/tensiones | Aceptada `[CONFIRMADO]` — `./ThinkingSeed Master.md` |
+| `ADR-004` | Validación AST/Regex 100% Standard Library en `./scripts/test_seed_coverage.py` | El validador anterior solo medía coincidencias léxicas superficiales de nombres de archivos | Usar librerías externas (`pydantic`, `tree-sitter`, `pyyaml`) | Cero fricción de instalación (`[INV-04]`) y verificación semántica real vía `ast.parse()` | Aceptada `[CONFIRMADO]` — `./scripts/test_seed_coverage.py` |
 
-### 15.2 Trabajo pendiente detectado
-
-| Prioridad | Pendiente | Fuente | Dependencias | Criterio de cierre |
-|---|---|---|---|---|
-| P1 | Implementar jobs de demostración en `src/cloud_jobs/` | Arquitectura iDirectory | Scaffolding actual | Pipeline de muestra PySpark/Fabric funcional |
-| P2 | Hook pre-commit para refresco de seeds | Deuda técnica | Git hooks | Script automatizado en `.git/hooks/pre-commit` |
-| P2 | Generador de diagramas Mermaid automatizado | Mejora de tooling | Scripts de análisis | Script que emita el diagrama de componentes automáticamente |
-
-### 15.3 TODO, FIXME, HACK y código muerto
-- No se registran marcadores `TODO`, `FIXME` ni `HACK` en los scripts productivos de `scripts/`.
-- La resiliencia de `scripts/test_seed_coverage.py` fue blindada para manejar ausencias de seeds sin lanzar `KeyError`.
-
-### 15.4 Bloqueadores e incertidumbres
-- Ningún bloqueador técnico activo. El proyecto opera al $100.0\%$ de sus capacidades declaradas para la gestión y gobernanza de seeds de contexto.
-
-### 15.5 Deuda técnica
-- **Desarrollo de Cloud Jobs (`src/cloud_jobs/`):** La carpeta contiene beacons y scaffolding pero carece de scripts productivos concretos (`[FALTANTE]`). Impacto: Bajo (es un framework de documentación y arquitectura, no un backend transaccional).
+### 9.4 Incertidumbres activas y preguntas abiertas
+1. ¿Se agregará en el futuro un flag `--check-only` en `./scripts/install_skills.py` para previsualizar qué archivos de reglas serían sobrescritos en un repositorio destino antes de aplicar `--target`?
+2. ¿Se automatizará la ejecución de `python scripts/test_seed_coverage.py --target-repo . --no-anonymize` mediante un workflow de GitHub Actions en `.github/workflows/`?
 
 ---
 
-## 16. MODOS DE FALLA Y RECUPERACIÓN
+## 10. REGLAS DE MODIFICACIÓN, GLOSARIO E ÍNDICE DE EVIDENCIAS
 
-| Falla | Síntoma | Causa probable | Detección | Respuesta actual | Recuperación | Riesgo residual |
-|---|---|---|---|---|---|---|
-| Drift Satelital | `FWengine.py` reporta desactualización | Archivo nuevo o renombrado sin sincronizar mapa | `map --check-freshness` | Alerta en consola | Ejecutar `FWengine.py map --sync` | Nulo |
-| Inyección en Directorio Inválido | `install_skills.py` falla con error | Ruta destino no existe o no es carpeta | `target.is_dir() == False` | Mensaje de error claro | Proveer ruta válida existente | Nulo |
-| Ausencia de `01_seed/` | Guardado de seed falla | Primera ejecución en repo virgen | Inspección previa | `mkdir(parents=True, exist_ok=True)` | Creación automática de la carpeta | Nulo |
-| KeyError en Benchmark | Script de coverage aborta | Seed híbrido o master ausente en `01_seed/` | Excepción no manejada | Manejo seguro con `.get()` | Ejecución resiliente con valor por defecto 0 | Nulo |
-| Exposición de Secretos | Filtración de API keys en seed | Desarrollador incluyó credenciales en código | Inspección del agente | Sanitización con `<REDACTED>` | Edición del seed eliminando el secreto | Muy bajo |
+### 10.1 Reglas obligatorias para modificar el proyecto y Checklist Pre-Commit
+1. **Preservar Invariantes `[INV-01]` a `[INV-06]`:** Ningún cambio a plantillas, skills o seeds puede introducir rutas locales absolutas, enlaces con esquema de archivo local, bloques de código de implementación ni dependencias fuera de la librería estándar de Python.
+2. **Sincronización de Contratos AST:** Si se agrega o modifica una función pública, clase o flag CLI en `./scripts/*.py`, debe actualizarse su firma simbólica de 1 línea en la Sección 4.1 de este Seed.
+3. **Sincronización Topológica:** Si se crea o elimina un directorio con `.context.yaml`, debe actualizarse `./.context/tree.json` manteniendo nombres estrictamente en minúsculas (`all-lowercase`).
+- **Checklist Pre-Commit Determinista:**
+  - [ ] Ejecutar `python scripts/test_seed_coverage.py --target-repo . --no-anonymize` y verificar código de salida `0` (`6/6 GATES OK`).
+  - [ ] Ejecutar `python scripts/install_skills.py --help` y verificar salida limpia.
+  - [ ] Confirmar que `git status` no muestre archivos temporales ni secretos expuestos.
 
----
-
-## 17. DECISIONES Y EVOLUCIÓN
-
-### 17.1 Decisiones registradas
-
-| ID | Decisión | Motivo | Alternativas | Consecuencia | Estado | Evidencia |
-|---|---|---|---|---|---|---|
-| ADR-001 | Unificación canónica de carpeta en `01_seed/` | Eliminar ambigüedad entre `001_Seed`, `docs/seeds` y `01_seed` | Mantener `001_Seed` | Estandarización universal obligatoria en todos los agentes | Aceptada `[CONFIRMADO]` | `GEMINI.md:10`, `AGENTS.md:6` |
-| ADR-002 | Dualidad de workflows `/seed` y `/seedMaster` | Equilibrar agilidad diaria con auditoría profunda | Un solo comando monolítico | Ahorro masivo de tiempo en tareas cotidianas | Aceptada `[CONFIRMADO]` | `ThinkingSeed Master.md`, `ThinkingSeed_MasterHybrid.md` |
-| ADR-003 | Agnosticismo Multi-Agente sin dependencias | Garantizar interoperabilidad en Gemini, Claude, Cursor, Copilot | SDK propietario de un único vendor | Adopción inmediata sin fricción de instalación | Aceptada `[CONFIRMADO]` | `scripts/install_skills.py` |
-| ADR-004 | Gobernanza iDirectory v3.0 con Beacons y Satélite | Reducir el consumo de tokens en exploración inicial | Indexación exhaustiva de todo el repo | 95%+ de ahorro en lectura inicial de contexto | Aceptada `[CONFIRMADO]` | `.context/tree.json`, `02_foundation/engine/engine_readme.md` |
-
-### 17.2 Decisiones inferidas
-- **[INFERIDO]** Se eligió Python estándar sin dependencias externas para `scripts/install_skills.py` y `scripts/test_seed_coverage.py` para permitir que cualquier pipeline de CI/CD o contenedor mínimo ejecute las herramientas sin requerir pasos previos de `pip install`.
-- **[INFERIDO]** Se optó por mantener `data/` dentro del repositorio pero ignorado en Git para brindar una estructura estandarizada a científicos de datos sin riesgo de subir gigabytes a la nube.
-
-### 17.3 Preguntas abiertas
-1. ¿Se integrará un webhook o GitHub Action formal en repositorios corporativos para ejecutar `test_seed_coverage.py` automáticamente en cada Pull Request?
-2. ¿Se requerirá soporte para agentes adicionales como Aider o Roo Code en futuras versiones de `scripts/install_skills.py`?
-
----
-
-## 18. REGLAS PARA FUTURAS RESPUESTAS Y CAMBIOS
-
-Todo modelo de lenguaje que utilice este Seed debe cumplir las siguientes pautas:
-1. **Alineación Arquitectónica:** Proponer soluciones acordes al estándar iDirectory v3.0 y los contratos de ThinkingSeed.
-2. **Citar Rutas Exactas:** Utilizar siempre rutas relativas completas con barras Unix (e.g. `01_seed/seed-ThinkingSeed-master.md`).
-3. **Mapeo de Impacto:** Indicar con precisión los archivos a crear, modificar o eliminar.
-4. **Respeto a los Beacons:** Consultar el `.context.yaml` de una carpeta antes de alterar su contenido.
-5. **No Inventar Componentes:** Si algo está ausente, etiquetarlo como `[FALTANTE]` en lugar de asumir su existencia.
-6. **Preservar Sanitización:** Nunca incluir credenciales reales; usar `<REDACTED>`.
-7. **Idempotencia:** Garantizar que cualquier script o cambio sea seguro ante re-ejecuciones.
-
-### 18.1 Formato recomendado para responder solicitudes
-
+### 10.2 Formato recomendado para responder solicitudes técnicas
 ```markdown
 ## Entendimiento de la solicitud
-## Componentes afectados
-## Supuestos e incertidumbres
-## Solución propuesta
-## Archivos a modificar
-## Implementación
-## Pruebas y validación
-## Riesgos y rollback
-## Criterios de aceptación
+## Componentes afectados (rutas relativas ./)
+## Supuestos, riesgos de tensión (Sección 7) e incertidumbres
+## Solución propuesta y contratos simbólicos afectados
+## Implementación propuesta
+## Pruebas, validación y criterios de aceptación
 ```
 
----
-
-## 19. GLOSARIO DEL DOMINIO
-
-| Término | Definición en este proyecto | No confundir con | Evidencia |
+### 10.3 Glosario del dominio
+| Término | Definición precisa en este proyecto | No confundir con | Evidencia |
 |---|---|---|---|
-| **ThinkingSeed** | Estándar de memoria técnica y ADN arquitectónico portable para agentes | Repositorio completo de código fuente | `ThinkingSeed Master.md:5-9` |
-| **Seed Híbrido (`/seed`)** | Snapshot técnico ágil y condensado para chats comerciales | Resumen superficial de texto | `ThinkingSeed_MasterHybrid.md` |
-| **Seed Master (`/seedMaster`)** | Auditoría forense exhaustiva de 21 secciones del ADN del sistema | Volcado de código fuente crudo | `ThinkingSeed Master.md` |
-| **iDirectory v3.0** | Arquitectura de directorios estructurada con Context Engineering nativo | Jerarquía de carpetas arbitraria | `02_foundation/engine/engine_readme.md` |
-| **Beacon (`.context.yaml`)** | Archivo local que define rol, aislamiento y directivas de una carpeta | Archivo de configuración transaccional | `.context.yaml` (24x) |
-| **Satélite (`tree.json`)** | Mapa topológico ultraligero (~250 tokens) de arranque para agentes | AST o árbol de llamadas en memoria | `.context/tree.json` |
-| **MetricsThinking™** | Auditor forense universal de madurez basado en evidencia física | Herramienta de cobertura de tests estándar | `artifacts/MetricsThinking.md` |
-| **Rigor Epistemológico** | Disciplina de clasificar afirmaciones por nivel de evidencia | Estimaciones o conjeturas de IA | `ThinkingSeed Master.md:114-139` |
+| `<SEED_ARCHITECTURAL_VECTOR>` | Contenedor XML de frontera v3.0 que declara `contains_source_code="false"` y modo de auditoría adversarial | Comentario decorativo HTML | `./ThinkingSeed Master.md` |
+| **Firma Simbólica AST** | Contrato público de 1 línea (`modulo::funcion(arg: Tipo) -> Retorno \| Invariante`) extraído sin cuerpo de código | Snippet o volcado de código fuente | `./scripts/test_seed_coverage.py:144-184` |
+| **Delta-Seeding** | Flujo incremental que inspecciona `git diff <old_commit>..HEAD` antes de regenerar el Seed | Re-escaneo ciego desde cero | `./.agents/skills/seedMaster/SKILL.md` |
+| **Poda Polimórfica** | Regla que omite o resume en 1 línea los sub-módulos condicionales sin evidencia física en el repositorio | Dejar secciones vacías con `"No aplica"` | `./ThinkingSeed Master.md` |
+| **Beacon (`.context.yaml`)** | Archivo local de gobernanza que define rol, prioridad (`p0`-`p3`) y permiso `crawl` de cada directorio | Configuración de runtime de aplicación | `./01_seed/.context.yaml` |
+| **Mapa Satelital (`tree.json`)** | Índice topológico JSON ultraligero (~250 tokens) de los 24 nodos canónicos del repositorio | Árbol AST de código Python | `./.context/tree.json` |
 
----
-
-## 20. ÍNDICE DE EVIDENCIAS
-
-| Ruta | Tipo | Relevancia | Último estado observado |
+### 10.4 Índice de evidencias y cobertura del análisis
+| Ruta Relativa | Tipo de Artefacto | Relevancia Arquitectónica | Estado Observado |
 |---|---|---|---|
-| `ThinkingSeed Master.md` | Core Specification | Contrato canónico de auditoría profunda master | Vigente `[CONFIRMADO]` |
-| `ThinkingSeed_MasterHybrid.md` | Core Specification | Contrato canónico de snapshot híbrido ágil | Vigente `[CONFIRMADO]` |
-| `AGENTS.md` | Agent Directives | Directiva universal agnóstica para agentes | Vigente `[CONFIRMADO]` |
-| `GEMINI.md` | Workspace Rules | Reglas globales de workspace para Antigravity | Vigente `[CONFIRMADO]` |
-| `CLAUDE.md` | Assistant Rules | Configuración y comandos para Claude Code | Vigente `[CONFIRMADO]` |
-| `.context/tree.json` | Satellite Map | Mapa satelital topológico de arranque rápido | Vigente `[CONFIRMADO]` |
-| `scripts/install_skills.py` | Tooling Script | Instalador y distribuidor universal multi-agente | Vigente `[CONFIRMADO]` |
-| `scripts/test_seed_coverage.py` | Tooling Script | Auditoría cuantitativa de cobertura y compresión | Vigente `[CONFIRMADO]` |
-| `artifacts/MetricsThinking.md` | Forensic Audit | Auditoría forense de madurez (Score 100.0%) | Vigente `[CONFIRMADO]` |
-| `artifacts/benchmark_seed_coverage.md` | Forensic Report | Benchmark de compresión y ahorro de tokens | Vigente `[CONFIRMADO]` |
-| `artifacts/plans/active/INFERRED_ROADMAP.md` | Operational Plan | Roadmap de ejecución operacional (M01-M10) | Vigente `[CONFIRMADO]` |
-| `02_foundation/engine/engine_readme.md` | Architecture Spec | Manifiesto de gobernanza iDirectory v3.0 | Vigente `[CONFIRMADO]` |
+| `./ThinkingSeed Master.md` | Core Specification | Especificación canónica v3.0 Polimórfica + XML Vector + Zero-Code | Vigente `[CONFIRMADO]` |
+| `./ThinkingSeed_MasterHybrid.md` | Core Specification | Especificación canónica híbrida v3.0 | Vigente `[CONFIRMADO]` |
+| `./tests/ThinkingSeed_Mini.md` | Test Fixture | Plantilla mínima de validación v3.0 | Vigente `[CONFIRMADO]` |
+| `./.agents/skills/seedMaster/SKILL.md` | Agent Skill | Workflow `/seedMaster` con Delta-Seeding, AST y Auditoría Adversarial | Vigente `[CONFIRMADO]` |
+| `./.agents/skills/seed/SKILL.md` | Agent Skill | Workflow `/seed` alineado a v3.0 | Vigente `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | CLI Script | Instalador e inyector universal multi-agente | Vigente `[CONFIRMADO]` |
+| `./scripts/test_seed_coverage.py` | CLI Auditor | Suite de benchmark y 6 validadores deterministas AST/Regex | Vigente `[CONFIRMADO]` |
+| `./.context/tree.json` | Satellite Map | Mapa topológico sincronizado con los 24 beacons `.context.yaml` | Vigente `[CONFIRMADO]` |
+| `./AGENTS.md` / `./GEMINI.md` / `./CLAUDE.md` | Agent Rules | Directivas multi-agente v3.0 (junto con `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`) | Vigente `[CONFIRMADO]` |
+| `./README.md` / `./README_ES.md` | Documentation | Documentación paper-grade bilingüe sincronizada con `./tools/` | Vigente `[CONFIRMADO]` |
+| `./artifacts/benchmark_seed_coverage.md` | Audit Report | Reporte cuantitativo de compresión, cobertura AST y 6 gates | Vigente `[CONFIRMADO]` |
+| `./artifacts/MetricsThinking.md` | Forensic Report | Evaluación de madurez en 10 módulos (`MetricsThinking.json` & `INFERRED_ROADMAP.md`) | Vigente `[CONFIRMADO]` |
 
----
-
-## 21. RESUMEN DE CONFIANZA Y COBERTURA
-
-### 21.1 Cobertura del análisis
-
-| Área | Cobertura | Confianza | Motivo de limitación |
+| Área Evaluada | Cobertura | Confianza | Método de Verificación |
 |---|---|---|---|
-| Arquitectura | Alta ($100\%$) | Alta | Verificada completamente en especificaciones y directivas |
-| Ejecución | Alta ($100\%$) | Alta | Entry points probados localmente vía CLI |
-| Datos y Contratos | Alta ($100\%$) | Alta | Esquemas formales y beacons validados |
-| Testing y Benchmarking | Alta ($100\%$) | Alta | Suite `test_seed_coverage.py` ejecutada y verificada |
-| Despliegue y Distribución | Alta ($100\%$) | Alta | `install_skills.py` probado en modos interactivo y target |
-| Seguridad | Alta ($100\%$) | Alta | Cero credenciales expuestas; sanitización verificada |
-
-### 21.2 Hechos esenciales que un modelo no debe perder
-1. **La ruta canónica es invariablemente `01_seed/`:** Nunca generar seeds en la raíz o en `001_Seed/`.
-2. **Dualidad de Workflows:** `/seed` para interacción cotidiana ágil; `/seedMaster` para auditorías exhaustivas.
-3. **El Seed es ADN, no Repositorio:** El modelo no debe inventar archivos ni exigir código faltante no solicitado.
-4. **Gobernanza iDirectory v3.0:** El repositorio se gobierna por 24 beacons `.context.yaml` y el mapa satelital `.context/tree.json`.
-5. **Rigor Epistemológico:** Toda afirmación técnica debe llevar una etiqueta explícita (`[CONFIRMADO]`, `[INFERIDO]`, `[DECLARADO]`, `[FALTANTE]`).
-6. **Zero-Trust de Secretos:** Cualquier credencial o clave privada debe redactarse siempre con `<REDACTED>`.
-7. **Zero-Dependency Tooling:** Los scripts operativos usan exclusivamente la librería estándar de Python.
-8. **Ahorro Comprobado:** El estándar comprime el consumo de tokens en un $99.83\%$ manteniendo la fidelidad técnica.
-9. **Madurez Operativa:** MetricsThinking™ certifica un $100.0\%$ de cumplimiento en sus 10 módulos canónicos.
-10. **Agnosticismo de Agentes:** Compatible nativamente con Gemini, Claude, Cursor, Windsurf y Copilot.
-
-### 21.3 Principales incertidumbres
-- Ninguna incertidumbre que comprometa la arquitectura o el funcionamiento del framework. La única área en evolución es la futura materialización de pipelines de datos de muestra en `src/cloud_jobs/`.
+| Arquitectura y Topología (16 Top Dirs / 19 Sub-Dirs / 24 Beacons) | Alta ($100.0\%$) | Alta | `check_local_tree_freshness` + `analyze_repo` `[CONFIRMADO]` |
+| Contratos Simbólicos AST (22/22 símbolos y flags CLI) | Alta ($100.0\%$) | Alta | `check_ast_contract_coverage` (`ast.parse`) `[CONFIRMADO]` |
+| Portabilidad de Rutas y Cumplimiento Zero-Code | Alta ($100.0\%$) | Alta | `check_path_portability` + `check_zero_code_invariant` `[CONFIRMADO]` |
+| Seguridad Zero-Trust (`<REDACTED>`) | Alta ($100.0\%$) | Alta | `check_secret_leaks` (0 fugas detectadas) `[CONFIRMADO]` |
 
 ---
 
 ## 📌 CONTEXT HANDOFF & PROTOCOLO DE ASISTENCIA
 
 > **Mensaje de orientación para el modelo de IA receptor:**
-> "Esto es una semilla de proyecto (ThinkingSeed Master): el ADN del proyecto y no su repositorio completo. Refleja el avance real y la arquitectura del sistema hasta la fecha. Como modelo receptor, tu función es usar esta semilla como memoria técnica para:
-> 1. **Responder preguntas** sobre la arquitectura, funcionamiento, dependencias y flujos del sistema.
-> 2. **Sugerir mejoras o asistencia técnica** sobre el estado actual y áreas pendientes identificadas en la semilla.
-> 3. **Generar código o soluciones compatibles** respetando las rutas, convenciones y patrones definidos aquí, cuando el usuario te lo solicite."
+> "Esto es una semilla de proyecto (**ThinkingSeed Master v3.0**): el vector arquitectónico y ADN del proyecto (`contains_source_code="false"`), no su repositorio de código completo. Refleja el avance real, los contratos simbólicos y la superficie de tensión del sistema hasta la fecha. Como modelo receptor, tu función es usar esta semilla como memoria técnica para:
+> 1. **Responder preguntas** sobre la arquitectura, contratos simbólicos, dependencias y flujos del sistema.
+> 2. **Auditar riesgos y sugerir mejoras** evaluando activamente la Superficie de Tensión (Sección 7) y las áreas marcadas como `[FALTANTE]`.
+> 3. **Generar código o soluciones compatibles** respetando estrictamente las rutas relativas (`./`), firmas simbólicas e invariantes definidas aquí, cuando el usuario te lo solicite."
 
 ### Pautas de resolución:
 Antes de resolver una solicitud:
 1. Identifica el objetivo del usuario.
-2. Localiza los componentes afectados usando las rutas del Seed.
-3. Revisa restricciones, reglas y contratos declarados.
-4. Explicita supuestos cuando sea necesario: "Supongo que X debido a Y".
-5. Propone cambios por archivo con rutas claras y separadores Unix (`/`).
-6. Añade pruebas, riesgos y criterios de aceptación.
+2. Localiza los componentes afectados usando las rutas relativas (`./`) del Seed.
+3. Revisa restricciones (`[INV-01]` a `[INV-06]`), decisiones (`[ADR-001]` a `[ADR-004]`), contratos simbólicos (Sección 4.1) y vectores de tensión (Sección 7).
+4. Explicita supuestos cuando sea necesario: *"Supongo que X debido a Y"*.
+5. Propone cambios por archivo con rutas relativas claras y separadores Unix (`/`).
+6. Añade pruebas, riesgos de regresión y criterios de aceptación verificables.
 
 ### 🤝 Acuse de Recibo Inicial
 Si el usuario adjuntó esta semilla **sin una instrucción específica**, no intentes generar código ni completar archivos vacíos. Responde únicamente con:
-1. Un saludo confirmando que asimilaste el ADN de **ThinkingSeed** y su stack principal.
-2. Un breve resumen de 2-3 líneas sobre el objetivo y su estado actual de avance.
-3. Una frase poniéndote a disposición para resolver dudas sobre su funcionamiento o colaborar en los siguientes pasos de desarrollo.
+1. Un saludo confirmando que asimilaste el ADN arquitectónico v3.0 de **ThinkingSeed** (`<SEED_ARCHITECTURAL_VECTOR>`) y su stack basado en Python Standard Library e iDirectory v3.0.
+2. Un breve resumen de 2-3 líneas sobre el propósito del sistema, su estado actual y sus principales vectores de tensión.
+3. Una frase poniéndote a disposición para auditar, resolver dudas o colaborar en los siguientes pasos de desarrollo.
+
+</SEED_ARCHITECTURAL_VECTOR>

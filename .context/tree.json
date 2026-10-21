@@ -3,8 +3,8 @@
   "version": "3.0",
   "project": "ThinkingSeed",
   "architecture": "Gravity HyperScale Thinking",
-  "updated_at": "2026-10-21T00:04:41.382778+00:00",
-  "timestamp": 1792541081.3817794,
+  "updated_at": "2026-10-20T22:30:00.000000+00:00",
+  "timestamp": 1792546200.0,
   "bootloader": {
     "tier_1": [
       "AGENTS.md",
@@ -14,18 +14,28 @@
     "tier_2": [
       "AGENTS.md",
       ".context/tree.json",
-      "01_seed/seed-idirectory-master.md",
+      "01_seed/seed-ThinkingSeed-master.md",
       "[target_folder]/.context.yaml"
     ]
   },
   "nodes": {
+    ".agents": {
+      "role": "agent_skills",
+      "prio": "p1",
+      "crawl": true,
+      "seed_ref": "optional",
+      "key_files": [
+        "skills/seed/SKILL.md",
+        "skills/seedMaster/SKILL.md"
+      ]
+    },
     "01_seed": {
       "role": "dna",
       "prio": "p0",
       "crawl": false,
       "seed_ref": "required",
       "key_files": [
-        "seed-idirectory-master.md"
+        "seed-ThinkingSeed-master.md"
       ]
     },
     "02_foundation/engine": {

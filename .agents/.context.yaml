@@ -1,0 +1,13 @@
+version: 1.0
+directory: .agents
+role: agent_skills
+purpose: "Definición de skills multi-agente locales (/seed y /seedMaster) bajo el estándar ThinkingSeed v3.0."
+relevance: high
+crawl: true
+read_priority: p1
+seed_reference: optional
+token_density: medium
+instructions: "Skills ejecutables del proyecto; mantener sincronizadas con ThinkingSeed Master.md y ThinkingSeed_MasterHybrid.md."
+key_files:
+  - "skills/seed/SKILL.md"
+  - "skills/seedMaster/SKILL.md"

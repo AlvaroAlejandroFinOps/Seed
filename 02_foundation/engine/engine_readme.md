@@ -3,14 +3,15 @@
 Framework modular gobernado por **Gravity HyperScale Thinking** con Context Engineering nativo.
 
 > **Protocolo de Ingesta para Agentes (Bootloader):**
-> 1. Lee `AGENTS.md` (o `GEMINI.md` / `CLAUDE.md`).
-> 2. Lee `.context/tree.json` (Mapa Topológico Satelital de ~250 tokens).
-> 3. Lee `01_seed/seed-idirectory-master.md` (ADN y Ground Truth del proyecto).
+> 1. Lee `./AGENTS.md` (o `./GEMINI.md` / `./CLAUDE.md`).
+> 2. Lee `./.context/tree.json` (Mapa Topológico Satelital de ~250 tokens).
+> 3. Lee `./01_seed/seed-ThinkingSeed-master.md` (ADN y Ground Truth del proyecto).
 > 4. Lee el `.context.yaml` del directorio objetivo antes de modificar archivos.
 
-## Manifiesto de Directorios y Roles
+## Manifiesto de Directorios y Roles (`all-lowercase` invariant)
 
-- **`01_seed/`**: Semilla de proyecto y memoria técnica (ThinkingSeed Master). ADN arquitectónico del sistema. `[Priority: p0]`
+- **`.agents/`**: Definición de skills multi-agente locales (`/seed` y `/seedMaster`) bajo el estándar ThinkingSeed v3.0. `[Priority: p1]`
+- **`01_seed/`**: Semilla de proyecto y memoria técnica (ThinkingSeed Master v3.0). ADN arquitectónico del sistema. `[Priority: p0]`
 - **`02_foundation/engine/`**: Núcleo del framework de automatización, lógica de ruteo, indexación y governance engine. `[Priority: p1]`
 - **`03_research/notebooks/`**: Notebooks de desarrollo interactivo (Jupyter/Colab/Fabric/Databricks) para análisis exploratorio (EDA). `[Priority: p2]`
 - **`03_research/prompts/`**: Estructuras de prompts para LLMs, system prompts, árboles de contexto y plantillas de inferencia. `[Priority: p1]`
@@ -20,6 +21,7 @@ Framework modular gobernado por **Gravity HyperScale Thinking** con Context Engi
 - **`src/core/`**: Lógica de negocio transversal, utilitarios de backend, clientes de servicios y módulos comunes. `[Priority: p1]`
 - **`src/dashboards/`**: Tableros de Business Intelligence y apps de visualización interactiva (Streamlit, Dash, PowerBI, Looker). `[Priority: p2]`
 - **`artifacts/plans/active/`**: Planes de capacidad activos (F-SKUs), presupuestos cloud vigentes e hitos operativos en curso. `[Priority: p1]`
+- **`artifacts/plans/metricsthinking/`**: Gobernanza y artefactos de evaluación forense MetricsThinking™ v3.0. `[Priority: p0]`
 - **`artifacts/plans/archive/`**: Histórico de planes evaluados, arquitecturas descartadas y documentación obsoleta preservada por trazabilidad. `[Priority: p3]`
 - **`docs/architecture/`**: Diagramas de arquitectura multi-cloud, topologías C4 y flujos de datos de las capas Medallion. `[Priority: p1]`
 - **`docs/specs/`**: Especificaciones técnicas detalladas, linaje de datos, contratos de esquemas y requerimientos no funcionales. `[Priority: p1]`
@@ -29,8 +31,8 @@ Framework modular gobernado por **Gravity HyperScale Thinking** con Context Engi
 - **`data/processed/`**: Datos transformados localmente (Silver/Gold) en formatos estructurados (Parquet/Delta). `[Priority: p3]`
 - **`data/sandbox/`**: Entorno aislado para experimentación de científicos de datos y arquitectos. `[Priority: p3]`
 - **`schemas/`**: Definiciones estrictas de esquemas (Avro, JSON Schema, DDL de SQL) para control de deriva de datos. `[Priority: p1]`
-- **`scripts/`**: Scripts operativos del sistema operativo (bash, powershell, make) para tareas de mantenimiento. `[Priority: p2]`
-- **`tests/`**: Suites de pruebas unitarias, integración y calidad de datos (Great Expectations / pytest). `[Priority: p1]`
-- **`tools/`**: Scripts utilitarios internos, herramientas de automatización local y linters. `[Priority: p2]`
+- **`scripts/`**: Scripts operativos del sistema operativo y herramientas CLI en Python (`install_skills.py`, `test_seed_coverage.py`). `[Priority: p2]`
+- **`tests/`**: Suites de pruebas unitarias, integración y fixtures de validación (`ThinkingSeed_Mini.md`). `[Priority: p1]`
+- **`tools/`**: Recursos gráficos de arquitectura (`Seed.png`), scripts utilitarios internos y herramientas locales. `[Priority: p2]`
 - **`logs/`**: Trazas locales de ejecución, auditorías y dumps de errores. `[Priority: p3]`
 - **`.context/`**: Directorio de telemetría, esquemas y mapas satelitales de Context Engineering de iDirectory. `[Priority: p0]`

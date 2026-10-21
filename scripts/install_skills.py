@@ -11,9 +11,9 @@ Instala las skills `/seed` y `/seedMaster` en cualquier entorno de agentes:
 - Estándar Agnóstico AGENTS.md
 
 Uso:
-    python scripts/install_skills.py            # Modo interactivo
-    python scripts/install_skills.py --global   # Instala globalmente para Antigravity y Claude
-    python scripts/install_skills.py --target /ruta/a/mi-proyecto  # Inyecta en un proyecto destino
+    python scripts/install_skills.py                   # Modo interactivo
+    python scripts/install_skills.py --global-install  # Instala globalmente para Antigravity y Claude
+    python scripts/install_skills.py --target ./ruta   # Inyecta en un proyecto destino
 """
 
 import os

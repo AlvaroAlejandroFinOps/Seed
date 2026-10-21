@@ -114,7 +114,6 @@ ThinkingSeed/
 ├── 01_seed/                         # [p0] Canonical destination for generated seed snapshots
 │   ├── .context.yaml
 │   └── seed-ThinkingSeed-master.md  # Repository technical DNA & ground truth
-├── 01_Status/                       # Progress and operational performance reports
 ├── 02_foundation/                   # [p1] Governance engine & framework foundation
 │   └── engine/
 │       ├── .context.yaml
@@ -139,7 +138,7 @@ ThinkingSeed/
 ├── tests/                           # [p1] Test suites & minimal test specifications
 │   ├── .context.yaml
 │   └── ThinkingSeed_Mini.md
-├── Tools/                           # [p2] Utility tools & architectural visual assets
+├── tools/                           # [p2] Utility tools & architectural visual assets
 ├── AGENTS.md                        # Universal agent directive specification
 ├── CLAUDE.md                        # Anthropic Claude Code integration directives
 ├── GEMINI.md                        # Google Antigravity & Gemini CLI directives

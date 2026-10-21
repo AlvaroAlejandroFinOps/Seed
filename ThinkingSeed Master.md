@@ -1,798 +1,389 @@
 # Gravity HyperScale Thinking
 
-## MASTER THINKING SEED
+## MASTER THINKING SEED SPECIFICATION (v3.0)
 
-> **Propósito:** generar un snapshot técnico autosuficiente, verificable y portable de un proyecto de software. El resultado debe permitir que un modelo conversacional externo, sin acceso al IDE ni al repositorio, comprenda la intención, arquitectura, implementación, operación, estado actual, restricciones y brechas del proyecto con el menor nivel posible de ambigüedad.
-
----
-
-# A. CONTRATO DE GENERACIÓN DEL SEED
-
-## A.1 Rol del agente que genera esta semilla
-
-Actúa como **Arquitecto de Software, Analista de Repositorios y Documentador Técnico**. Inspecciona el repositorio completo y construye una representación fiel de su estado actual.
-
-No te limites a describir nombres de archivos. Debes inferir responsabilidades a partir de evidencia concreta, conectar componentes, identificar flujos y distinguir con claridad entre:
-
-- hechos observados en el repositorio;
-- inferencias razonables;
-- convenciones esperadas, pero no verificadas;
-- funcionalidades incompletas o ausentes;
-- deuda técnica, riesgos y contradicciones.
-
-## A.2 Objetivo de salida
-
-Genera un único documento Markdown llamado `Seed.md`, apto para adjuntarse a cualquier modelo conversacional. Debe poder responder, como mínimo:
-
-1. ¿Qué hace el proyecto y para quién?
-2. ¿Qué problema resuelve y cuál es su alcance?
-3. ¿Cómo está organizado el repositorio?
-4. ¿Cómo se ejecuta el sistema de extremo a extremo?
-5. ¿Qué componentes, datos, APIs y dependencias intervienen?
-6. ¿Cómo se configura, prueba, despliega, monitorea y recupera?
-7. ¿Cuál es el estado real de implementación?
-8. ¿Qué falta, qué está bloqueado y qué riesgos existen?
-9. ¿Qué reglas debe respetar cualquier cambio futuro?
-10. ¿En qué archivos concretos debería trabajar un modelo para resolver una tarea?
-
-## A.3 Alcance de inspección
-
-Inspecciona recursivamente todo el proyecto, incluyendo cuando existan:
-
-- código fuente;
-- archivos de configuración;
-- manifiestos y lockfiles;
-- documentación y ADR;
-- pruebas, fixtures y mocks;
-- migraciones, esquemas y contratos;
-- notebooks, SQL y pipelines;
-- infraestructura como código;
-- workflows de CI/CD;
-- contenedores y scripts operativos;
-- archivos de ejemplo de variables de entorno;
-- artefactos de compilación relevantes;
-- referencias a servicios externos;
-- comentarios `TODO`, `FIXME`, `HACK`, `XXX` y código deshabilitado;
-- historial Git, ramas o diffs disponibles, si el entorno permite consultarlos.
-
-### Exclusiones predeterminadas
-
-No leas ni reproduzcas contenido de directorios o archivos generados, binarios o de alto volumen, salvo que sean arquitectónicamente relevantes:
-
-```text
-.git/
-node_modules/
-.venv/
-venv/
-__pycache__/
-dist/
-build/
-target/
-coverage/
-.next/
-.cache/
-*.pyc
-*.class
-*.dll
-*.so
-*.dylib
-*.exe
-*.bin
-*.zip
-*.tar
-*.gz
-```
-
-Puedes registrar su existencia, tamaño o finalidad sin volcar su contenido.
-
-## A.4 Seguridad y privacidad
-
-Antes de escribir el Seed:
-
-- **No expongas secretos**, tokens, contraseñas, claves privadas, connection strings completas ni datos personales.
-- Sustituye valores sensibles por `<REDACTED>`.
-- Conserva únicamente el **nombre de la variable**, su finalidad, obligatoriedad y formato esperado.
-- Señala en `Security Findings` cualquier secreto potencialmente versionado, sin reproducirlo.
-- No copies datasets completos, payloads sensibles ni información propietaria innecesaria.
-- No ejecutes código, scripts, migraciones ni comandos destructivos solo para inspeccionar el proyecto.
-
-## A.5 Método obligatorio de análisis
-
-Sigue este orden:
-
-1. Identifica raíz, tipo de repositorio y subproyectos.
-2. Lee documentación y manifiestos principales.
-3. Construye el árbol estructural excluyendo ruido.
-4. Localiza entry points y flujos de ejecución.
-5. Identifica configuración, contratos, persistencia e integraciones.
-6. Revisa pruebas, automatización, despliegue y observabilidad.
-7. Busca trabajo pendiente, inconsistencias y componentes huérfanos.
-8. Contrasta documentación declarada contra implementación observada.
-9. Genera el Seed con referencias a rutas concretas.
-10. Realiza una verificación final de cobertura, seguridad y coherencia.
-
-## A.6 Reglas de evidencia y honestidad epistemológica
-
-Cada afirmación importante debe incluir una de estas etiquetas:
-
-- **[CONFIRMADO]**: observado directamente en código o configuración.
-- **[INFERIDO]**: deducido de varias señales, pero no declarado explícitamente.
-- **[DECLARADO]**: aparece en documentación, aunque puede no coincidir con el código.
-- **[NO VERIFICADO]**: requiere ejecución, acceso externo o información ausente.
-- **[FALTANTE]**: componente esperado que no existe o no fue encontrado.
-
-Para decisiones, flujos y hallazgos relevantes, agrega evidencia con rutas:
-
-```text
-Evidencia: src/api/main.py:42-88; config/settings.yaml; README.md#ejecucion
-```
-
-Si no puedes obtener números de línea, cita al menos la ruta y el símbolo, sección o clave correspondiente.
-
-### Reglas contra alucinaciones
-
-- No inventes archivos, endpoints, tablas, variables, comandos ni comportamientos.
-- No presentes como funcional algo que solo está documentado o es un stub.
-- Si hay contradicciones, registra ambas versiones y señala cuál prevalece en la implementación.
-- Si una conclusión depende de ejecutar el sistema, márcala como **[NO VERIFICADO]**.
-- Usa `No encontrado` en vez de completar vacíos con supuestos.
-
-## A.7 Política de profundidad y presupuesto
-
-Prioriza información estructural y accionable. Evita copiar archivos completos.
-
-- Resume archivos rutinarios.
-- Describe en mayor profundidad entry points, orquestadores, contratos, modelos, configuración, seguridad y componentes críticos.
-- Incluye fragmentos de código únicamente cuando sean indispensables y limítalos a 10-20 líneas.
-- Para repositorios grandes, documenta primero todos los módulos a nivel funcional y profundiza en el camino crítico.
-- Si el documento supera un tamaño razonable, conserva el resumen ejecutivo y divide detalles en anexos dentro del mismo archivo.
+> **Propósito:** Generar un vector arquitectónico autosuficiente, verificable, determinista y portable de un proyecto de software (`01_seed/seed-[proyecto]-master.md`). El resultado permite que cualquier modelo de lenguaje o agente autónomo (Claude, GPT, Gemini, Cursor, Windsurf, Copilot), sin acceso al IDE ni al repositorio completo, comprenda la intención, arquitectura, contratos simbólicos, operación, estado real, superficie de tensión, contradicciones y modos de falla del sistema con cero ambigüedad y 99%+ de ahorro de tokens.
 
 ---
 
-# B. FORMATO OBLIGATORIO DEL SEED GENERADO
+# A. CONTRATO DE GENERACIÓN DEL SEED (v3.0)
 
-<!-- ============================================================================== -->
-<!-- THINKINGSEED: ADN DEL PROYECTO (CONTEXTO PASIVO PARA MODELOS DE LENGUAJE)     -->
-<!-- ============================================================================== -->
-> [!NOTE]
-> ### 🧬 DEFINICIÓN Y ROL DE ESTE DOCUMENTO
-> 1. **¿Qué es este archivo?:** Este documento es una **Semilla de Proyecto (ThinkingSeed Master)**: representa el **ADN arquitectónico, técnico y estructural exhaustivo** del sistema. **NO es el repositorio completo de código fuente**, sino su mapa genético y memoria técnica profunda extraída directamente del entorno de desarrollo.
-> 2. **Estado de Avance (Work in Progress):** Este documento refleja el **estado actual del desarrollo**. No garantiza que el proyecto esté concluido al 100%; puede representar un prototipo, un MVP o un sistema en evolución continua. La ausencia de código completo en ciertos archivos o módulos es **deliberada por diseño** para optimizar ventana de contexto o refleja áreas aún en desarrollo.
-> 3. **Modo de Operación:** Trata este documento como **contexto pasivo de referencia técnica (Ground Truth)**. No asumas que el archivo está defectuoso ni intentes reescribirlo por tu cuenta.
-<!-- ============================================================================== -->
+## A.1 Rol del agente generador
+Actúa como **Lead Systems Architect, Principal Context Engineer y Auditor Forense de Software**. Inspecciona el repositorio y construye una representación fiel y adversarial de su estado real.
 
-## 0. IDENTIDAD Y METADATOS
+No te limites a listar nombres de archivos ni caigas en autocomplacencia. Debes conectar componentes, extraer firmas simbólicas de contratos, auditar tensiones arquitectónicas y distinguir con rigor entre:
+- hechos observados directamente en código o manifiestos (`[CONFIRMADO]`);
+- inferencias lógicas sustentadas en señales estructurales (`[INFERIDO]`);
+- afirmaciones presentes en documentación pero no contrastadas o divergentes del código (`[DECLARADO]`);
+- comportamientos que requieren ejecución en vivo o credenciales externas (`[NO VERIFICADO]`);
+- funcionalidades, archivos o validaciones esperadas que están ausentes (`[FALTANTE]`).
+
+## A.2 Invariantes de Ingeniería v3.0 (Cumplimiento Estricto)
+
+1. **Contrato de Frontera XML (`<SEED_ARCHITECTURAL_VECTOR>`):**
+   Todo Seed generado DEBE abrir y cerrar con la etiqueta XML de directiva de sistema:
+   `<SEED_ARCHITECTURAL_VECTOR version="3.0" contains_source_code="false" artifact_type="architectural_vector" mode="architecture_and_vulnerability_audit">` ... `</SEED_ARCHITECTURAL_VECTOR>`.
+   Esto evita que preprocesadores de chats externos ignoren los comentarios HTML o traten el Seed como un repositorio de código truncado.
+2. **Invariante "Zero Source Code / Symbolic Contracts Only":**
+   Queda **estrictamente prohibido** incluir bloques de código fuente de implementación (`.py`, `.ps1`, `.sh`, `.rs`, `.go`, `.sql`, `.json`, `.yaml` literales) mayores a 5 líneas dentro del Seed.
+   - **Únicos bloques cercados permitidos:**
+     * El bloque `yaml` de metadatos en la Sección `0`.
+     * El bloque `text` del árbol de directorios en la Sección `2`.
+     * Los diagramas `mermaid` en las Secciones `2`, `3` y `6`.
+     * El bloque `markdown` de plantilla de respuesta en la Sección `10`.
+   - Todo módulo, script, clase, función o CLI se documenta exclusivamente mediante **Firmas Simbólicas AST de 1 línea**:
+     `ruta/modulo.py::funcion(arg: Tipo) -> Retorno | Invariante / Efecto / Excepciones`.
+3. **Invariante "Zero Local Absolute Paths & Zero File-Scheme URIs":**
+   Queda **estrictamente prohibido** incluir rutas absolutas del sistema anfitrión (unidades locales `C` o `D`, `/Users/`, `/home/`) o enlaces con esquema `file` de triple barra en cualquier parte del Seed.
+   - El campo `repository_root` en la Sección `0` debe ser siempre `"./"`.
+   - Toda referencia a archivos debe usar rutas relativas limpias con separador Unix (`./ruta/archivo.ext` o `ruta/archivo.ext`).
+4. **Poda Polimórfica en las 11 Secciones Core (`0` a `10`):**
+   El Seed se estructura en **11 Secciones Core obligatorias (`0` a `10`)** que consolidan las 21 dimensiones analíticas clásicas. Los **Sub-Módulos Condicionales** (marcados como `[CONDICIONAL]`) solo se despliegan si existe evidencia física en el repositorio; si no aplican, se omiten o se declaran en una sola línea concisa sin tablas vacías de `"No aplica"`.
+5. **Regla DRY Intra-Seed (Cero Redundancia):**
+   Cada archivo, contrato, restricción (`[INV-XX]`) o decisión arquitectónica (`[ADR-XXX]`) se define exhaustivamente una sola vez y se referencia por su identificador en secciones posteriores.
+6. **Política Zero-Trust de Seguridad (`<REDACTED>`):**
+   Jamás expongas secretos, API keys, tokens, certificados privados ni cadenas de conexión con credenciales. Sustituye cualquier valor sensible por `<REDACTED>` y reporta la ubicación del hallazgo en la Sección `8`.
+
+## A.3 Método Obligatorio de Inspección (Delta-Seeding + AST)
+
+1. **Delta-Seeding Incremental (si existe Seed previo):**
+   - Leer `git_commit` del archivo existente en `./01_seed/seed-[proyecto]-master.md`.
+   - Ejecutar `git diff --name-status <old_commit>..HEAD` para identificar archivos mutados y combinar con la lectura del mapa satelital `./.context/tree.json` y beacons `.context.yaml`.
+2. **Inspección Estructural y Extracción Simbólica AST:**
+   - Recorrer los módulos productivos, scripts y esquemas excluyendo ruido (`.git/`, `.venv/`, `venv/`, `node_modules/`, `__pycache__/`, `dist/`, `build/`, `.pytest_cache/`, `.mypy_cache/`, `.ruff_cache/`).
+   - Extraer funciones públicas, clases, dataclasses y flags CLI (`argparse`, `typer`, `click`) como firmas simbólicas de 1 línea.
+3. **Auditoría Adversarial de Superficie de Tensión:**
+   - Cruzar la documentación y directivas (`AGENTS.md`, `GEMINI.md`, `CLAUDE.md`, `README.md`) contra el árbol físico real buscando contradicciones, violaciones de casing (`all-lowercase`), dependencias fantasma invocadas en comandos pero ausentes en el repo, condiciones de carrera y riesgos de sobrescritura.
+
+---
+
+# B. FORMATO OBLIGATORIO DEL SEED MASTER v3.0
+
+<SEED_ARCHITECTURAL_VECTOR version="3.0" contains_source_code="false" artifact_type="architectural_vector" mode="architecture_and_vulnerability_audit">
+
+# THINKING SEED MASTER: <Nombre del Proyecto>
+
+> **[DIRECTIVA DE SISTEMA PARA MODELOS DE IA RECEPTORES — CLAUDE / GPT / GEMINI / AGENTES]:**
+> 1. **Naturaleza del Artefacto:** Este documento es un **Vector Arquitectónico y Memoria Técnica (ThinkingSeed Master v3.0)** con `contains_source_code="false"`. **NO es el repositorio de código fuente completo** ni un volcado truncado. La ausencia de bloques de código de implementación es una **invariante deliberada de ingeniería** para maximizar la densidad semántica y preservar más del 99% de tu ventana de contexto.
+> 2. **Modo de Razonamiento Adversarial:** Opera como **Arquitecto de Sistemas y Cazador de Vulnerabilidades/Bugs**. No te dejes llevar por sesgos de autocomplacencia: utiliza las firmas simbólicas (Sección 4) y la superficie de tensión (Sección 7) para detectar condiciones de carrera, acoplamientos frágiles, violaciones de contratos y casos borde antes de proponer cambios.
+> 3. **Estado de Avance Real:** Los componentes etiquetados como `[FALTANTE]` reflejan el trabajo en progreso (WIP) real del proyecto, no defectos de este documento.
+
+## Seed Changelog
+- `<YYYY-MM-DD>`: `<Resumen conciso de cambios respecto al commit anterior, actualizaciones de contratos o auditoría>`
+
+---
+
+## 0. IDENTIDAD, METADATOS Y CONTRATO DEL RECEPTOR
 
 ```yaml
-seed_schema_version: "2.0"
+seed_schema_version: "3.0"
 project_name: "<nombre>"
 repository_name: "<nombre>"
-project_type: "<monolith|modular-monolith|microservices|library|data-platform|ml-system|frontend|mobile|infra|mixed|unknown>"
+project_type: "<monolith|modular-monolith|modular-framework|microservices|library|data-platform|ml-system|frontend|infra|mixed>"
 repository_mode: "<single-project|monorepo|multi-root>"
 generated_at: "<ISO-8601 con zona horaria>"
-generated_by: "<agente/modelo si está disponible>"
-repository_root: "<ruta lógica, no sensible>"
+generated_by: "<agente/modelo>"
+repository_root: "./"
 git_branch: "<rama o unknown>"
 git_commit: "<hash corto o unknown>"
 working_tree_state: "<clean|dirty|unknown>"
-analysis_mode: "<static|static+git|static+validated>"
+analysis_mode: "<static|static+git|static+git+validated>"
 coverage_level: "<high|medium|low>"
 known_analysis_limits:
-  - "<limitación>"
+  - "<limitación verificada>"
 ```
 
 ### 0.1 Instrucciones para el modelo receptor
-
-Al recibir este Seed:
-
-1. **ADN vs Repositorio:** Reconoce este documento como la memoria técnica y el ADN del proyecto, no como el repositorio completo ni como una prueba de ejecución.
-2. **Contexto Pasivo:** No generes código no solicitado ni reclames por archivos ausentes; espera instrucciones específicas del usuario o utilízalo como contexto pasivo para responder preguntas sobre el funcionamiento del sistema.
-3. **Estado de Avance:** Considera que las secciones incompletas o componentes marcados como `[FALTANTE]` representan el avance real del proyecto y oportunidades de asistencia, no errores del documento.
-4. **Evidencia:** Respeta las etiquetas de evidencia y no transformes inferencias en hechos.
-5. **Rutas:** Antes de proponer cambios, identifica módulos y archivos afectados citando sus rutas exactas relativas al repositorio.
-6. **Contratos:** Conserva arquitectura, convenciones, contratos y restricciones declaradas.
-7. **Preguntas Dirigidas:** No inventes componentes ausentes. Formula preguntas solo cuando la incertidumbre impida una respuesta segura.
-8. **Seguridad:** No reveles ni solicites secretos. Usa placeholders (`<REDACTED>`).
-9. **Impacto:** Evalúa impactos laterales en pruebas, configuración, datos, seguridad, observabilidad y despliegue.
-10. **Asistencia:** Distingue entre solución inmediata, deuda técnica y recomendación futura.
+1. **ADN vs Repositorio:** Reconoce este documento como la memoria técnica y el ADN del proyecto (`contains_source_code="false"`), no como el repositorio completo ni como una prueba de ejecución en vivo.
+2. **Contexto Pasivo y Quirúrgico:** No generes código no solicitado ni reclames por archivos ausentes; espera instrucciones específicas del usuario o utilízalo como Ground Truth para responder consultas técnicas.
+3. **Estado de Avance:** Considera que los elementos marcados como `[FALTANTE]` representan el avance real del proyecto y oportunidades de asistencia, no errores del documento.
+4. **Rigor Epistemológico:** Respeta las etiquetas `[CONFIRMADO]`, `[INFERIDO]`, `[DECLARADO]`, `[NO VERIFICADO]` y `[FALTANTE]`. No conviertas inferencias en hechos.
+5. **Portabilidad de Rutas:** Cita siempre rutas relativas a la raíz del repositorio (`./ruta/archivo`) usando `/` como separador. Prohibido emitir rutas locales absolutas o enlaces con esquema `file` local.
+6. **Preservación de Contratos:** Respeta las firmas simbólicas declaradas en la Sección 4 y las invariantes `[INV-XX]` antes de proponer modificaciones.
+7. **Postura Adversarial Constructiva:** Revisa siempre la Sección 7 (Superficie de Tensión) para anticipar regresiones, bloqueos de I/O o impactos laterales.
+8. **Seguridad Zero-Trust:** Nunca reveles, inventes ni solicites secretos reales; utiliza siempre el marcador `<REDACTED>`.
 
 ---
 
-## 1. RESUMEN EJECUTIVO
+## 1. RESUMEN EJECUTIVO Y ALCANCE
 
 ### 1.1 Proyecto en una frase
+`<Qué construye, para quién, mediante qué arquitectura y con qué resultado verificable>` `[CONFIRMADO]`
 
-`<Qué construye, para quién y con qué resultado>`
+### 1.2 Objetivos principales y problema que resuelve
+- **[CONFIRMADO]** `<Objetivo 1 y problema específico que erradica>` — *Evidencia:* `<ruta:líneas>`
+- **[CONFIRMADO]** `<Objetivo 2>` — *Evidencia:* `<ruta:líneas>`
 
-### 1.2 Objetivo principal
+### 1.3 Alcance y límites del sistema
+- **Dentro del alcance (`In-Scope`):** `<Capacidades implementadas y verificadas>`
+- **Fuera del alcance (`Out-of-Scope`):** `<Límites explícitos y responsabilidades delegadas>`
 
-- **[ETIQUETA]** `<objetivo>`
-- Evidencia: `<rutas>`
+### 1.4 Principios de diseño e invariantes no negociables
+- **`[INV-01]`** `<Nombre de invariante>`: `<Descripción técnica verificable>` `[CONFIRMADO]`
+- **`[INV-02]`** `<Nombre de invariante>`: `<Descripción técnica verificable>` `[CONFIRMADO]`
 
-### 1.3 Problema que resuelve
-
-Describe situación inicial, usuarios o sistemas afectados, resultado esperado y límites del problema.
-
-### 1.4 Alcance
-
-**Incluye:**
-- `<capacidad>`
-
-**No incluye / fuera de alcance:**
-- `<capacidad>`
-
-### 1.5 Estado actual resumido
-
-- **Fase:** `<idea|prototipo|MVP|beta|producción|mantenimiento|migración|unknown>`
-- **Operatividad estimada:** `<funcional|parcial|bloqueada|no verificada>`
-- **Foco actual:** `<objetivo del ciclo actual>`
-- **Mayor brecha:** `<brecha>`
-- **Mayor riesgo:** `<riesgo>`
-
-### 1.6 Capacidades principales
-
-| Capacidad | Estado | Implementación principal | Evidencia |
-|---|---|---|---|
-| `<capacidad>` | `<completa|parcial|stub|planificada|desconocida>` | `<ruta/componente>` | `<ruta>` |
+### 1.5 Capacidades principales y criterios de éxito
+| Capacidad | Estado | Componente / Entry Point | Métrica / Criterio de Éxito | Evidencia |
+|---|---|---|---|---|
+| `<capacidad>` | `<Completa|Parcial|Stub|Faltante>` `[ETIQUETA]` | `<ruta>` | `<métrica cuantitativa o gate>` | `<ruta>` |
 
 ---
 
-## 2. MANIFIESTO Y PRINCIPIOS DE DISEÑO
+## 2. ARQUITECTURA, TOPOLOGÍA Y FRONTERAS MODULARES
 
-### 2.1 Principios arquitectónicos
+### 2.1 Patrón arquitectónico y vista general
+`<Descripción del estilo arquitectónico, capas, bounded contexts y modelo de ingesta de contexto>` `[CONFIRMADO]`
 
-Enumera decisiones que estructuran el proyecto, por ejemplo: desacoplamiento, idempotencia, event-driven, configuración externa, zero trust, separación de dominios o reproducibilidad.
-
-### 2.2 Restricciones no negociables
-
-- restricciones técnicas;
-- compatibilidad;
-- latencia, volumen o costo;
-- residencia o clasificación de datos;
-- requisitos de seguridad;
-- limitaciones de proveedor;
-- decisiones explícitamente descartadas.
-
-### 2.3 Criterios de éxito
-
-Incluye métricas o condiciones verificables. Si no existen, marca **[FALTANTE]**.
-
----
-
-## 3. TOPOLOGÍA DEL REPOSITORIO
-
-### 3.1 Vista general
-
-Explica si es monorepo, repositorio simple o multi-root, y cómo se separan dominios, capas o servicios.
-
-### 3.2 Árbol anotado
-
-Incluye un árbol suficientemente completo para localizar cualquier componente relevante. Anota responsabilidades; no listes ruido generado.
-
+### 2.2 Árbol estructural anotado (`all-lowercase` invariant)
 ```text
-<repo>/
-├── src/                  # Código productivo
-│   └── ...
-├── tests/                # Estrategia y tipos de pruebas
-├── config/               # Configuración no secreta
+./
+├── <carpeta>/             # [prio] Responsabilidad concisa
+│   └── <archivo>          # Rol específico del archivo
 └── ...
 ```
 
-### 3.3 Catálogo de componentes
-
+### 2.3 Catálogo de componentes y fronteras modulares
 | Componente | Tipo | Responsabilidad | Entry point | Depende de | Consumido por | Madurez |
 |---|---|---|---|---|---|---|
-| `<nombre>` | `<service|library|job|ui|pipeline|infra>` | `<responsabilidad>` | `<ruta>` | `<componentes>` | `<componentes>` | `<estado>` |
+| `<nombre>` | `<skill|cli|engine|schema|doc>` | `<responsabilidad>` | `<ruta>` | `<dependencias>` | `<consumidores>` | `<estado>` `[ETIQUETA]` |
 
-### 3.4 Carpetas o nombres ambiguos
+### 2.4 Desambiguación de carpetas y archivos críticos
+- **Diferenciaciones clave:** `<Explicación de carpetas con nombres similares o roles complementarios>`
+- **Fuentes de verdad vs Artefactos generados:** `<Distinción entre archivos editables manualmente y salidas sincronizadas por herramientas>`
 
-Explica diferencias entre carpetas similares, duplicadas, legacy o con responsabilidades poco evidentes.
-
-### 3.5 Archivos críticos
-
-| Ruta | Por qué es crítica | Qué la consume | Riesgo de cambio |
+| Ruta Crítica | Por qué es crítica | Consumidor principal | Riesgo de modificación |
 |---|---|---|---|
-| `<ruta>` | `<motivo>` | `<consumidor>` | `<alto|medio|bajo>` |
+| `<ruta>` | `<motivo>` | `<consumidor>` | `<Crítico|Alto|Medio|Bajo>` |
 
-### 3.6 Archivos generados y fuentes de verdad
-
-Distingue claramente:
-
-- archivos fuente editables;
-- artefactos generados;
-- archivos vendorizados;
-- cachés;
-- outputs de ejecución;
-- archivos que no deben editarse manualmente.
+### 2.5 Stack tecnológico
+| Capa | Tecnología | Versión | Finalidad | Fuente de verificación |
+|---|---|---|---|---|
+| `<Runtime/Core/Format>` | `<tecnología>` | `<versión>` | `<finalidad>` | `<ruta>` |
 
 ---
 
-## 4. ARQUITECTURA DEL SISTEMA
+## 3. FLUJOS DE EJECUCIÓN, ENTRY POINTS Y CICLO DE VIDA
 
-### 4.1 Patrón arquitectónico
+### 3.1 Entry points registrados
+| Escenario / Operación | Entry point | Trigger / Comando simbólico | Salida / Efecto en disco | Evidencia |
+|---|---|---|---|---|
+| `<escenario>` | `<ruta::símbolo>` | `<comando o evento>` | `<artefacto o mutación>` | `<ruta:líneas>` |
 
-Describe patrón global, capas, bounded contexts, componentes y fronteras de responsabilidad.
-
-### 4.2 Diagrama de contexto
-
+### 3.2 Flujo principal de extremo a extremo (Grafo de Ejecución)
 ```mermaid
 flowchart LR
-    User[Usuario o sistema] --> Project[Proyecto]
-    Project --> External[Dependencia externa]
+    A["Input / Trigger"] --> B["Componente Core"]
+    B --> C["Validación / Gate"]
+    C --> D["Artefacto Persistido"]
 ```
+- **Secuencia algorítmica:** `<Pasos numerados concisos indicando input, transformación, persistencia y manejo de error por etapa>`
 
-### 4.3 Diagrama de componentes
-
-Incluye únicamente relaciones verificadas y marca las inferidas en etiquetas o notas.
-
-### 4.4 Stack tecnológico
-
-| Capa | Tecnología | Versión | Finalidad | Fuente de versión |
-|---|---|---:|---|---|
-| `<backend>` | `<tecnología>` | `<versión o rango>` | `<uso>` | `<manifest/lockfile>` |
-
-### 4.5 Fronteras y acoplamientos
-
-Describe interfaces internas, dependencias circulares, accesos cruzados y zonas de alto acoplamiento.
+### 3.3 Ciclo de vida de datos/artefactos, concurrencia e idempotencia
+- **Génesis, transformación y persistencia:** `<Ciclo completo de los artefactos>`
+- **Estado, concurrencia e idempotencia:** `<Garantías stateless/stateful, comportamiento ante re-ejecución y manejo de escrituras en disco>`
 
 ---
 
-## 5. FLUJOS DE EJECUCIÓN
+## 4. CONTRATOS SIMBÓLICOS, MODELO DE DATOS Y PERSISTENCIA
 
-### 5.1 Entry points
+> **Nota de Invariante `[INV-02]`:** Prohibido volcar código fuente. Todo contrato público se expresa como firma simbólica tipada de 1 línea.
 
-| Escenario | Entry point | Comando o trigger | Resultado |
+### 4.1 Tabla de Firmas Simbólicas AST y Contratos CLI
+| Ruta del Módulo | Símbolo Público / CLI Flag | Firma Simbólica Tipada (1 línea) | Invariante / Efecto / Excepciones |
 |---|---|---|---|
-| `<API>` | `<ruta:símbolo>` | `<comando/evento>` | `<salida>` |
+| `<ruta.py>` | `<funcion_o_clase>` | `modulo::simbolo(arg: Tipo) -> Retorno` | `<Invariante, mutación en disco o código de salida>` `[CONFIRMADO]` |
+| `<ruta.py>` | `<--flag-cli>` | `CLI Flag (--flag: tipo, default=X)` | `<Efecto exacto sobre el flujo de ejecución>` `[CONFIRMADO]` |
 
-### 5.2 Flujo principal de extremo a extremo
-
-Incluye pasos numerados y un diagrama Mermaid. Para cada paso indica:
-
-- componente ejecutor;
-- input y output;
-- transformación o regla;
-- persistencia;
-- error esperado y manejo;
-- evidencia.
-
-### 5.3 Flujos alternativos
-
-Documenta trabajos batch, workers, tareas programadas, webhooks, CLI, reintentos y rutas de fallback.
-
-### 5.4 Ciclo de vida de datos y artefactos
-
-Especifica dónde nacen, se validan, transforman, almacenan, publican, versionan y eliminan los datos.
-
-### 5.5 Estado, concurrencia e idempotencia
-
-Explica manejo de estado, transacciones, locks, deduplicación, reentrancia y garantías de entrega.
-
----
-
-## 6. CONTRATOS E INTERFACES
-
-### 6.1 APIs expuestas
-
-| Método/Tipo | Ruta o tópico | Auth | Request | Response | Errores | Implementación |
-|---|---|---|---|---|---|---|
-| `<GET>` | `</v1/...>` | `<método>` | `<schema>` | `<schema>` | `<códigos>` | `<ruta>` |
-
-### 6.2 APIs y servicios consumidos
-
-| Sistema | Uso | Protocolo/SDK | Configuración | Timeout/Retry | Fallback |
-|---|---|---|---|---|---|
-| `<servicio>` | `<uso>` | `<tipo>` | `<env var>` | `<política>` | `<conducta>` |
-
-### 6.3 Eventos, colas y mensajería
-
-Documenta productores, consumidores, tópicos, schemas, ordering, delivery semantics y dead-letter queues.
-
-### 6.4 Contratos de datos
-
-| Entidad/Dataset | Propietario | Schema | Clave | Origen | Destino | Calidad/Validación |
-|---|---|---|---|---|---|---|
-| `<nombre>` | `<owner>` | `<ruta>` | `<clave>` | `<origen>` | `<destino>` | `<reglas>` |
-
-### 6.5 Compatibilidad y versionado
-
-Describe versionado de APIs, schemas, migraciones y criterios de backward compatibility.
-
----
-
-## 7. PERSISTENCIA Y DATOS
-
-### 7.1 Almacenes
-
-| Almacén | Tecnología | Contenido | Acceso | Retención | Evidencia |
-|---|---|---|---|---|---|
-| `<nombre>` | `<DB/object store>` | `<datos>` | `<repositorio/cliente>` | `<política>` | `<ruta>` |
-
-### 7.2 Modelo de datos
-
-Resume entidades, relaciones, claves, índices, particiones y restricciones relevantes.
-
-### 7.3 Migraciones y bootstrap
-
-Indica herramienta, ubicación, orden, reversibilidad, seed data y procedimiento de inicialización.
-
-### 7.4 Calidad, gobernanza y linaje
-
-Documenta validaciones, ownership, clasificación, catálogo, lineage, PII y controles de acceso si aplican.
-
----
-
-## 8. CONFIGURACIÓN Y ENTORNOS
-
-### 8.1 Variables de configuración
-
-Nunca incluyas valores secretos.
-
-| Variable | Tipo | Requerida | Default seguro | Entornos | Efecto | Validación | Sensible |
-|---|---|---:|---|---|---|---|---:|
-| `<NAME>` | `<string>` | `<sí/no>` | `<valor o ninguno>` | `<dev/test/prod>` | `<efecto>` | `<regla>` | `<sí/no>` |
-
-### 8.2 Precedencia de configuración
-
-Describe orden efectivo, por ejemplo: argumentos CLI > variables de entorno > archivo > defaults.
-
-### 8.3 Matriz de entornos
-
-| Aspecto | Local | Testing | Staging | Producción |
+### 4.2 Contratos de datos y esquemas (Schemas)
+| Entidad / Artefacto | Formato / Schema | Claves Requeridas / Estructura Simbólica | Origen -> Destino | Regla de Validación |
 |---|---|---|---|---|
-| `<datos>` | `<config>` | `<config>` | `<config>` | `<config>` |
+| `<nombre>` | `<YAML/JSON/MD>` | `<claves y tipos en 1 línea>` | `<origen -> destino>` | `<validador>` |
 
-### 8.4 Feature flags
-
-Registra nombre, finalidad, estado por defecto, dependencias y estrategia de retiro.
-
----
-
-## 9. DEPENDENCIAS
-
-### 9.1 Dependencias internas
-
-Incluye grafo o lista de módulos y dirección de dependencia.
-
-### 9.2 Dependencias externas críticas
-
-| Dependencia | Versión | Uso | Criticidad | Riesgo/Restricción | Alternativa |
-|---|---:|---|---|---|---|
-| `<paquete/servicio>` | `<versión>` | `<uso>` | `<alta/media/baja>` | `<riesgo>` | `<alternativa>` |
-
-### 9.3 Gestión y reproducibilidad
-
-Describe lockfiles, registries, pinning, actualización, licencias, vulnerabilidades conocidas y artefactos privados.
-
-### 9.4 Proyectos hermanos y ecosistema
-
-Señala repositorios, librerías, pipelines o plataformas relacionadas. No inventes relaciones no verificadas.
-
----
-
-## 10. DESARROLLO LOCAL
-
-### 10.1 Prerrequisitos
-
-Lista runtimes, versiones, herramientas, accesos y servicios requeridos.
-
-### 10.2 Quick start verificable
-
-```bash
-# Comandos mínimos y no destructivos encontrados en el repositorio
-<instalación>
-<configuración>
-<ejecución>
-```
-
-Marca los comandos como **[NO VERIFICADO]** si no fueron ejecutados.
-
-### 10.3 Comandos operativos
-
-| Objetivo | Comando | Directorio | Efectos secundarios | Verificado |
+### 4.3 Almacenes de persistencia
+| Almacén | Tecnología | Contenido | Política de Acceso / Retención | Evidencia |
 |---|---|---|---|---|
-| `<test>` | `<comando>` | `<ruta>` | `<efecto>` | `<sí/no>` |
+| `<nombre>` | `<Filesystem/Git/DB>` | `<contenido>` | `<lectura/escritura/gitignore>` | `<ruta>` |
 
-### 10.4 Convenciones de código
-
-Incluye estilo, linting, tipado, nombres, estructura, manejo de errores, logging, commits y branching si están definidos.
-
-### 10.5 Guía de cambios
-
-Explica dónde agregar una nueva feature, endpoint, entidad, pipeline, prueba y configuración sin romper las fronteras existentes.
+### 4.4 Sub-Módulos Condicionales `[CONDICIONAL: Omitir o resumir en 1 línea si no existe evidencia física]`
+- **4.4.1 Eventos, Colas y Mensajería Asíncrona:** `<Productores, tópicos, consumidores y DLQ si existen; de lo contrario declarar en 1 línea arquitectura síncrona orientada a archivos>`.
+- **4.4.2 Migraciones, Bootstrap y Linaje de Datos:** `<Secuencia de inicialización/bootstrap y control de deriva/freshness>`.
 
 ---
 
-## 11. TESTING Y CALIDAD
+## 5. CONFIGURACIÓN, ENTORNOS Y DEPENDENCIAS
 
-### 11.1 Estrategia de pruebas
+### 5.1 Variables de configuración y constantes operativas
+| Variable / Constante | Tipo | Requerida | Default Seguro | Efecto Operativo | Sensible | Evidencia |
+|---|---|---|---|---|---|---|
+| `<NOMBRE>` | `<Path/str/bool>` | `<Sí/No>` | `<valor o <REDACTED>>` | `<efecto>` | `<Sí/No>` | `<ruta:líneas>` |
 
-| Tipo | Ubicación | Framework | Qué cubre | Cómo ejecutar | Estado |
-|---|---|---|---|---|---|
-| `<unit>` | `<ruta>` | `<tool>` | `<cobertura>` | `<comando>` | `<activo/parcial/ausente>` |
+### 5.2 Precedencia de configuración y matriz de entornos
+- **Orden de precedencia:** `<Ej: Flags CLI > Reglas locales de workspace > Configuración global de usuario > Defaults en plantilla>`
+- **Matriz de entornos:** `<Comportamiento diferenciado entre Desarrollo Local, Instalación Global OS e Inyección en Target Repo>`
 
-### 11.2 Cobertura crítica
+### 5.3 Dependencias internas, externas y resolución de motores externos
+- **Grafo de dependencias internas:** `<Relaciones directas entre skills, plantillas y scripts>`
+- **Dependencias externas y motores satelitales:**
 
-Indica caminos cubiertos, no cubiertos y pruebas frágiles. No inventes porcentajes.
-
-### 11.3 Datos de prueba
-
-Describe fixtures, factories, mocks, golden files, anonimización y aislamiento.
-
-### 11.4 Quality gates
-
-Documenta lint, formato, type checking, análisis estático, coverage gates y reglas de merge.
+| Dependencia / Motor | Versión | Naturaleza | Ubicación / Resolución | Fallback Local Autónomo |
+|---|---|---|---|---|
+| `<Python Stdlib / Git / Motor externo>` | `<versión>` | `<Runtime / Binario externo>` | `<PATH / Repo hermano>` | `<Mecanismo de fallback nativo verificado>` |
 
 ---
 
-## 12. BUILD, RELEASE Y DESPLIEGUE
+## 6. PRUEBAS, CI/CD, DESPLIEGUE Y OPERACIÓN
 
-### 12.1 Build y empaquetado
+### 6.1 Estrategia de pruebas y cobertura
+| Suite / Validador | Ubicación | Qué audita / cubre | Comando simbólico de ejecución | Estado |
+|---|---|---|---|---|
+| `<nombre>` | `<ruta>` | `<cobertura AST, rutas, secretos, esquema>` | `<comando>` | `<Activo/Parcial/Faltante>` `[ETIQUETA]` |
 
-Describe inputs, outputs, herramientas, versionado y artefactos.
-
-### 12.2 CI/CD
-
+### 6.2 Quality Gates y CI/CD
+- **Gates deterministas de salida:** `<Condiciones booleanas que deben cumplirse antes de cualquier commit o release>`
+- **Pipeline de validación y distribución:**
 ```mermaid
 flowchart LR
-    Commit --> Validate --> Test --> Build --> Deploy
+    Commit["Git Commit"] --> Gate["test_seed_coverage.py (6 Gates AST/Regex)"]
+    Gate --> Sync["Sincronización Satelital tree.json"]
+    Sync --> Distribute["install_skills.py (--global-install / --target)"]
 ```
 
-Detalla triggers, jobs, gates, secretos referenciados, promociones y rollback.
-
-### 12.3 Infraestructura
-
-Documenta cloud, cuentas/proyectos lógicos, regiones, redes, cómputo, storage, identidades e IaC sin exponer identificadores sensibles.
-
-### 12.4 Release y rollback
-
-Incluye estrategia, migraciones, compatibilidad, canary/blue-green si existe y procedimiento de recuperación.
+### 6.3 Sub-Módulo Condicional: Observabilidad, Health Checks y Runbooks `[CONDICIONAL]`
+- **Convenciones de logging y señales operativas:** `<Prefijos semánticos, métricas emitidas y archivos de reporte>`
+- **Health checks y procedimientos de recuperación (Runbooks):** `<Secuencia declarativa de diagnóstico y reparación sin bloques de código redundantes>`
 
 ---
 
-## 13. OPERACIÓN Y OBSERVABILIDAD
+## 7. SUPERFICIE DE TENSIÓN, CONTRADICCIONES Y MODOS DE FALLA (AUDITORÍA ADVERSARIAL)
 
-### 13.1 Logging
+> **Propósito Adversarial:** Esta sección elimina el sesgo de autocomplacencia y expone los puntos frágiles, supuestos no verificados y vectores de falla reales donde un modelo receptor o ingeniero debe extremar precauciones.
 
-Formato, niveles, correlation IDs, destinos y política sobre datos sensibles.
+### 7.1 Fronteras de confianza (Trust Boundaries) y entradas no confiables
+- `<Análisis de argumentos CLI, rutas de usuario, archivos leídos sin validación de esquema o inyecciones potenciales de prompt/path>`
 
-### 13.2 Métricas, trazas y alertas
+### 7.2 Acoplamientos implícitos, concurrencia y estado mutable compartido
+- `<Riesgos de sobrescritura en disco, bloqueos de archivos en Windows NTFS, falta de locks atómicos o acoplamiento entre nombres de archivo y scripts>`
 
-| Señal | Instrumentación | Destino | Umbral/SLO | Acción |
+### 7.3 Contradicciones detectadas (Declarado vs Observado en Árbol Físico)
+- `<Lista explícita de divergencias entre documentación/reglas y la implementación física, o registro de divergencias recién corregidas que deben vigilarse para evitar regresión>`
+
+### 7.4 Dependencias externas asumidas en `PATH` o repositorios hermanos
+- `<Análisis de binarios o scripts invocados en documentación (ej. FWengine.py, query_graph.py, git) que pueden no existir en el entorno del consumidor y cómo opera el fallback>`
+
+### 7.5 Matriz de modos de falla y recuperación
+| ID | Modo de Falla / Vector | Síntoma Observable | Causa Raíz | Detección | Mitigación / Recuperación | Riesgo Residual Real |
+|---|---|---|---|---|---|---|
+| `FAIL-01` | `<falla>` | `<síntoma>` | `<causa>` | `<validador/señal>` | `<acción>` | `<Bajo/Medio/Alto + motivo técnico real (prohibido poner "Nulo" sin justificación)>` |
+
+---
+
+## 8. SEGURIDAD, PRIVACIDAD Y GUARDRAILS
+
+### 8.1 Postura Zero-Trust y manejo de secretos
+- `<Política de sanitización <REDACTED>, exclusiones en .gitignore/.agentignore y validación determinista anti-fugas>`
+
+### 8.2 Superficie de ataque y controles implementados
+- `<Controles contra Path Traversal, ejecución arbitraria, supply-chain (0 dependencias de terceros) y contaminación de contexto>`
+
+### 8.3 Hallazgos de seguridad (Security Findings)
+| Severidad | Vector / Hallazgo | Evidencia | Impacto Potencial | Mitigación / Estado |
 |---|---|---|---|---|
-| `<métrica>` | `<ruta/tool>` | `<plataforma>` | `<regla>` | `<respuesta>` |
-
-### 13.3 Health checks y readiness
-
-Documenta endpoints, probes, dependencias verificadas y condiciones de disponibilidad.
-
-### 13.4 Runbooks y operación
-
-Incluye procedimientos conocidos para incidentes, reprocess, limpieza, rotación, recuperación y soporte.
+| `<Crítica/Alta/Media/Baja/Info>` | `<descripción sin secretos>` | `<ruta:líneas>` | `<impacto>` | `<control aplicado>` |
 
 ---
 
-## 14. SEGURIDAD
+## 9. ESTADO REAL, DEUDA TÉCNICA Y DECISIONES (ADRs)
 
-### 14.1 Modelo de autenticación y autorización
-
-Describe identidades, roles, permisos, fronteras de confianza y service principals sin exponer secretos.
-
-### 14.2 Manejo de secretos
-
-Indica proveedor, mecanismo de inyección, rotación y archivos que solo documentan nombres de variables.
-
-### 14.3 Superficie de ataque y controles
-
-Revisa validación de entrada, CORS, SSRF, SQL injection, command execution, path traversal, deserialización, supply chain y exposición de datos según corresponda.
-
-### 14.4 Security Findings
-
-| Severidad | Hallazgo | Evidencia | Impacto | Remediación sugerida |
+### 9.1 Matriz Declarado vs Observado
+| Área / Módulo | Declarado en Documentación | Observado en Repositorio | Estado Real | Evidencia |
 |---|---|---|---|---|
-| `<crítica/alta/media/baja>` | `<sin reproducir secretos>` | `<ruta>` | `<impacto>` | `<acción>` |
+| `<área>` | `<declarado>` | `<observado>` | `<Completo / Parcial / Scaffolding [FALTANTE]>` | `<ruta>` |
 
-Aclara que el análisis estático no sustituye una auditoría de seguridad.
+### 9.2 Trabajo pendiente (`[FALTANTE]`) y deuda técnica priorizada
+| ID | Prioridad | Componente / Deuda o Pendiente | Impacto | Criterio de Cierre Verificable |
+|---|---|---|---|---|
+| `DEBT-01` | `<P0-P3>` | `<descripción>` | `<impacto>` | `<condición booleana de cierre>` |
 
----
-
-## 15. ESTADO REAL DEL PROYECTO
-
-### 15.1 Matriz de implementación
-
-| Área | Declarado | Observado | Estado real | Evidencia | Próximo paso |
+### 9.3 Registro de Decisiones Arquitectónicas (`[ADR-XXX]`)
+| ID | Decisión Arquitectónica | Motivo / Problema | Alternativa Descartada | Consecuencia / Trade-off | Estado / Evidencia |
 |---|---|---|---|---|---|
-| `<área>` | `<documentación>` | `<código>` | `<completo/parcial/stub/ausente>` | `<ruta>` | `<acción>` |
+| `ADR-001` | `<decisión>` | `<motivo>` | `<alternativa>` | `<consecuencia>` | `Aceptada [CONFIRMADO]` — `<ruta>` |
 
-### 15.2 Trabajo pendiente detectado
-
-| Prioridad | Pendiente | Fuente | Dependencias | Criterio de cierre |
-|---|---|---|---|---|
-| `<P0-P3>` | `<tarea>` | `<TODO/issue/doc/inferencia>` | `<bloqueos>` | `<resultado verificable>` |
-
-### 15.3 TODO, FIXME, HACK y código muerto
-
-Agrupa hallazgos por componente. No listes comentarios irrelevantes.
-
-### 15.4 Bloqueadores e incertidumbres
-
-Enumera accesos faltantes, dependencias externas, configuración ausente, decisiones abiertas y elementos que no pueden validarse estáticamente.
-
-### 15.5 Deuda técnica
-
-Prioriza impacto, probabilidad, costo aproximado relativo y recomendación.
+### 9.4 Incertidumbres activas y preguntas abiertas
+- `<Aspectos que dependen de evolución futura o decisiones de arquitectura pendientes>`
 
 ---
 
-## 16. MODOS DE FALLA Y RECUPERACIÓN
+## 10. REGLAS DE MODIFICACIÓN, GLOSARIO E ÍNDICE DE EVIDENCIAS
 
-| Falla | Síntoma | Causa probable | Detección | Respuesta actual | Recuperación | Riesgo residual |
-|---|---|---|---|---|---|---|
-| `<falla>` | `<síntoma>` | `<causa>` | `<señal>` | `<manejo>` | `<pasos>` | `<riesgo>` |
+### 10.1 Reglas obligatorias para modificar el proyecto y Checklist Pre-Commit
+1. `<Regla 1 alineada con invariantes [INV-XX]>`
+2. `<Regla 2>`
+- **Checklist Pre-Commit Determinista:**
+  - [ ] `<Verificación 1>`
+  - [ ] `<Verificación 2>`
 
-Incluye errores de red, datos inválidos, timeouts, rate limits, indisponibilidad, duplicados, corrupción, despliegue y migración cuando apliquen.
-
----
-
-## 17. DECISIONES Y EVOLUCIÓN
-
-### 17.1 Decisiones registradas
-
-| ID | Decisión | Motivo | Alternativas | Consecuencia | Estado | Evidencia |
-|---|---|---|---|---|---|---|
-| `<ADR-001>` | `<decisión>` | `<motivo>` | `<alternativas>` | `<trade-off>` | `<aceptada/superseded>` | `<ruta>` |
-
-### 17.2 Decisiones inferidas
-
-Registra decisiones visibles en el código, pero no documentadas explícitamente, siempre con etiqueta **[INFERIDO]**.
-
-### 17.3 Preguntas abiertas
-
-Formula preguntas concretas cuya respuesta cambiaría arquitectura, implementación o prioridad.
-
----
-
-## 18. REGLAS PARA FUTURAS RESPUESTAS Y CAMBIOS
-
-Todo modelo que use este Seed debe:
-
-1. Responder alineado con el stack y patrones existentes.
-2. Citar rutas del repositorio al justificar propuestas.
-3. Indicar archivos a crear, modificar o eliminar.
-4. Explicar impacto en contratos, datos, configuración, pruebas, seguridad y despliegue.
-5. Evitar refactors amplios si la tarea puede resolverse localmente.
-6. No introducir dependencias sin justificar compatibilidad, costo y mantenimiento.
-7. Mantener backward compatibility salvo autorización explícita.
-8. Proponer pruebas y criterios de aceptación para cada cambio.
-9. Marcar supuestos e incertidumbres.
-10. Separar claramente diagnóstico, solución recomendada y pasos de implementación.
-
-### 18.1 Formato recomendado para responder solicitudes
-
+### 10.2 Formato recomendado para responder solicitudes técnicas
 ```markdown
 ## Entendimiento de la solicitud
-## Componentes afectados
-## Supuestos e incertidumbres
-## Solución propuesta
-## Archivos a modificar
-## Implementación
-## Pruebas y validación
-## Riesgos y rollback
-## Criterios de aceptación
+## Componentes afectados (rutas relativas ./)
+## Supuestos, riesgos de tensión (Sección 7) e incertidumbres
+## Solución propuesta y contratos simbólicos afectados
+## Implementación propuesta
+## Pruebas, validación y criterios de aceptación
 ```
 
----
-
-## 19. GLOSARIO DEL DOMINIO
-
-| Término | Definición en este proyecto | No confundir con | Evidencia |
+### 10.3 Glosario del dominio
+| Término | Definición precisa en este proyecto | No confundir con | Evidencia |
 |---|---|---|---|
 | `<término>` | `<definición>` | `<distinción>` | `<ruta>` |
 
----
-
-## 20. ÍNDICE DE EVIDENCIAS
-
-Lista las fuentes principales revisadas y su relevancia.
-
-| Ruta | Tipo | Relevancia | Último estado observado |
+### 10.4 Índice de evidencias y cobertura del análisis
+| Ruta Relativa | Tipo de Artefacto | Relevancia Arquitectónica | Estado Observado |
 |---|---|---|---|
-| `<ruta>` | `<manifest/código/doc/test/config>` | `<qué demuestra>` | `<vigente/legacy/desconocido>` |
+| `<./ruta>` | `<Spec/Script/Config/Map>` | `<qué demuestra>` | `<Vigente / Scaffolding>` |
 
----
-
-## 21. RESUMEN DE CONFIANZA Y COBERTURA
-
-### 21.1 Cobertura del análisis
-
-| Área | Cobertura | Confianza | Motivo de limitación |
+| Área Evaluada | Cobertura | Confianza | Método de Verificación |
 |---|---|---|---|
-| Arquitectura | `<alta/media/baja>` | `<alta/media/baja>` | `<motivo>` |
-| Ejecución | `<...>` | `<...>` | `<...>` |
-| Datos | `<...>` | `<...>` | `<...>` |
-| Testing | `<...>` | `<...>` | `<...>` |
-| Despliegue | `<...>` | `<...>` | `<...>` |
-| Seguridad | `<...>` | `<...>` | `<...>` |
+| Arquitectura y Topología | `<Alta/Media/Baja>` | `<Alta/Media/Baja>` | `<Inspección + check_local_tree_freshness>` |
+| Contratos Simbólicos AST | `<Alta/Media/Baja>` | `<Alta/Media/Baja>` | `<ast.parse en check_ast_contract_coverage>` |
+| Portabilidad y Seguridad | `<Alta/Media/Baja>` | `<Alta/Media/Baja>` | `<Regex determinista Zero-Paths / Zero-Leaks>` |
 
-### 21.2 Hechos esenciales que un modelo no debe perder
-
-Enumera entre 5 y 15 hechos de máxima importancia para trabajar correctamente en el proyecto.
-
-### 21.3 Principales incertidumbres
-
-Enumera las incertidumbres que podrían invalidar recomendaciones futuras.
-
----
-
-# C. CONTROL DE CALIDAD ANTES DE GUARDAR
-
-Antes de escribir `Seed.md`, verifica:
-
-- [ ] El proyecto y su problema pueden explicarse sin acceso al repositorio.
-- [ ] El árbol permite localizar todos los componentes relevantes.
-- [ ] Los entry points y el flujo principal están identificados.
-- [ ] Se diferencian hechos, declaraciones, inferencias y faltantes.
-- [ ] Cada afirmación crítica tiene evidencia por ruta.
-- [ ] Se documentaron configuración, contratos, persistencia e integraciones.
-- [ ] Se comparó lo documentado con lo realmente implementado.
-- [ ] Se registraron pruebas, despliegue, observabilidad y seguridad.
-- [ ] Se identificaron brechas, bloqueadores, deuda y modos de falla.
-- [ ] No hay secretos ni datos sensibles expuestos.
-- [ ] No se inventaron comandos, archivos o funcionalidades.
-- [ ] Las instrucciones para el modelo receptor son claras.
-- [ ] Las rutas son relativas al repositorio y usan `/` como separador.
-- [ ] Los diagramas son coherentes con las descripciones.
-- [ ] El documento tiene fecha, commit y limitaciones del análisis.
-
----
-
-# D. ACTUALIZACIÓN INCREMENTAL DEL SEED
-
-Si ya existe un `Seed.md`:
-
-1. No lo sobrescribas ciegamente.
-2. Compara commit, árbol, manifiestos, contratos, entry points y configuración.
-3. Conserva información todavía vigente.
-4. Elimina o marca como obsoleta la información contradicha por el repositorio.
-5. Actualiza estados, evidencias, riesgos y cobertura.
-6. Agrega al inicio un changelog breve:
-
-```markdown
-## Seed Changelog
-- `<fecha>`: `<cambio estructural o funcional detectado>`
-- `<fecha>`: `<sección actualizada y motivo>`
-```
-
-7. Si no hay acceso a Git, indica que la comparación se hizo solo contra el contenido disponible.
-
----
-
-# E. BLOQUE FINAL PARA EL MODELO RECEPTOR
-
-```markdown
 ---
 
 ## 📌 CONTEXT HANDOFF & PROTOCOLO DE ASISTENCIA
 
 > **Mensaje de orientación para el modelo de IA receptor:**
-> "Esto es una semilla de proyecto (ThinkingSeed): el ADN del proyecto y no su repositorio completo. Refleja el avance real y la arquitectura del sistema hasta la fecha. Como modelo receptor, tu función es usar esta semilla como memoria técnica para:
-> 1. **Responder preguntas** sobre la arquitectura, funcionamiento, dependencias y flujos del sistema.
-> 2. **Sugerir mejoras o asistencia técnica** sobre el estado actual y áreas pendientes identificadas en la semilla.
-> 3. **Generar código o soluciones compatibles** respetando las rutas, convenciones y patrones definidos aquí, cuando el usuario te lo solicite."
+> "Esto es una semilla de proyecto (**ThinkingSeed Master v3.0**): el vector arquitectónico y ADN del proyecto (`contains_source_code="false"`), no su repositorio de código completo. Refleja el avance real, los contratos simbólicos y la superficie de tensión del sistema hasta la fecha. Como modelo receptor, tu función es usar esta semilla como memoria técnica para:
+> 1. **Responder preguntas** sobre la arquitectura, contratos simbólicos, dependencias y flujos del sistema.
+> 2. **Auditar riesgos y sugerir mejoras** evaluando activamente la Superficie de Tensión (Sección 7) y las áreas marcadas como `[FALTANTE]`.
+> 3. **Generar código o soluciones compatibles** respetando estrictamente las rutas relativas (`./`), firmas simbólicas e invariantes definidas aquí, cuando el usuario te lo solicite."
 
 ### Pautas de resolución:
 Antes de resolver una solicitud:
 1. Identifica el objetivo del usuario.
-2. Localiza los componentes afectados usando las rutas del Seed.
-3. Revisa restricciones, reglas y contratos declarados.
-4. Explicita supuestos cuando sea necesario: "Supongo que X debido a Y".
-5. Propone cambios por archivo con rutas claras.
-6. Añade pruebas, riesgos y criterios de aceptación.
+2. Localiza los componentes afectados usando las rutas relativas (`./`) del Seed.
+3. Revisa restricciones (`[INV-XX]`), decisiones (`[ADR-XXX]`), contratos simbólicos (Sección 4) y vectores de tensión (Sección 7).
+4. Explicita supuestos cuando sea necesario: *"Supongo que X debido a Y"*.
+5. Propone cambios por archivo con rutas relativas claras y separadores Unix (`/`).
+6. Añade pruebas, riesgos de regresión y criterios de aceptación verificables.
 
 ### 🤝 Acuse de Recibo Inicial
 Si el usuario adjuntó esta semilla **sin una instrucción específica**, no intentes generar código ni completar archivos vacíos. Responde únicamente con:
-1. Un saludo confirmando que asimilaste el ADN de **[Nombre del Proyecto]** y su stack principal.
-2. Un breve resumen de 2-3 líneas sobre el objetivo y su estado actual de avance.
-3. Una frase poniéndote a disposición para resolver dudas sobre su funcionamiento o colaborar en los siguientes pasos de desarrollo.
-```
+1. Un saludo confirmando que asimilaste el ADN arquitectónico v3.0 de **[Nombre del Proyecto]** (`<SEED_ARCHITECTURAL_VECTOR>`) y su stack principal.
+2. Un breve resumen de 2-3 líneas sobre el propósito del sistema, su estado actual y sus principales vectores de tensión.
+3. Una frase poniéndote a disposición para auditar, resolver dudas o colaborar en los siguientes pasos de desarrollo.
 
+</SEED_ARCHITECTURAL_VECTOR>
+
+---
+
+# C. CHECKLIST DE AUTO-VALIDACIÓN PRE-EMISIÓN (GATE DEL AGENTE GENERADOR)
+
+Antes de guardar el archivo en `./01_seed/seed-[proyecto]-master.md`, el agente generador DEBE verificar:
+- [ ] **Gate 1 (Frontera XML y Handoff):** El documento inicia con `<SEED_ARCHITECTURAL_VECTOR version="3.0" contains_source_code="false" ...>`, contiene la sección `0.1 Instrucciones para el modelo receptor`, incluye `## 📌 CONTEXT HANDOFF & PROTOCOLO DE ASISTENCIA` y cierra con `</SEED_ARCHITECTURAL_VECTOR>`.
+- [ ] **Gate 2 (Zero Source Code):** Cero bloques de código fuente de implementación (`.py`, `.ps1`, `.sh`, `.json`, `.yaml` literales > 5 líneas). Todos los scripts y módulos están representados mediante firmas simbólicas AST de 1 línea en la Sección 4.1.
+- [ ] **Gate 3 (Zero Local Paths & Zero File URIs):** `repository_root` es `"./"` y existen **0 coincidencias** de URIs con esquema `file` local, letras de unidad de disco (`C` o `D`) o rutas de usuario (`/Users/`, `/home/`).
+- [ ] **Gate 4 (Zero-Trust `<REDACTED>`):** Ningún secreto, token o credencial aparece en texto plano.
+- [ ] **Gate 5 (Auditoría Adversarial):** La Sección 7 documenta tensiones, contradicciones y modos de falla reales sin caer en el sesgo de `"Riesgo Nulo / 100% Mitigado"`.
+- [ ] **Gate 6 (Validación Cuantitativa):** Si `./scripts/test_seed_coverage.py` está presente, ejecutar `python scripts/test_seed_coverage.py --target-repo . --no-anonymize` y confirmar código de salida `0`.
