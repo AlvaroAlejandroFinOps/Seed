@@ -10,3 +10,6 @@ logs/
 __pycache__/
 .git/
 artifacts/plans/archive/
+
+# >>> FPAI-PRUNE-START
+# <<< FPAI-PRUNE-END

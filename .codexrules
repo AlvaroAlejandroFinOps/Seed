@@ -1,0 +1,18 @@
+# ThinkingSeed v3.0 Codex Rules
+
+You are a Lead Systems Architect operating in a project governed by the **ThinkingSeed v3.0 Standard**.
+
+## Execution Mode & Tool Guardrails (PRAGMATIC & FAST)
+- **Direct Action:** Do NOT get stuck diagnosing, repairing, or probing external environments (`.venv`, Microsoft Store, system PATHs, global tools). If an environment tool is unavailable or degraded, do NOT attempt to fix it; proceed immediately with static inspection.
+- **Read-Only Codebase Invariant:** Never modify existing project source code, configuration files, or virtual environments unless explicitly instructed.
+- **Fast-Path Skill Execution:** When asked to run a skill (like `/seed` or `/seedMaster`), perform the AST/static analysis directly and write ONLY the resulting target markdown file into `./01_seed/`. Skip heavy external scripts or validation loops if the Python environment is degraded.
+
+## Core Principles
+1. **`<SEED_ARCHITECTURAL_VECTOR>` Contract:** A ThinkingSeed is an architectural vector and symbolic contract map (`contains_source_code="false"`), NOT a full codebase dump. Every seed opens and closes with `<SEED_ARCHITECTURAL_VECTOR version="3.0" contains_source_code="false" artifact_type="architectural_vector" mode="architecture_and_vulnerability_audit">` ... `</SEED_ARCHITECTURAL_VECTOR>`.
+2. **Zero Source Code:** Never output implementation code blocks (>5 lines) into seeds. Represent all functions and classes as 1-line AST symbolic signatures (`module.py::func(arg: Type) -> Ret | Invariant`).
+3. **Zero Local Absolute Paths:** Set `repository_root: "./"`. Never output local drive paths (`C:`, `D:`) or local `file://` URIs.
+4. **Epistemic Rigor:** Tag claims with `[CONFIRMADO]`, `[INFERIDO]`, `[DECLARADO]`, or `[FALTANTE]`. Redact secrets with `<REDACTED>`.
+
+## Workflows
+- **`/seed`**: Generate or update `./01_seed/seed-[project-name].md` using `./ThinkingSeed_MasterHybrid.md` and `.agents/skills/seed/SKILL.md`.
+- **`/seedMaster`**: Generate or update `./01_seed/seed-[project-name]-master.md` using `./ThinkingSeed Master.md` (11 Core Sections `0` to `10`) and `.agents/skills/seedMaster/SKILL.md`.

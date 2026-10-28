@@ -1,0 +1,352 @@
+{
+  ".agentignore": {
+    "mtime": 1789700829.8851666,
+    "size": 211,
+    "sha256": "2f8be57be335469c99868d75dbf60b50626eb5a859e030737e6cc053afde219e",
+    "line_count": 12,
+    "token_estimate": 52
+  },
+  ".cursorrules": {
+    "mtime": 1792546786.367708,
+    "size": 1944,
+    "sha256": "c45c3dae60eb6217d61cf48fb98193dc1a0e6986a38d620e8719f9e565535b4a",
+    "line_count": 16,
+    "token_estimate": 486
+  },
+  ".gitignore": {
+    "mtime": 1789702041.5023444,
+    "size": 569,
+    "sha256": "7d93af588a838b8f7f7d0eb865b380c0083e2f8a860fc8000ae9eb82a728e516",
+    "line_count": 43,
+    "token_estimate": 142
+  },
+  ".windsurfrules": {
+    "mtime": 1792546789.715912,
+    "size": 1303,
+    "sha256": "9decbf94255be86743066fd795b663b7f73d3d6f07eddb3a0f71005a09802d25",
+    "line_count": 12,
+    "token_estimate": 325
+  },
+  "AGENTS.md": {
+    "mtime": 1792546749.4152997,
+    "size": 2879,
+    "sha256": "18801a88890ead88f9c1769bc77c16be1f9eed979e2e57cdf75c2cf08fbd997f",
+    "line_count": 26,
+    "token_estimate": 719
+  },
+  "CLAUDE.md": {
+    "mtime": 1792546755.3944175,
+    "size": 3310,
+    "sha256": "9efce85fd9e120dad3faedbdf9662b4b6623047afca064c9eb9860fa29a07b98",
+    "line_count": 37,
+    "token_estimate": 827
+  },
+  "GEMINI.md": {
+    "mtime": 1792546751.0006988,
+    "size": 4646,
+    "sha256": "2820c616d342ba1628820d1e6c19085f40dc3ae2804c217a9ded2628e865e7a5",
+    "line_count": 48,
+    "token_estimate": 1161
+  },
+  "image.png": {
+    "mtime": 1786673448.280292,
+    "size": 4714121,
+    "sha256": "a72a28b3123183c1eefc5f536550b8d7ea34c3a9ae90b7bba14fd569f1f04e0b",
+    "line_count": 0,
+    "token_estimate": 1178530
+  },
+  "LICENSE": {
+    "mtime": 1789702047.8788545,
+    "size": 1103,
+    "sha256": "4ab9024d1a512f25515690c5f35007ef61006dca47d378c6e8e128198a71be98",
+    "line_count": 21,
+    "token_estimate": 275
+  },
+  "README.md": {
+    "mtime": 1792546211.6268919,
+    "size": 12281,
+    "sha256": "ffb599b0a5991208a2e25245b54d6948c5b52da06883373abd8415586b160353",
+    "line_count": 223,
+    "token_estimate": 3070
+  },
+  "README_ES.md": {
+    "mtime": 1792546214.741608,
+    "size": 12976,
+    "sha256": "70e558fb65c98d57304faea302f927d990589f5fd5618c2de4fd927294618ad4",
+    "line_count": 223,
+    "token_estimate": 3244
+  },
+  "ThinkingSeed Master.md": {
+    "mtime": 1792546742.330101,
+    "size": 25463,
+    "sha256": "bf8a6ed2c34589e76cf493cdfd6476c15317c33f9e1704907abf751ca810b026",
+    "line_count": 389,
+    "token_estimate": 6365
+  },
+  "ThinkingSeed_MasterHybrid.md": {
+    "mtime": 1792546744.3935103,
+    "size": 5897,
+    "sha256": "57965e70bc82e51c27695ba5684b6559edde762b40e4fa6b039577c961ed7888",
+    "line_count": 83,
+    "token_estimate": 1474
+  },
+  ".agents/.context.yaml": {
+    "mtime": 1792546184.4808338,
+    "size": 459,
+    "sha256": "9ed097da02cf462a0c486ac69cf7ea76b21ed8603ef0babc617e02630883497c",
+    "line_count": 13,
+    "token_estimate": 114
+  },
+  ".agents/skills/seed/SKILL.md": {
+    "mtime": 1792546796.2323573,
+    "size": 6000,
+    "sha256": "bb7adf390274ed1da9d42e191f6dfe4c56c9bad8b36313865c0f05b977798c79",
+    "line_count": 97,
+    "token_estimate": 1500
+  },
+  ".agents/skills/seedMaster/SKILL.md": {
+    "mtime": 1792546801.9724329,
+    "size": 10966,
+    "sha256": "0fad1e3bfb2628e2ea35630ad5140fa6d8706dde1af71359c4cb44fb46bf2dd5",
+    "line_count": 138,
+    "token_estimate": 2741
+  },
+  ".context/.context.yaml": {
+    "mtime": 1792546706.8711953,
+    "size": 372,
+    "sha256": "89980e0c80f91b2135c084b18fa7e31f9011ddd8ca47dd18961722b00aecb787",
+    "line_count": 12,
+    "token_estimate": 93
+  },
+  ".context/tree.json": {
+    "mtime": 1792546188.6232803,
+    "size": 4301,
+    "sha256": "47d0d9bdf981e74f47061ce9c5744d1fd08986ad807447497f1bf0a21cf55b29",
+    "line_count": 196,
+    "token_estimate": 1075
+  },
+  ".github/copilot-instructions.md": {
+    "mtime": 1792546791.9962616,
+    "size": 1195,
+    "sha256": "c8e1a57f7c13d78595270c720b89878661921de8c04fdd5d64e26c061deeabb1",
+    "line_count": 10,
+    "token_estimate": 298
+  },
+  "01_seed/.context.yaml": {
+    "mtime": 1792546186.103338,
+    "size": 400,
+    "sha256": "9fc2d55d7eb60d4c469d3f7e8046903694db1d8c1fab5d3b569b7bd3cd83cce3",
+    "line_count": 12,
+    "token_estimate": 100
+  },
+  "01_seed/seed-ThinkingSeed-master.md": {
+    "mtime": 1792546714.7852838,
+    "size": 59923,
+    "sha256": "b8e939029d7210b27276553448dee2bb13f538ae1688c2a4cbe70dfde66bf985",
+    "line_count": 516,
+    "token_estimate": 14980
+  },
+  "02_foundation/engine/.context.yaml": {
+    "mtime": 1792541073.1999156,
+    "size": 401,
+    "sha256": "49f06c764d6a4ad903f5981e1546c0c29ad3399cfa21ebca77b9e2fbc50a8b60",
+    "line_count": 12,
+    "token_estimate": 100
+  },
+  "02_foundation/engine/engine_readme.md": {
+    "mtime": 1792546190.3128889,
+    "size": 4170,
+    "sha256": "59368ac192c49b8847b86b4d7542f9f21b9ff84690d5288fb567a1c174ba7080",
+    "line_count": 38,
+    "token_estimate": 1042
+  },
+  "03_research/experiments/.context.yaml": {
+    "mtime": 1792541073.2073708,
+    "size": 343,
+    "sha256": "6b7aaa19adf3fb9034394b05ec0ca75b64aec50c33e3299943c6fcd8876c03ec",
+    "line_count": 10,
+    "token_estimate": 85
+  },
+  "03_research/notebooks/.context.yaml": {
+    "mtime": 1792541073.2018483,
+    "size": 390,
+    "sha256": "f943ebb021bba1c5ca13171c7fdb98f6783e80611706f32da4be450773a1e2c0",
+    "line_count": 10,
+    "token_estimate": 97
+  },
+  "03_research/prompts/.context.yaml": {
+    "mtime": 1792541073.2028449,
+    "size": 350,
+    "sha256": "8a95f230e75f5b824c50c3483541b356742417a54d96ef013349a6a8413ac779",
+    "line_count": 10,
+    "token_estimate": 87
+  },
+  "artifacts/benchmark_seed_coverage.md": {
+    "mtime": 1792546831.0930803,
+    "size": 4040,
+    "sha256": "1977f9c4e4cade80a277e03cbd9b659dc62c5dcc340a2ab7fa79126aea707c56",
+    "line_count": 66,
+    "token_estimate": 1010
+  },
+  "artifacts/MetricsThinking.json": {
+    "mtime": 1790645037.7560909,
+    "size": 19175,
+    "sha256": "767105e76b3ff1c21c4a17afc395bad73b2d9cdba0beb5196503a68ccda20a3c",
+    "line_count": 450,
+    "token_estimate": 4793
+  },
+  "artifacts/MetricsThinking.md": {
+    "mtime": 1790645037.753054,
+    "size": 14625,
+    "sha256": "d5d160a7fd8a1b68aace749a04ec7cd86b6c965a5236968b7742084072679798",
+    "line_count": 217,
+    "token_estimate": 3656
+  },
+  "artifacts/plans/active/.context.yaml": {
+    "mtime": 1792541073.2168791,
+    "size": 380,
+    "sha256": "155d7088c1864ee12d48dd0f8f28cb449a5432aaaa6bfc47bec88d0c7cdd8241",
+    "line_count": 10,
+    "token_estimate": 95
+  },
+  "artifacts/plans/active/INFERRED_ROADMAP.md": {
+    "mtime": 1790645037.753054,
+    "size": 10103,
+    "sha256": "6aeb2c64fe3e4059e585a7e0396b2c9fbf734155afe172938fba016becb80acb",
+    "line_count": 144,
+    "token_estimate": 2525
+  },
+  "artifacts/plans/archive/.context.yaml": {
+    "mtime": 1792541073.222388,
+    "size": 411,
+    "sha256": "acf1b5481f0370c8d932cb1795f506d5f6a99aa1492bae1c042df35d91499bd8",
+    "line_count": 10,
+    "token_estimate": 102
+  },
+  "artifacts/plans/metricsthinking/.context.yaml": {
+    "mtime": 1792541073.2203953,
+    "size": 561,
+    "sha256": "99e32a4b14ed139b1b9581343b8c805c2b08976286ec7dd1ccfdda56f50ee67d",
+    "line_count": 13,
+    "token_estimate": 140
+  },
+  "config/.context.yaml": {
+    "mtime": 1792541073.2321875,
+    "size": 338,
+    "sha256": "e1ee7bf86706e25a4061f38d24e3b4fea4fb9d35336f33ad19f442115fafac1c",
+    "line_count": 10,
+    "token_estimate": 84
+  },
+  "docs/architecture/.context.yaml": {
+    "mtime": 1792541073.2269983,
+    "size": 350,
+    "sha256": "44322449efe9adf324dd52770551b5e3ab3c0ee4418b85cb17e06aa45968bde5",
+    "line_count": 10,
+    "token_estimate": 87
+  },
+  "docs/notes/.context.yaml": {
+    "mtime": 1792541073.230213,
+    "size": 351,
+    "sha256": "09647dcf9838963568410e4b605020e43bd3b5e00372faea706399bf233e010c",
+    "line_count": 10,
+    "token_estimate": 87
+  },
+  "docs/specs/.context.yaml": {
+    "mtime": 1792541073.2279947,
+    "size": 333,
+    "sha256": "a4e9794274b7db3bf48af3e121fce7f7076d4f06f7850939a0617be303d3403f",
+    "line_count": 10,
+    "token_estimate": 83
+  },
+  "logs/.context.yaml": {
+    "mtime": 1792541073.2414024,
+    "size": 343,
+    "sha256": "f69089e9dad91a7a64f7c4d74dfd1ac5de0f8c98ddee893e2fcd2e512091e7b8",
+    "line_count": 10,
+    "token_estimate": 85
+  },
+  "schemas/.context.yaml": {
+    "mtime": 1792541073.2368405,
+    "size": 368,
+    "sha256": "6e1b1759ca038be522a39640e8a98adf781817b7c3c0968a090b54580b4dced4",
+    "line_count": 10,
+    "token_estimate": 92
+  },
+  "scripts/.context.yaml": {
+    "mtime": 1792541073.2378917,
+    "size": 318,
+    "sha256": "75f8fae5606ee34cb897e3b6e08b0c7ec8e173d032fac9ce812a0b74ac062a09",
+    "line_count": 10,
+    "token_estimate": 79
+  },
+  "scripts/install_skills.py": {
+    "mtime": 1792546327.1217632,
+    "size": 5989,
+    "sha256": "5b6ced78f0b8c759f1e70b8bffdea931f3bf441a0d1ede54807f6aad9abd0330",
+    "line_count": 164,
+    "token_estimate": 1497
+  },
+  "scripts/test_seed_coverage.py": {
+    "mtime": 1792546709.188414,
+    "size": 32242,
+    "sha256": "4633730eeac34ee4f1fa5a703069ca0909f8c188ecaa3b34b3984633fa619cb3",
+    "line_count": 694,
+    "token_estimate": 8060
+  },
+  "src/cloud_jobs/.context.yaml": {
+    "mtime": 1792541073.2083688,
+    "size": 437,
+    "sha256": "ed6e89ac38b0fb760f46da565844deaf4ec0f769fdd9619de02d64f47807845b",
+    "line_count": 13,
+    "token_estimate": 109
+  },
+  "src/core/.context.yaml": {
+    "mtime": 1792541073.2128377,
+    "size": 335,
+    "sha256": "b5c17bc80c50eb07c800a5ab3d10ab3b405c34fa304b454683a29f8be22678ba",
+    "line_count": 10,
+    "token_estimate": 83
+  },
+  "src/dashboards/.context.yaml": {
+    "mtime": 1792541073.214833,
+    "size": 351,
+    "sha256": "63e306c0a400ce596c3070b7ff50426fdd4ce10cde4a366a229498d83ac2855b",
+    "line_count": 10,
+    "token_estimate": 87
+  },
+  "src/data_generation/.context.yaml": {
+    "mtime": 1792541073.211327,
+    "size": 365,
+    "sha256": "838d98d07f792fc3c9b9e312d95db8476eb43b27f2b2a57b219a44b5a39f8da1",
+    "line_count": 10,
+    "token_estimate": 91
+  },
+  "tests/.context.yaml": {
+    "mtime": 1792541073.2398968,
+    "size": 318,
+    "sha256": "354bc92d9959c48d535467e7bde621770a6b9ee0e7876e30f57fdf749beba932",
+    "line_count": 10,
+    "token_estimate": 79
+  },
+  "tests/ThinkingSeed_Mini.md": {
+    "mtime": 1792546747.170566,
+    "size": 2531,
+    "sha256": "a008b7994ba1337f3b997a1d62606e0b71aadc26195fcbb7cd15d34934b6dda7",
+    "line_count": 49,
+    "token_estimate": 632
+  },
+  "tools/.context.yaml": {
+    "mtime": 1792541073.2404585,
+    "size": 288,
+    "sha256": "1455a9b11cc6d41886da887ffc83d06a3742043bbd7725549b14ad3c888a0951",
+    "line_count": 10,
+    "token_estimate": 72
+  },
+  "tools/Seed.png": {
+    "mtime": 1786673349.4303792,
+    "size": 3503824,
+    "sha256": "9f3a64c35bb7b1e390e21c324dff8d241b4e744550f763420297cc2d080f09ce",
+    "line_count": 0,
+    "token_estimate": 875956
+  }
+}

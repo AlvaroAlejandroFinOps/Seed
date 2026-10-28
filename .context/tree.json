@@ -1,196 +1,38 @@
 {
-  "$schema": "./schema/tree.schema.json",
-  "version": "3.0",
+  "$schema": "../schemas/tree.schema.json",
+  "version": "4.0",
   "project": "ThinkingSeed",
   "architecture": "Gravity HyperScale Thinking",
-  "updated_at": "2026-10-20T22:30:00.000000+00:00",
-  "timestamp": 1792546200.0,
-  "bootloader": {
-    "tier_1": [
-      "AGENTS.md",
-      ".context/tree.json",
-      "[target_folder]/.context.yaml"
-    ],
-    "tier_2": [
-      "AGENTS.md",
-      ".context/tree.json",
-      "01_seed/seed-ThinkingSeed-master.md",
-      "[target_folder]/.context.yaml"
-    ]
-  },
+  "updated_at": "2026-10-28T17:40:43.765984+00:00",
+  "timestamp": 1793209243.829411,
+  "topology_hash": "f3f8c79ce077fe84f416884346457e077ef22824e1bfa574f7f96143a4670a3b",
+  "bootloader": {"tier_1": ["AGENTS.md",".context/tree.json","[target_folder]/.context.yaml"],"tier_1a": ["python FWengine.py context --pack <target_dir> --tier 1a"],"tier_1b": ["python FWengine.py context --compact","python FWengine.py map --slice <target_dir>","python FWengine.py seed --section <id>"],"tier_2": ["AGENTS.md",".context/tree.json","01_seed/seed-ThinkingSeed-master.md","[target_folder]/.context.yaml"]},
   "nodes": {
-    ".agents": {
-      "role": "agent_skills",
-      "prio": "p1",
-      "crawl": true,
-      "seed_ref": "optional",
-      "key_files": [
-        "skills/seed/SKILL.md",
-        "skills/seedMaster/SKILL.md"
-      ]
-    },
-    "01_seed": {
-      "role": "dna",
-      "prio": "p0",
-      "crawl": false,
-      "seed_ref": "required",
-      "key_files": [
-        "seed-ThinkingSeed-master.md"
-      ]
-    },
-    "02_foundation/engine": {
-      "role": "core_engine",
-      "prio": "p1",
-      "crawl": true,
-      "seed_ref": "optional",
-      "key_files": [
-        "engine_readme.md"
-      ]
-    },
-    "03_research/notebooks": {
-      "role": "eda",
-      "prio": "p2",
-      "crawl": false,
-      "seed_ref": "optional"
-    },
-    "03_research/prompts": {
-      "role": "prompt_engineering",
-      "prio": "p1",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "03_research/experiments": {
-      "role": "pocs_benchmarks",
-      "prio": "p2",
-      "crawl": false,
-      "seed_ref": "optional"
-    },
-    "src/cloud_jobs": {
-      "role": "production_pipelines",
-      "prio": "p1",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "src/data_generation": {
-      "role": "synthetic_data",
-      "prio": "p2",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "src/core": {
-      "role": "shared_backend",
-      "prio": "p1",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "src/dashboards": {
-      "role": "bi_viz",
-      "prio": "p2",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "artifacts/plans/active": {
-      "role": "active_plans",
-      "prio": "p1",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "artifacts/plans/metricsthinking": {
-      "role": "metrics_evaluation",
-      "prio": "p0",
-      "crawl": true,
-      "seed_ref": "required",
-      "key_files": [
-        "MetricsThinking.md",
-        "MetricsThinking.json"
-      ]
-    },
-    "artifacts/plans/archive": {
-      "role": "archived_plans",
-      "prio": "p3",
-      "crawl": false,
-      "seed_ref": "optional"
-    },
-    "docs/architecture": {
-      "role": "architecture_diagrams",
-      "prio": "p1",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "docs/specs": {
-      "role": "technical_specs",
-      "prio": "p1",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "docs/notes": {
-      "role": "engineers_notes",
-      "prio": "p2",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "config": {
-      "role": "configuration",
-      "prio": "p1",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "data/raw": {
-      "role": "bronze_storage",
-      "prio": "p3",
-      "crawl": false,
-      "seed_ref": "optional"
-    },
-    "data/processed": {
-      "role": "silver_gold_storage",
-      "prio": "p3",
-      "crawl": false,
-      "seed_ref": "optional"
-    },
-    "data/sandbox": {
-      "role": "sandbox",
-      "prio": "p3",
-      "crawl": false,
-      "seed_ref": "optional"
-    },
-    "schemas": {
-      "role": "data_contracts",
-      "prio": "p1",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "scripts": {
-      "role": "ops_automation",
-      "prio": "p2",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "tests": {
-      "role": "test_suites",
-      "prio": "p1",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "tools": {
-      "role": "tooling",
-      "prio": "p2",
-      "crawl": true,
-      "seed_ref": "optional"
-    },
-    "logs": {
-      "role": "logs",
-      "prio": "p3",
-      "crawl": false,
-      "seed_ref": "optional"
-    },
-    ".context": {
-      "role": "context_engineering",
-      "prio": "p0",
-      "crawl": true,
-      "seed_ref": "optional",
-      "key_files": [
-        "tree.json"
-      ]
-    }
+    "01_seed": {"role":"dna","prio":"p0","crawl":true,"seed_ref":"required","tier1_preload":false,"key_files":["seed-ThinkingSeed-master.md"],"node_hash":"747d145f1f400448"},
+    "02_foundation/engine": {"role":"core_engine","prio":"p1","crawl":true,"key_files":["engine_readme.md"],"node_hash":"39f1899857684823"},
+    "03_research/notebooks": {"role":"eda","prio":"p2","crawl":false,"node_hash":"b971a2fe9ea1fe24"},
+    "03_research/prompts": {"role":"prompt_engineering","prio":"p1","crawl":true,"node_hash":"50328a65dc31d497"},
+    "03_research/experiments": {"role":"pocs_benchmarks","prio":"p2","crawl":false,"node_hash":"fd70cadec700d4f0"},
+    "src/cloud_jobs": {"role":"production_pipelines","prio":"p1","crawl":true,"node_hash":"9b7c579913b75ee8"},
+    "src/data_generation": {"role":"synthetic_data","prio":"p2","crawl":true,"node_hash":"6c1a1eb427249077"},
+    "src/core": {"role":"shared_backend","prio":"p1","crawl":true,"node_hash":"d1bba3ab4765e65c"},
+    "src/dashboards": {"role":"bi_viz","prio":"p2","crawl":true,"node_hash":"7dba6e0dbff46746"},
+    "artifacts/plans/active": {"role":"active_plans","prio":"p1","crawl":true,"node_hash":"fc6b6b7ab8aef716"},
+    "artifacts/plans/metricsthinking": {"role":"metrics_evaluation","prio":"p2","crawl":true,"key_files":["MetricsThinking.md","MetricsThinking.json"],"node_hash":"716e05689be46861"},
+    "artifacts/plans/backlog": {"role":"intent_backlog","prio":"p2","crawl":false,"tier1_preload":false,"node_hash":"aa617c5a9c89c8ac"},
+    "artifacts/plans/archive": {"role":"archived_plans","prio":"p3","crawl":false,"node_hash":"0174bc86bec7e6ed"},
+    "docs/architecture": {"role":"architecture_diagrams","prio":"p1","crawl":true,"node_hash":"6e9f494c0e697312"},
+    "docs/specs": {"role":"technical_specs","prio":"p1","crawl":true,"node_hash":"6626f43de9fbdd2c"},
+    "docs/notes": {"role":"engineers_notes","prio":"p2","crawl":true,"node_hash":"7b702e2a69c315e7"},
+    "config": {"role":"configuration","prio":"p1","crawl":true,"key_files":["context_policy.json"],"node_hash":"cf0b87a4bb660b63"},
+    "data/raw": {"role":"bronze_storage","prio":"p3","crawl":false,"node_hash":"9461edb3fc67e856"},
+    "data/processed": {"role":"silver_gold_storage","prio":"p3","crawl":false,"node_hash":"4c1181b60df4de65"},
+    "data/sandbox": {"role":"sandbox","prio":"p3","crawl":false,"node_hash":"83cba3128a9c82a5"},
+    "schemas": {"role":"data_contracts","prio":"p1","crawl":true,"node_hash":"3671c0d5dbdcebd2"},
+    "scripts": {"role":"ops_automation","prio":"p2","crawl":true,"node_hash":"19915f189283e086"},
+    "tests": {"role":"test_suites","prio":"p1","crawl":true,"node_hash":"6f62b1bcd834d394"},
+    "tools": {"role":"tooling","prio":"p2","crawl":true,"node_hash":"8d6b2980c0fe4487"},
+    "logs": {"role":"logs","prio":"p3","crawl":false,"node_hash":"803a74960b298b02"},
+    ".context": {"role":"context_engineering","prio":"p0","crawl":true,"key_files":["tree.json"],"has_dynamic_children":true,"node_hash":"5f5b1e48abb52eea"}
   }
 }

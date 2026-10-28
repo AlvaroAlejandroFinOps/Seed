@@ -64,6 +64,23 @@ def install_claude_code_global() -> bool:
         print(f"  [ERROR] Al configurar Claude Code Global: {e}")
         return False
 
+def install_codex_global() -> bool:
+    codex_dir = get_home_dir() / ".codex"
+    try:
+        codex_dir.mkdir(parents=True, exist_ok=True)
+        codex_md_src = BASE_DIR / "CODEX.md"
+        if codex_md_src.exists():
+            shutil.copy2(codex_md_src, codex_dir / "CODEX.md")
+            print(f"  [OK] Codex Global: Copiado CODEX.md en {codex_dir / 'CODEX.md'}")
+        codex_rules_src = BASE_DIR / ".codexrules"
+        if codex_rules_src.exists():
+            shutil.copy2(codex_rules_src, codex_dir / ".codexrules")
+            print(f"  [OK] Codex Global: Copiado .codexrules en {codex_dir / '.codexrules'}")
+        return True
+    except Exception as e:
+        print(f"  [ERROR] Al configurar Codex Global: {e}")
+        return False
+
 def inject_into_project(target_path: Path) -> bool:
     target = target_path.resolve()
     if not target.exists() or not target.is_dir():
@@ -88,6 +105,8 @@ def inject_into_project(target_path: Path) -> bool:
     agent_rule_files = [
         "GEMINI.md",
         "CLAUDE.md",
+        "CODEX.md",
+        ".codexrules",
         ".cursorrules",
         ".windsurfrules",
         "AGENTS.md"
@@ -129,6 +148,7 @@ def main():
         print("\nInstalando skills en el entorno global del usuario...")
         install_antigravity_global()
         install_claude_code_global()
+        install_codex_global()
         print("\n[OK] Instalacion global completada con exito.")
         return
 
@@ -138,8 +158,8 @@ def main():
 
     # Modo interactivo
     print("\nSelecciona una opcion:")
-    print("1) Instalacion Global (Antigravity / Gemini CLI + Claude Code)")
-    print("2) Inyectar en un proyecto especifico (Claude, Cursor, Windsurf, Copilot, Gemini)")
+    print("1) Instalacion Global (Antigravity / Gemini CLI + Claude Code + Codex)")
+    print("2) Inyectar en un proyecto especifico (Claude, Cursor, Windsurf, Copilot, Gemini, Codex)")
     print("3) Salir")
 
     try:
@@ -150,6 +170,7 @@ def main():
     if choice == "1":
         install_antigravity_global()
         install_claude_code_global()
+        install_codex_global()
         print("\n[OK] Instalacion global completada con exito.")
     elif choice == "2":
         path_input = input("Introduce la ruta absoluta o relativa del proyecto: ").strip()
