@@ -2,7 +2,7 @@
   "$schema": "../schemas/icontext_bus.schema.json",
   "protocol_version": "5.0.0",
   "project": "ThinkingSeed",
-  "updated_at": "2026-10-29T01:57:41.548500+00:00",
+  "updated_at": "2026-10-29T02:15:06.774880+00:00",
   "layers": {
     "l0_idirectory": {
       "version": "5.0.0",
@@ -42,5 +42,15 @@
       "path_leakage_rate": 0.0,
       "synced_with_topology_hash": "713ea55b6cb20379f2b7f921ba386559394939efabda75853d280be9e4c2d15c"
     }
+  },
+  "l1_thinkingseed": {
+    "seed_path": "./01_seed/seed-ThinkingSeed-master.md",
+    "seed_version": "5.0",
+    "ast_coverage_pct": 96.0,
+    "untracked_Public_symbols": [
+      "install_codex_global"
+    ],
+    "freshness_status": "SYNCED",
+    "last_validated_at": "2026-10-29T02:15:06.774880+00:00"
   }
 }
