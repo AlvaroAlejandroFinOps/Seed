@@ -1,13 +1,14 @@
-<SEED_ARCHITECTURAL_VECTOR version="3.0" contains_source_code="false" artifact_type="architectural_vector" mode="architecture_and_vulnerability_audit">
+<SEED_ARCHITECTURAL_VECTOR version="5.0" contains_source_code="false" artifact_type="architectural_vector" mode="architecture_and_vulnerability_audit">
 
 # THINKING SEED MASTER: ThinkingSeed
 
 > **[DIRECTIVA DE SISTEMA PARA MODELOS DE IA RECEPTORES — CLAUDE / GPT / GEMINI / AGENTES]:**
-> 1. **Naturaleza del Artefacto:** Este documento es un **Vector Arquitectónico y Memoria Técnica (ThinkingSeed Master v3.0)** con `contains_source_code="false"`. **NO es el repositorio de código fuente completo** ni un volcado truncado. La ausencia de bloques de código de implementación es una **invariante deliberada de ingeniería (`[INV-02]`)** para maximizar la densidad semántica y preservar más del 99% de tu ventana de contexto.
+> 1. **Naturaleza del Artefacto:** Este documento es un **Vector Arquitectónico y Memoria Técnica (ThinkingSeed Master v5.0)** con `contains_source_code="false"`. **NO es el repositorio de código fuente completo** ni un volcado truncado. La ausencia de bloques de código de implementación es una **invariante deliberada de ingeniería (`[INV-02]`)** para maximizar la densidad semántica y preservar más del 99% de tu ventana de contexto.
 > 2. **Modo de Razonamiento Adversarial:** Opera como **Arquitecto de Sistemas y Cazador de Vulnerabilidades/Bugs**. Utiliza las firmas simbólicas AST (Sección 4.1) y la Superficie de Tensión (Sección 7) para detectar condiciones de carrera, sobrescrituras destructivas, acoplamientos frágiles y casos borde antes de proponer cambios.
 > 3. **Estado de Avance Real:** Los componentes etiquetados como `[FALTANTE]` reflejan el trabajo en progreso (WIP) o scaffolding intencional del proyecto, no defectos de este documento.
 
 ## Seed Changelog
+- `2026-10-28 (v5.0)`: Evolución integral a **ThinkingSeed v5.0 (iContext Federation Protocol v5.0 — Capa L1)**. Implementación de: (1) Integración con el índice AST cacheado `./.context/contracts_ast.json` y el Bus Cognitivo Federado `./.context/icontext_bus.json` (`l1_thinkingseed`); (2) Resolución de `DEBT-01` / `FAIL-01` mediante composición no destructiva de bloques segmentados `upsert_segmented_rule_file` y flags `--backup` y `--check-only` en `./scripts/install_skills.py`; (3) Resolución de `DEBT-02` mediante la suite de pruebas unitarias `./tests/test_validators.py`; (4) Incorporación local de `./FWengine.py` v5.0 y `./schemas/`.
 - `2026-10-20 (v3.0)`: Reingeniería integral a esquema **ThinkingSeed v3.0** (`<SEED_ARCHITECTURAL_VECTOR>`). Consolidación polimórfica de 21 a 11 Secciones Core (`0` a `10`) con regla DRY Intra-Seed, erradicación de rutas absolutas locales y URIs de esquema de archivo local, extracción de 22 contratos simbólicos AST de 1 línea en `scripts/install_skills.py` y `scripts/test_seed_coverage.py`, normalización topológica `all-lowercase` (`./tools/`, `./README.md`), sincronización de 26/26 beacons `.context.yaml` con `.context/tree.json`, e incorporación de los 6 validadores deterministas AST/Regex en `scripts/test_seed_coverage.py`.
 - `2026-09-18 (v2.0)`: Generación inicial de la especificación ThinkingSeed Master v2.0 bajo arquitectura iDirectory v3.0, distribución multi-agente (`scripts/install_skills.py`) y unificación de carpeta canónica en `./01_seed/`.
 
@@ -16,13 +17,13 @@
 ## 0. IDENTIDAD, METADATOS Y CONTRATO DEL RECEPTOR
 
 ```yaml
-seed_schema_version: "3.0"
+seed_schema_version: "5.0"
 project_name: "ThinkingSeed"
 repository_name: "Thinking-Seed"
 project_type: "modular-framework"
 repository_mode: "single-project"
-generated_at: "2026-10-20T22:35:00-03:00"
-generated_by: "Antigravity Lead Systems Architect (Gemini 4 Argon Medium) / Master Seed Workflow v3.0"
+generated_at: "2026-10-28T22:30:00-03:00"
+generated_by: "Antigravity Lead Systems Architect (iContext Federation Protocol v5.0)"
 repository_root: "./"
 git_branch: "master"
 git_commit: "a9923c0"
@@ -31,8 +32,7 @@ analysis_mode: "static+git+validated"
 coverage_level: "high"
 known_analysis_limits:
   - "Inspección estática profunda y validación determinista mediante AST/Regex local (./scripts/test_seed_coverage.py)."
-  - "Los directorios productivos de nube (./src/cloud_jobs, ./src/core, ./src/dashboards, ./src/data_generation) operan como scaffolding arquitectónico iDirectory v3.0 sin código fuente de negocio implementado."
-  - "Los motores satelitales externos (FWengine.py y query_graph.py) residen en repositorios hermanos del ecosistema Gravity; la verificación local autónoma se ejecuta mediante check_local_tree_freshness."
+  - "Los directorios productivos de nube (./src/cloud_jobs, ./src/core, ./src/dashboards, ./src/data_generation) operan como scaffolding arquitectónico iDirectory v5.0 sin código fuente de negocio implementado."
 ```
 
 ### 0.1 Instrucciones para el modelo receptor
@@ -245,12 +245,15 @@ flowchart LR
 | Ruta del Módulo | Símbolo Público / CLI Flag | Firma Simbólica Tipada (1 línea) | Invariante / Efecto / Excepciones |
 |---|---|---|---|
 | `./scripts/install_skills.py` | `get_home_dir` | `install_skills::get_home_dir() -> Path` | Retorna `Path.home()` del usuario actual sin efectos secundarios `[CONFIRMADO]` |
-| `./scripts/install_skills.py` | `install_antigravity_global` | `install_skills::install_antigravity_global() -> bool` | Reemplaza `seed` y `seedMaster` en `~/.gemini/config/skills/`; captura `Exception` y retorna `bool` `[CONFIRMADO]` |
-| `./scripts/install_skills.py` | `install_claude_code_global` | `install_skills::install_claude_code_global() -> bool` | Copia `./CLAUDE.md` hacia `~/.claude/CLAUDE.md`; captura `Exception` y retorna `bool` `[CONFIRMADO]` |
-| `./scripts/install_skills.py` | `inject_into_project` | `install_skills::inject_into_project(target_path: Path) -> bool` | Inyecta `.agents/skills/`, 6 archivos de reglas multi-agente y crea `01_seed/` en `target_path.resolve()` `[CONFIRMADO]` |
-| `./scripts/install_skills.py` | `main` | `install_skills::main() -> None` | Orquesta CLI (`argparse`) en modo `--global-install`, `--target` o menú interactivo `input()` con fallback `EOFError` `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `upsert_segmented_rule_file` | `install_skills::upsert_segmented_rule_file(src_file: Path, dest_file: Path, backup: bool = False, check_only: bool = False) -> str` | Inserta o actualiza el bloque demarcado `<!-- >>> ICONTEXT-V5:THINKINGSEED:START >>> -->` sin sobrescribir directivas existentes `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `install_antigravity_global` | `install_skills::install_antigravity_global(check_only: bool = False) -> bool` | Reemplaza `seed` y `seedMaster` en `~/.gemini/config/skills/`; captura `Exception` y retorna `bool` `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `install_claude_code_global` | `install_skills::install_claude_code_global(backup: bool = False, check_only: bool = False) -> bool` | Sincroniza `./CLAUDE.md` hacia `~/.claude/CLAUDE.md` mediante bloque segmentado v5.0 `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `inject_into_project` | `install_skills::inject_into_project(target_path: Path, backup: bool = False, check_only: bool = False) -> bool` | Inyecta `.agents/skills/`, fusiona no destructivamente 6 archivos de reglas multi-agente y crea `01_seed/` `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `main` | `install_skills::main() -> None` | Orquesta CLI (`argparse`) en modo `--global-install`, `--target`, `--backup`, `--check-only` o menú interactivo `input()` `[CONFIRMADO]` |
 | `./scripts/install_skills.py` | `--global-install` | `CLI Flag (--global-install: action="store_true")` | Ejecuta `install_antigravity_global()` e `install_claude_code_global()` sin prompt interactivo `[CONFIRMADO]` |
 | `./scripts/install_skills.py` | `--target` | `CLI Flag (--target: str, optional)` | Ruta del repositorio destino donde `inject_into_project(Path(args.target))` inyecta las skills y reglas `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `--backup` | `CLI Flag (--backup: action="store_true")` | Crea respaldos `.bak` antes de modificar archivos de reglas existentes en el repositorio destino `[CONFIRMADO]` |
+| `./scripts/install_skills.py` | `--check-only` | `CLI Flag (--check-only: action="store_true")` | Previsualiza los archivos y bloques que serían actualizados sin escribir en disco `[CONFIRMADO]` |
 | `./scripts/test_seed_coverage.py` | `check_llm_contract_headers` | `test_seed_coverage::check_llm_contract_headers(seed_content: str) -> Dict[str, Any]` | Validador 1: Exige `<SEED_ARCHITECTURAL_VECTOR`, `contains_source_code="false"`, `0.1 Instrucciones para el modelo receptor` y `CONTEXT HANDOFF` `[CONFIRMADO]` |
 | `./scripts/test_seed_coverage.py` | `check_zero_code_invariant` | `test_seed_coverage::check_zero_code_invariant(seed_content: str) -> Dict[str, Any]` | Validador 2: Escanea bloques cercados y rechaza lenguajes en `FORBIDDEN_CODE_LANGS` o múltiples bloques YAML > 5 líneas `[CONFIRMADO]` |
 | `./scripts/test_seed_coverage.py` | `check_path_portability` | `test_seed_coverage::check_path_portability(seed_content: str) -> Dict[str, Any]` | Validador 3: Exige `repository_root: "./"` y 0 coincidencias de URIs locales, letras de unidad o rutas de usuario `[CONFIRMADO]` |

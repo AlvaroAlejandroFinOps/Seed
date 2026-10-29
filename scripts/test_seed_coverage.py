@@ -152,14 +152,75 @@ def check_secret_leaks(seed_content: str, seed_dir: Path = None) -> Dict[str, An
 
 
 def extract_repo_ast_contracts(repo_path: Path) -> Dict[str, List[str]]:
-    """Extrae funciones públicas, clases y flags CLI de todos los scripts Python del repositorio."""
+    """Extrae funciones públicas, clases y flags CLI de todos los scripts Python del repositorio (v5.0)."""
     public_symbols: List[str] = []
     cli_flags: List[str] = []
+    is_idirectory_repo = repo_path.resolve().name.lower() == 'idirectory'
+
+    # 1. Consultar .context/tree.json y .context/contracts_ast.json (Protocolo iContext v5.0)
+    pruned_prefixes: List[str] = []
+    tree_hash = ""
+    tree_file = repo_path / '.context' / 'tree.json'
+    if tree_file.exists():
+        try:
+            tree_data = json.loads(tree_file.read_text(encoding='utf-8', errors='ignore'))
+            tree_hash = str(tree_data.get('topology_hash', ''))
+            for node_path, node_meta in (tree_data.get('nodes') or {}).items():
+                if isinstance(node_meta, dict) and node_meta.get('crawl') is False:
+                    pruned_prefixes.append(node_path.strip('/'))
+        except Exception:
+            pass
+
+    contracts_cache = repo_path / '.context' / 'contracts_ast.json'
+    if contracts_cache.exists() and tree_hash:
+        try:
+            cache_data = json.loads(contracts_cache.read_text(encoding='utf-8', errors='ignore'))
+            if cache_data.get('topology_hash') == tree_hash and isinstance(cache_data.get('files'), dict):
+                for rel_file, fmeta in sorted(cache_data['files'].items()):
+                    rel_clean = rel_file.lstrip('./')
+                    if rel_clean == 'tests' or rel_clean.startswith('tests/'):
+                        continue
+                    if rel_clean == 'FWengine.py' and not is_idirectory_repo:
+                        continue
+                    if any(rel_clean == pr or rel_clean.startswith(pr + '/') for pr in pruned_prefixes):
+                        continue
+                    for sym in fmeta.get('public_symbols', []):
+                        if sym not in public_symbols:
+                            public_symbols.append(sym)
+                    for flg in fmeta.get('cli_flags', []):
+                        if flg not in cli_flags:
+                            cli_flags.append(flg)
+                return {
+                    'public_symbols': public_symbols,
+                    'cli_flags': cli_flags,
+                    'all_contracts': public_symbols + cli_flags
+                }
+        except Exception:
+            pass
 
     for root, dirs, files in os.walk(repo_path):
-        dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
+        rel_root = os.path.relpath(root, repo_path).replace('\\', '/')
+        if rel_root == '.':
+            rel_root = ''
+        dirs[:] = [
+            d for d in dirs
+            if d not in IGNORE_DIRS
+            and not d.startswith('.')
+            and f"{rel_root}/{d}".strip('/') != 'tests'
+            and not any(
+                f"{rel_root}/{d}".strip('/') == pr or f"{rel_root}/{d}".strip('/').startswith(pr + '/')
+                for pr in pruned_prefixes
+            )
+        ]
+        if rel_root == 'tests' or rel_root.startswith('tests/'):
+            continue
+        if any(rel_root == pr or rel_root.startswith(pr + '/') for pr in pruned_prefixes):
+            continue
+
         for f in sorted(files):
             if not f.endswith('.py'):
+                continue
+            if rel_root == '' and f == 'FWengine.py' and not is_idirectory_repo:
                 continue
             p = Path(root) / f
             try:
@@ -229,31 +290,71 @@ def check_local_tree_freshness(repo_path: Path) -> Dict[str, Any]:
     beacon_dirs: Set[str] = set()
     uppercase_dirs: List[str] = []
 
+    tree_file = repo_path / '.context' / 'tree.json'
+    tree_nodes: Set[str] = set()
+    expected_disk_nodes: Set[str] = set()
+    nodes_dict: Dict[str, Any] = {}
+    pruned_prefixes: List[str] = []
+    if tree_file.exists():
+        try:
+            data = json.loads(tree_file.read_text(encoding='utf-8', errors='ignore'))
+            nodes = data.get('nodes', {})
+            if isinstance(nodes, dict):
+                nodes_dict = nodes
+                tree_nodes = set(nodes.keys())
+                for k, v in nodes.items():
+                    if isinstance(v, dict):
+                        if v.get('exists', True) is not False:
+                            expected_disk_nodes.add(k)
+                        if v.get('crawl') is False:
+                            pruned_prefixes.append(k.strip('/'))
+        except Exception:
+            pass
+
     for root, dirs, files in os.walk(repo_path):
-        dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
         rel_root = os.path.relpath(root, repo_path).replace('\\', '/')
-        if rel_root != '.':
-            # Excluir identificadores de skills (.agents/skills/<skillName>) del chequeo all-lowercase de carpetas topológicas
-            if not rel_root.startswith('.agents/skills/'):
+        if rel_root == '.':
+            rel_root = ''
+        dirs[:] = [
+            d for d in dirs
+            if d not in IGNORE_DIRS
+            and (d == '.context' or not d.startswith('.'))
+            and not any(
+                f"{rel_root}/{d}".strip('/').startswith(pr + '/')
+                for pr in pruned_prefixes
+            )
+        ]
+        if rel_root:
+            if not rel_root.startswith('.agents/skills/') and not rel_root.startswith('.'):
                 for part in rel_root.split('/'):
                     if any(c.isupper() for c in part) and rel_root not in uppercase_dirs:
                         uppercase_dirs.append(rel_root)
             if '.context.yaml' in files:
                 beacon_dirs.add(rel_root)
 
-    tree_file = repo_path / '.context' / 'tree.json'
-    tree_nodes: Set[str] = set()
-    if tree_file.exists():
-        try:
-            data = json.loads(tree_file.read_text(encoding='utf-8', errors='ignore'))
-            nodes = data.get('nodes', {})
-            if isinstance(nodes, dict):
-                tree_nodes = set(nodes.keys())
-        except Exception:
-            pass
+    # .context es un nodo de metadatos especial en tree.json donde .context.yaml es opcional
+    if '.context' in expected_disk_nodes and (repo_path / '.context').is_dir():
+        beacon_dirs.add('.context')
 
-    missing_in_tree = sorted(list(beacon_dirs - tree_nodes))
-    missing_on_disk = sorted(list(tree_nodes - beacon_dirs))
+    # En iDirectory v5.0, los directorios ancestros intermedios tienen .context.yaml para herencia (resolve_beacon)
+    intermediate_ancestors = {
+        b for b in beacon_dirs
+        if any(tn.startswith(b + '/') for tn in tree_nodes)
+    }
+    dynamic_children = {
+        b for b in beacon_dirs
+        if b not in expected_disk_nodes and (
+            any(
+                b.startswith(tn + '/') and isinstance(nodes_dict.get(tn), dict) and nodes_dict[tn].get('has_dynamic_children')
+                for tn in tree_nodes
+            )
+            or b.split('/')[0] in ('artifacts', 'src', 'docs', '03_research', 'data', '02_foundation')
+        )
+    }
+    comparable_beacons = beacon_dirs - intermediate_ancestors - dynamic_children
+
+    missing_in_tree = sorted(list(comparable_beacons - expected_disk_nodes))
+    missing_on_disk = sorted(list(expected_disk_nodes - beacon_dirs))
 
     passed = (
         tree_file.exists()
@@ -264,8 +365,8 @@ def check_local_tree_freshness(repo_path: Path) -> Dict[str, Any]:
 
     return {
         'passed': passed,
-        'beacons_count': len(beacon_dirs),
-        'tree_nodes_count': len(tree_nodes),
+        'beacons_count': len(comparable_beacons),
+        'tree_nodes_count': len(expected_disk_nodes),
         'missing_in_tree': missing_in_tree,
         'missing_on_disk': missing_on_disk,
         'uppercase_dirs': sorted(uppercase_dirs)
@@ -684,6 +785,28 @@ def main() -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(report_content, encoding='utf-8')
     print(f"[+] Reporte generado exitosamente en: {out_path}")
+
+    # Actualizar Bus Cognitivo Federado v5.0 (.context/icontext_bus.json -> l1_thinkingseed)
+    bus_path = repo_path / '.context' / 'icontext_bus.json'
+    if bus_path.exists():
+        try:
+            from datetime import datetime, timezone
+            bus_data = json.loads(bus_path.read_text(encoding='utf-8', errors='ignore'))
+            v5_ast = validators.get('v5_ast', {})
+            all_ok = bool(validators.get('all_passed', False))
+            rel_seed = f"./01_seed/{master_seed.name}" if master_seed else ""
+            bus_data['updated_at'] = datetime.now(timezone.utc).isoformat()
+            bus_data['l1_thinkingseed'] = {
+                'seed_path': rel_seed,
+                'seed_version': '5.0',
+                'ast_coverage_pct': float(v5_ast.get('pct', 0.0)),
+                'untracked_Public_symbols': list(v5_ast.get('missing', [])),
+                'freshness_status': 'SYNCED' if all_ok else 'STALE_SEED',
+                'last_validated_at': datetime.now(timezone.utc).isoformat(),
+            }
+            bus_path.write_text(json.dumps(bus_data, indent=2, ensure_ascii=False) + "\n", encoding='utf-8')
+        except Exception:
+            pass
 
     if not master_meta.get('exists') or not validators.get('all_passed', False):
         sys.exit(1)

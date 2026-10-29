@@ -1,12 +1,12 @@
 # Gravity HyperScale Thinking
 
-## MASTER THINKING SEED SPECIFICATION (v3.0)
+## MASTER THINKING SEED SPECIFICATION (v5.0 — iContext Federation Protocol)
 
-> **Propósito:** Generar un vector arquitectónico autosuficiente, verificable, determinista y portable de un proyecto de software (`01_seed/seed-[proyecto]-master.md`). El resultado permite que cualquier modelo de lenguaje o agente autónomo (Claude, GPT, Gemini, Cursor, Windsurf, Copilot), sin acceso al IDE ni al repositorio completo, comprenda la intención, arquitectura, contratos simbólicos, operación, estado real, superficie de tensión, contradicciones y modos de falla del sistema con cero ambigüedad y 99%+ de ahorro de tokens.
+> **Propósito:** Generar un vector arquitectónico autosuficiente, verificable, determinista y portable de un proyecto de software (`01_seed/seed-[proyecto]-master.md`) sincronizado con el índice AST `./.context/contracts_ast.json` y el Bus Cognitivo Federado `./.context/icontext_bus.json`. El resultado permite que cualquier modelo de lenguaje o agente autónomo (Claude, GPT, Gemini, Cursor, Windsurf, Copilot), sin acceso al IDE ni al repositorio completo, comprenda la intención, arquitectura, contratos simbólicos, operación, estado real, superficie de tensión, contradicciones y modos de falla del sistema con cero ambigüedad y 99%+ de ahorro de tokens.
 
 ---
 
-# A. CONTRATO DE GENERACIÓN DEL SEED (v3.0)
+# A. CONTRATO DE GENERACIÓN DEL SEED (v5.0)
 
 ## A.1 Rol del agente generador
 Actúa como **Lead Systems Architect, Principal Context Engineer y Auditor Forense de Software**. Inspecciona el repositorio y construye una representación fiel y adversarial de su estado real.
@@ -18,11 +18,11 @@ No te limites a listar nombres de archivos ni caigas en autocomplacencia. Debes 
 - comportamientos que requieren ejecución en vivo o credenciales externas (`[NO VERIFICADO]`);
 - funcionalidades, archivos o validaciones esperadas que están ausentes (`[FALTANTE]`).
 
-## A.2 Invariantes de Ingeniería v3.0 (Cumplimiento Estricto)
+## A.2 Invariantes de Ingeniería v5.0 (Cumplimiento Estricto)
 
 1. **Contrato de Frontera XML (`<SEED_ARCHITECTURAL_VECTOR>`):**
    Todo Seed generado DEBE abrir y cerrar con la etiqueta XML de directiva de sistema:
-   `<SEED_ARCHITECTURAL_VECTOR version="3.0" contains_source_code="false" artifact_type="architectural_vector" mode="architecture_and_vulnerability_audit">` ... `</SEED_ARCHITECTURAL_VECTOR>`.
+   `<SEED_ARCHITECTURAL_VECTOR version="5.0" contains_source_code="false" artifact_type="architectural_vector" mode="architecture_and_vulnerability_audit">` ... `</SEED_ARCHITECTURAL_VECTOR>`.
    Esto evita que preprocesadores de chats externos ignoren los comentarios HTML o traten el Seed como un repositorio de código truncado.
 2. **Invariante "Zero Source Code / Symbolic Contracts Only":**
    Queda **estrictamente prohibido** incluir bloques de código fuente de implementación (`.py`, `.ps1`, `.sh`, `.rs`, `.go`, `.sql`, `.json`, `.yaml` literales) mayores a 5 líneas dentro del Seed.

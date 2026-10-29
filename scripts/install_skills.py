@@ -17,6 +17,7 @@ Uso:
 """
 
 import os
+import re
 import sys
 import shutil
 import argparse
@@ -27,6 +28,38 @@ SKILLS_SRC_DIR = BASE_DIR / ".agents" / "skills"
 
 TEMPLATE_HYBRID = BASE_DIR / "ThinkingSeed_MasterHybrid.md"
 TEMPLATE_MASTER = BASE_DIR / "ThinkingSeed Master.md"
+
+
+def upsert_segmented_rule_file(src_path: Path, dest_path: Path, tool_key: str = "THINKINGSEED", backup: bool = False) -> bool:
+    """
+    Inserta o actualiza de forma no destructiva el bloque de reglas de ThinkingSeed v5.0
+    en el archivo destino sin sobrescribir reglas preexistentes de iDirectory, MetricsThinking o iReadme.
+    """
+    content = src_path.read_text(encoding="utf-8", errors="replace").strip()
+    start_marker = f"<!-- >>> ICONTEXT-V5:{tool_key}:START >>> -->"
+    end_marker = f"<!-- <<< ICONTEXT-V5:{tool_key}:END >>> -->"
+    wrapped = f"{start_marker}\n{content}\n{end_marker}"
+
+    if not dest_path.exists():
+        dest_path.parent.mkdir(parents=True, exist_ok=True)
+        dest_path.write_text(wrapped + "\n", encoding="utf-8")
+        return True
+
+    if backup:
+        bak_path = dest_path.with_suffix(dest_path.suffix + ".bak")
+        shutil.copy2(dest_path, bak_path)
+
+    existing = dest_path.read_text(encoding="utf-8", errors="replace")
+    if start_marker in existing and end_marker in existing:
+        pattern = re.compile(re.escape(start_marker) + r".*?" + re.escape(end_marker), re.DOTALL)
+        updated = pattern.sub(lambda _m: wrapped, existing)
+    elif existing.strip() and existing.strip() != content:
+        updated = existing.rstrip() + "\n\n" + wrapped + "\n"
+    else:
+        updated = wrapped + "\n"
+
+    dest_path.write_text(updated, encoding="utf-8")
+    return True
 
 def get_home_dir() -> Path:
     return Path.home()
@@ -81,27 +114,31 @@ def install_codex_global() -> bool:
         print(f"  [ERROR] Al configurar Codex Global: {e}")
         return False
 
-def inject_into_project(target_path: Path) -> bool:
+def inject_into_project(target_path: Path, backup: bool = False, check_only: bool = False) -> bool:
     target = target_path.resolve()
     if not target.exists() or not target.is_dir():
         print(f"  [ERROR] La ruta destino no existe o no es un directorio: {target}")
         return False
 
-    print(f"\nInyectando soporte ThinkingSeed en proyecto: {target}")
+    print(f"\n{'[CHECK-ONLY] Previsualizando' if check_only else 'Inyectando'} soporte ThinkingSeed v5.0 en proyecto: {target}")
 
     # 1. Copiar .agents/skills/
     target_agents_skills = target / ".agents" / "skills"
-    target_agents_skills.mkdir(parents=True, exist_ok=True)
+    if not check_only:
+        target_agents_skills.mkdir(parents=True, exist_ok=True)
     for skill_name in ["seed", "seedMaster"]:
         src = SKILLS_SRC_DIR / skill_name
         dest = target_agents_skills / skill_name
         if src.exists():
-            if dest.exists():
-                shutil.rmtree(dest)
-            shutil.copytree(src, dest)
-            print(f"  [OK] Skill instalada: {dest}")
+            if check_only:
+                print(f"  [PREVIEW] Skill a sincronizar: {dest}")
+            else:
+                if dest.exists():
+                    shutil.rmtree(dest)
+                shutil.copytree(src, dest)
+                print(f"  [OK] Skill instalada: {dest}")
 
-    # 2. Copiar archivos de reglas multi-agente
+    # 2. Componer de forma no destructiva archivos de reglas multi-agente (v5.0)
     agent_rule_files = [
         "GEMINI.md",
         "CLAUDE.md",
@@ -115,33 +152,45 @@ def inject_into_project(target_path: Path) -> bool:
     for fname in agent_rule_files:
         src = BASE_DIR / fname
         if src.exists():
-            shutil.copy2(src, target / fname)
-            print(f"  [OK] Regla copiada: {target / fname}")
+            dest_f = target / fname
+            if check_only:
+                state = "EXISTE (se fusionará por bloque v5.0)" if dest_f.exists() else "NUEVO"
+                print(f"  [PREVIEW] Regla {dest_f}: {state}")
+            else:
+                upsert_segmented_rule_file(src, dest_f, tool_key="THINKINGSEED", backup=backup)
+                print(f"  [OK] Regla sincronizada (no destructiva v5.0): {dest_f}")
 
     # 3. Copiar copilot instructions si existe .github
     copilot_src = BASE_DIR / ".github" / "copilot-instructions.md"
     if copilot_src.exists():
         target_github = target / ".github"
-        target_github.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(copilot_src, target_github / "copilot-instructions.md")
-        print(f"  [OK] GitHub Copilot configurado: {target_github / 'copilot-instructions.md'}")
+        dest_cop = target_github / "copilot-instructions.md"
+        if check_only:
+            print(f"  [PREVIEW] GitHub Copilot: {dest_cop}")
+        else:
+            target_github.mkdir(parents=True, exist_ok=True)
+            upsert_segmented_rule_file(copilot_src, dest_cop, tool_key="THINKINGSEED", backup=backup)
+            print(f"  [OK] GitHub Copilot configurado: {dest_cop}")
 
     # 4. Asegurar carpeta 01_seed
-    (target / "01_seed").mkdir(parents=True, exist_ok=True)
-    print(f"  [OK] Directorio 01_seed/ preparado.")
+    if not check_only:
+        (target / "01_seed").mkdir(parents=True, exist_ok=True)
+        print(f"  [OK] Directorio 01_seed/ preparado.")
 
-    print(f"\n¡Exito! El proyecto {target.name} ahora soporta /seed y /seedMaster en cualquier agente.")
+    print(f"\n¡Exito! El proyecto {target.name} ahora soporta /seed y /seedMaster v5.0 en cualquier agente.")
     return True
 
 def main():
-    parser = argparse.ArgumentParser(description="Instalador Universal de ThinkingSeed Skills")
+    parser = argparse.ArgumentParser(description="Instalador Universal de ThinkingSeed Skills v5.0")
     parser.add_argument("--global-install", action="store_true", help="Instala las skills globalmente en el sistema")
     parser.add_argument("--target", type=str, help="Ruta de un proyecto destino donde inyectar las skills y reglas")
+    parser.add_argument("--backup", action="store_true", help="Crea copia de respaldo (.bak) antes de actualizar archivos de reglas")
+    parser.add_argument("--check-only", action="store_true", help="Previsualiza los cambios en el repositorio destino sin escribir en disco")
 
     args = parser.parse_args()
 
     print("=" * 70)
-    print("  Gravity HyperScale Thinking - ThinkingSeed Multi-Agent Installer")
+    print("  Gravity HyperScale Thinking - ThinkingSeed v5.0 Multi-Agent Installer")
     print("=" * 70)
 
     if args.global_install:
@@ -153,7 +202,7 @@ def main():
         return
 
     if args.target:
-        inject_into_project(Path(args.target))
+        inject_into_project(Path(args.target), backup=args.backup, check_only=args.check_only)
         return
 
     # Modo interactivo
