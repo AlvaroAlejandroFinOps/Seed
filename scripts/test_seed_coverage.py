@@ -175,8 +175,9 @@ def extract_repo_ast_contracts(repo_path: Path) -> Dict[str, List[str]]:
     if contracts_cache.exists() and tree_hash:
         try:
             cache_data = json.loads(contracts_cache.read_text(encoding='utf-8', errors='ignore'))
-            if cache_data.get('topology_hash') == tree_hash and isinstance(cache_data.get('files'), dict):
-                for rel_file, fmeta in sorted(cache_data['files'].items()):
+            modules_data = cache_data.get('modules') or cache_data.get('files')
+            if cache_data.get('topology_hash') == tree_hash and isinstance(modules_data, dict):
+                for rel_file, fmeta in sorted(modules_data.items()):
                     rel_clean = rel_file.lstrip('./')
                     if rel_clean == 'tests' or rel_clean.startswith('tests/'):
                         continue
@@ -184,9 +185,11 @@ def extract_repo_ast_contracts(repo_path: Path) -> Dict[str, List[str]]:
                         continue
                     if any(rel_clean == pr or rel_clean.startswith(pr + '/') for pr in pruned_prefixes):
                         continue
-                    for sym in fmeta.get('public_symbols', []):
-                        if sym not in public_symbols:
-                            public_symbols.append(sym)
+                    syms = fmeta.get('symbols') or fmeta.get('public_symbols') or []
+                    for sym in syms:
+                        sym_name = sym.get('name') if isinstance(sym, dict) else str(sym)
+                        if sym_name and sym_name not in public_symbols:
+                            public_symbols.append(sym_name)
                     for flg in fmeta.get('cli_flags', []):
                         if flg not in cli_flags:
                             cli_flags.append(flg)
@@ -724,7 +727,7 @@ def generate_report(
 def main() -> None:
     parser = argparse.ArgumentParser(description="Auditoría Determinista y Cobertura de ThinkingSeed v3.0")
     parser.add_argument("--target-repo", required=True, help="Ruta al repositorio completo a auditar")
-    parser.add_argument("--output", default="artifacts/benchmark_seed_coverage.md", help="Ruta de salida del reporte")
+    parser.add_argument("--output", default=".context/cache/benchmark_seed_coverage.md", help="Ruta de salida del reporte")
     parser.add_argument("--no-anonymize", action="store_true", help="Desactivar anonimización de datos")
     args = parser.parse_args()
 
@@ -786,25 +789,84 @@ def main() -> None:
     out_path.write_text(report_content, encoding='utf-8')
     print(f"[+] Reporte generado exitosamente en: {out_path}")
 
-    # Actualizar Bus Cognitivo Federado v5.0 (.context/icontext_bus.json -> l1_thinkingseed)
+    # Actualizar Bus Cognitivo Federado v5.0 (.context/icontext_bus.json -> layers.l1_thinkingseed)
     bus_path = repo_path / '.context' / 'icontext_bus.json'
     if bus_path.exists():
         try:
+            import hashlib, time, uuid, threading, random
             from datetime import datetime, timezone
-            bus_data = json.loads(bus_path.read_text(encoding='utf-8', errors='ignore'))
-            v5_ast = validators.get('v5_ast', {})
-            all_ok = bool(validators.get('all_passed', False))
-            rel_seed = f"./01_seed/{master_seed.name}" if master_seed else ""
-            bus_data['updated_at'] = datetime.now(timezone.utc).isoformat()
-            bus_data['l1_thinkingseed'] = {
-                'seed_path': rel_seed,
-                'seed_version': '5.0',
-                'ast_coverage_pct': float(v5_ast.get('pct', 0.0)),
-                'untracked_Public_symbols': list(v5_ast.get('missing', [])),
-                'freshness_status': 'SYNCED' if all_ok else 'STALE_SEED',
-                'last_validated_at': datetime.now(timezone.utc).isoformat(),
-            }
-            bus_path.write_text(json.dumps(bus_data, indent=2, ensure_ascii=False) + "\n", encoding='utf-8')
+            
+            # Safe read with backoff for transient Windows contention
+            bus_data = None
+            delay = 0.015
+            for _ in range(6):
+                try:
+                    bus_data = json.loads(bus_path.read_text(encoding='utf-8', errors='replace'))
+                    break
+                except (OSError, json.JSONDecodeError):
+                    time.sleep(delay + random.uniform(0.005, 0.015))
+                    delay *= 1.5
+
+            if isinstance(bus_data, dict):
+                v5_ast = validators.get('v5_ast', {})
+                all_ok = bool(validators.get('all_passed', False))
+                rel_seed = f"./01_seed/{master_seed.name}" if master_seed else ""
+                bus_data['updated_at'] = datetime.now(timezone.utc).isoformat()
+                
+                # Limpiar clave huérfana en raíz si existía previamente
+                bus_data.pop('l1_thinkingseed', None)
+
+                layers = bus_data.setdefault('layers', {})
+                l1_prev = layers.get('l1_thinkingseed', {}) if isinstance(layers.get('l1_thinkingseed'), dict) else {}
+
+                seed_hash_val = l1_prev.get('seed_hash', '')
+                if not seed_hash_val and master_seed and master_seed.exists():
+                    seed_hash_val = hashlib.sha256(master_seed.read_bytes()).hexdigest()
+
+                tree_hash_val = ""
+                tree_file = repo_path / '.context' / 'tree.json'
+                if tree_file.exists():
+                    try:
+                        tree_hash_val = str(json.loads(tree_file.read_text(encoding='utf-8')).get('topology_hash', ''))
+                    except Exception:
+                        pass
+
+                layers['l1_thinkingseed'] = {
+                    'present': True,
+                    'version': '5.0.0',
+                    'seed_path': rel_seed,
+                    'seed_version': '5.0',
+                    'ast_coverage_pct': float(v5_ast.get('pct', 0.0)),
+                    'gates_passed': "6/6" if all_ok else "failed",
+                    'seed_hash': seed_hash_val,
+                    'synced_with_topology_hash': tree_hash_val or l1_prev.get('synced_with_topology_hash', ''),
+                    'untracked_public_symbols': list(v5_ast.get('missing', [])),
+                    'freshness_status': 'SYNCED' if all_ok else 'STALE_SEED',
+                    'last_validated_at': datetime.now(timezone.utc).isoformat(),
+                }
+
+                # Escritura atómica segura y única con cleanup garantizado
+                unique_suffix = f"{os.getpid()}_{threading.get_ident()}_{uuid.uuid4().hex[:8]}"
+                tmp_bus = bus_path.parent / f".tmp_{unique_suffix}_{bus_path.name}"
+                payload = json.dumps(bus_data, indent=2, ensure_ascii=False) + "\n"
+                delay = 0.02
+                try:
+                    tmp_bus.write_text(payload, encoding='utf-8')
+                    for attempt in range(10):
+                        try:
+                            os.replace(tmp_bus, bus_path)
+                            break
+                        except OSError:
+                            if attempt == 9:
+                                raise
+                            time.sleep(delay + random.uniform(0.01, 0.03))
+                            delay *= 1.4
+                finally:
+                    if tmp_bus.exists():
+                        try:
+                            tmp_bus.unlink()
+                        except OSError:
+                            pass
         except Exception:
             pass
 

@@ -12,9 +12,9 @@
 | Dimensión de Métrica | Repositorio Completo | Seed Híbrido (`/seed`) | Seed Master (`/seedMaster`) |
 |---|:---:|:---:|:---:|
 | **Volumen de Archivos** | **78 archivos** | 0 archivo Markdown | 1 archivo Markdown |
-| **Líneas de Código / Texto** | **9,390 líneas** | 0 líneas | 519 líneas |
-| **Peso Físico** | **8.30 MB** | 0.0 KB | 59.8 KB |
-| **Tokens Estimados** | **~2,176,774 tokens** | **~0 tokens** | **~9,383 tokens** |
+| **Líneas de Código / Texto** | **9,435 líneas** | 0 líneas | 519 líneas |
+| **Peso Físico** | **8.31 MB** | 0.0 KB | 59.8 KB |
+| **Tokens Estimados** | **~2,177,323 tokens** | **~0 tokens** | **~9,383 tokens** |
 | **Ahorro de Contexto (Tokens)** | 0% (Base) | **0.00% de ahorro** | **99.57% de ahorro** |
 | **Factor de Compresión** | 1x | **N/A** | **232x más ligero** |
 | **ÍNDICE DE COBERTURA DE ADN** | 100% (Código crudo) | **0.0% (ADN Esencial)** | **99.1% (ADN Exhaustivo)** |
@@ -61,6 +61,6 @@
 ---
 
 ## 5. CONCLUSIÓN Y VEREDICTO DE AUDITORÍA
-1. **Eficacia Demostrada:** El repositorio `ThinkingSeed` con **78 archivos (8.30 MB)** queda representado en su vector arquitectónico v3.0 en **59.8 KB** (99.57% de ahorro de tokens).
+1. **Eficacia Demostrada:** El repositorio `ThinkingSeed` con **78 archivos (8.31 MB)** queda representado en su vector arquitectónico v3.0 en **59.8 KB** (99.57% de ahorro de tokens).
 2. **Cobertura Semántica AST:** Se verificaron mediante `ast.parse()` **24/25 (96.0%)** contratos públicos y flags CLI documentados como firmas simbólicas de 1 línea.
 3. **Cumplimiento de Gates v3.0:** Estado global de los 6 validadores deterministas: **PASS (6/6 GATES OK)**.

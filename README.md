@@ -4,16 +4,14 @@
 
 **Language:** [English](README.md) | [Español](README_ES.md)
 
+[![Standard](https://img.shields.io/badge/Standard-Enterprise%20Paper--Grade%20v5.0-2b2b2b?style=flat-square)](#)
+[![Ecosystem](https://img.shields.io/badge/Ecosystem-Multi--AI%20%28Google%20%7C%20Claude%20%7C%20OpenAI%20%7C%20Cursor%29-34495e?style=flat-square)](#)
+[![iContext Federation](https://img.shields.io/badge/iContext-Federated%20v5.0-1a1a1a?style=flat-square)](#)
+[![iDirectory L0](https://img.shields.io/badge/L0-iDirectory%20v5.0-2b2b2b?style=flat-square)](#)
+[![ThinkingSeed L1](https://img.shields.io/badge/L1-ThinkingSeed%20v5.0-34495e?style=flat-square)](#)
+[![MetricsThinking L2](https://img.shields.io/badge/L2-MetricsThinking%20v5.0-4b5563?style=flat-square)](#)
+[![iReadme L3](https://img.shields.io/badge/L3-iReadme%20v5.0-000000?style=flat-square)](#)
 ![Status](https://img.shields.io/badge/Seed_Deployment-GravityHyperScaleThinking-1a1a1a?style=flat-square)
-![Framework](https://img.shields.io/badge/Gemini_1.5_Pro-Google-2b2b2b?style=flat-square)
-![Framework](https://img.shields.io/badge/Claude_3.5_Opus-Anthropic-2b2b2b?style=flat-square)
-![Framework](https://img.shields.io/badge/GPT_5.6_SOL-OpenAI-2b2b2b?style=flat-square)
-![Framework](https://img.shields.io/badge/DeepSeek_V4-DeepSeek-2b2b2b?style=flat-square)
-![Framework](https://img.shields.io/badge/Kimi_K2-Kimi-2b2b2b?style=flat-square)
-![Framework](https://img.shields.io/badge/Llama_4.1-Meta-2b2b2b?style=flat-square)
-![Framework](https://img.shields.io/badge/Mistral_Large_3-Mistral-2b2b2b?style=flat-square)
-![Framework](https://img.shields.io/badge/Qwen_Max-Alibaba-2b2b2b?style=flat-square)
-![Framework](https://img.shields.io/badge/Grok_3-xAI-2b2b2b?style=flat-square)
 
 ---
 
@@ -58,6 +56,19 @@ The GHT Seed architecture operates across three distinct operational phases: Rec
 |                                                                               |
 +-------------------------------------------------------------------------------+
 ```
+
+### Federated Governance & Context Engineering (iContext v5.0)
+
+This project formally implements the **iContext Federation Protocol v5.0**, incorporating **4 of the 4 canonical projects** (iDirectory, ThinkingSeed, MetricsThinking, and iReadme) for autonomous agentic governance and attentional optimization designed by Gravity HyperScale Thinking:
+
+| Layer | Component | Primary Engineering Function in this Repository | Status |
+| :--- | :--- | :--- | :--- |
+| `L0` | **iDirectory (L0)** — Topological Control Plane & Adaptive Context Engineering | Enforces deterministic all-lowercase directory topology, boundary beacons (.context.yaml), cryptographic tree satellite (.context/tree.json), token budgeting, and subagent capsule isolation (<450 tokens). | `ACTIVE (v5.0)` |
+| `L1` | **ThinkingSeed (L1)** — Symbolic Architectural DNA & Zero-Source-Code Vector | Preserves architectural technical memory and AST symbolic contracts with zero implementation code leakage (Zero Source Code), strictly certified across 6 deterministic validation gates. | `ACTIVE (v5.0)` |
+| `L2` | **MetricsThinking (L2)** — Forensic Technology Audit & Spectral FPIA Governance | Computes ground-truth maturity scores across 10 canonical modules, AST semantic drift detection, FPIA spectral efficiency (S_spectral, PF_spectral), and Zero-Tolerance security scanning. | `ACTIVE (v5.0)` |
+| `L3` | **iReadme (L3)** — Institutional Paper-Grade Dual Documentation Synthesizer | Synchronizes dual English/Spanish documentation under the Enterprise Paper-Grade standard, guaranteeing structural parity phi = 1.0, formal KaTeX formulations, and zero local path leakages. | `ACTIVE (v5.0)` |
+
+Interoperability across these tools is orchestrated in a non-blocking fashion via the **Federated Cognitive Bus** (`./.context/icontext_bus.json`), securing attentional continuity, zero satellite drift, and strict hallucination mitigation across autonomous AI agents.
 
 ---
 
